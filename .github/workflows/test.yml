@@ -1,0 +1,21 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run-tests:
+    name: Run tests
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      repository-projects: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 21
+      - run: npm install
+      - run: npx momentic@latest run-tests --start "npm run start" --wait-on http://localhost:3000 --tests c2c2fee4-4778-4bbb-8f0c-31f25f774726
