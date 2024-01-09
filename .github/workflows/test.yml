@@ -1,5 +1,8 @@
 name: Test
 
+env:
+  MOMENTIC_API_KEY: ${{ secrets.MOMENTIC_API_KEY }}
+
 on:
   push:
     branches:
