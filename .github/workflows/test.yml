@@ -22,4 +22,5 @@ jobs:
           node-version: 21
       - run: npm install
       - run: npx momentic@latest install-browsers
-      - run: npx momentic@latest run-tests --start "npm run start" --wait-on http://localhost:3000 --tests c2c2fee4-4778-4bbb-8f0c-31f25f774726
+      - run: npx momentic@latest run-tests --local --start "npm run start" --wait-on http://localhost:3000 --tests c2c2fee4-4778-4bbb-8f0c-31f25f774726
+      - run: npx momentic@latest run-tests --remote --tests c2c2fee4-4778-4bbb-8f0c-31f25f774726
