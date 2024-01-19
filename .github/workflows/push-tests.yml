@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  run-tests:
+  push-tests:
     name: Run tests
     runs-on: ubuntu-latest
     permissions:
