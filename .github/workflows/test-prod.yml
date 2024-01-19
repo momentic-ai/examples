@@ -1,4 +1,4 @@
-name: Sync with Momentic
+name: Test prod
 
 env:
   MOMENTIC_API_KEY: ${{ secrets.MOMENTIC_API_KEY }}
@@ -20,4 +20,4 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 21
-      - run: npx momentic@next push momentic
+      - run: npx momentic@next run create-react-app-test --remote
