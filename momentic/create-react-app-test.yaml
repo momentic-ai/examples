@@ -1,0 +1,39 @@
+id: 8c23e9f8-d846-45fc-ae74-b721cca3655f
+name: create-react-app test
+baseUrl: https://momentic-github-actions-demo.vercel.app/
+schemaVersion: 1.0.6
+advanced:
+  availableAsModule: false
+  disableAICaching: false
+retries: 0
+steps:
+  - type: PRESET_ACTION
+    command:
+      type: AI_ASSERTION
+      assertion: There are instructions to edit src/app.js
+      useVision: false
+      disableCache: true
+  - type: PRESET_ACTION
+    command:
+      type: CLICK
+      target:
+        elementDescriptor: learn react link
+        a11yData:
+          id: 12
+          role: link
+          name: Learn React
+          content: ""
+          serializedForm: |
+            <link name="Learn React" />
+      doubleClick: false
+      rightClick: false
+  - type: PRESET_ACTION
+    command:
+      type: TAB
+      url: react.dev
+  - type: PRESET_ACTION
+    command:
+      type: AI_ASSERTION
+      assertion: we are on the react documentation site
+      useVision: false
+      disableCache: true

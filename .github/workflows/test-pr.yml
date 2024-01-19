@@ -1,0 +1,28 @@
+name: Test PR
+
+env:
+  MOMENTIC_API_KEY: ${{ secrets.MOMENTIC_API_KEY }}
+
+on:
+  pull_request:
+
+jobs:
+  run-tests:
+    name: Run tests
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      repository-projects: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 21
+          cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm i
+      - run: npx momentic@next install-browsers
+      - run: npx momentic@next run momentic/create-react-app-test.yaml --local --start "npm run start" --wait-on http://localhost:3000
