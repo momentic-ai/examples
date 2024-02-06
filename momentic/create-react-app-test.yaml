@@ -6,6 +6,10 @@ advanced:
   availableAsModule: false
   disableAICaching: false
 retries: 0
+envSettings:
+  - name: development
+    fixtures:
+      - echo-text
 steps:
   - type: PRESET_ACTION
     command:
