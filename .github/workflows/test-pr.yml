@@ -24,5 +24,5 @@ jobs:
           cache: "pnpm"
       - name: Install dependencies
         run: pnpm i
-      - run: npx momentic@latest install-browser
+      - run: npx momentic@latest install-browsers
       - run: npx momentic@latest run momentic/create-react-app-test.yaml --local --start "npm run start" --wait-on http://localhost:3000
