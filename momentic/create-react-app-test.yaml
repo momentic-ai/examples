@@ -6,7 +6,7 @@ advanced:
   availableAsModule: false
   disableAICaching: false
 retries: 0
-envSettings:
+envs:
   - name: development
     fixtures:
       - echo-text
