@@ -1,0 +1,4 @@
+fileType: momentic/environment
+name: production
+variables:
+  BASE_URL: https://gptzero.me

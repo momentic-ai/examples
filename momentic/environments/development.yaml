@@ -2,4 +2,3 @@ fileType: momentic/environment
 name: development
 variables:
   BASE_URL: https://momentic-github-actions-demo.vercel.app/
-  
