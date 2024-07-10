@@ -1,6 +1,6 @@
 # Momentic GitHub Actions demo
 
-This repo uses the [Momentic CLI](https://momentic.ai/docs/sdk) to:
+This repo uses the [Momentic CLI](https://docs.momentic.ai/cli/installation) to:
 
 1. Sync local test files to Momentic cloud on every push to `main`.
 2. Trigger Momentic cloud test runs on every push to `main`.
