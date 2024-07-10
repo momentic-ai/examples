@@ -1,0 +1,14 @@
+fileType: momentic/test
+id: 7b24p2f8-a846-45fc-ae74-b721cca3673a
+name: google-test
+baseUrl: https://google.com/
+schemaVersion: 1.0.9
+advanced:
+  disableAICaching: false
+retries: 0
+steps:
+  - type: PRESET_ACTION
+    command:
+      id: a47ef2ac-23c1-13fb-9aca-1cad4676c37c
+      type: AI_ASSERTION
+      assertion: There is a search bar visible on the page

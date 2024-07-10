@@ -1,0 +1,83 @@
+name: Test Prod Amazon Linux
+
+env:
+  MOMENTIC_API_KEY: ${{ secrets.MOMENTIC_API_KEY }}
+
+on:
+  push:
+    branches:
+      - main
+  
+jobs:
+  run-tests-on-amazon-linux:
+    name: Run tests
+
+    runs-on: ubuntu-latest # Change this to your own runners
+    container: # Remove this line if your runners already run on Amazon Linux
+      image: amazonlinux # Remove this line if your runners already run on Amazon Linux
+
+    steps:
+      # Section 1: Dependency installation
+      # Remove docker related entries if you already have Docker installed on your runners
+      - name: Install sudo
+        run: yum install sudo -y
+      - name: Install Docker
+        run: sudo yum install docker tar git -y
+
+      # Checkout the code
+      - uses: actions/checkout@v4
+
+      # Section 2: Application boostrapping
+      # Replace with your own bootstrapping logic or delete if you have a long-lived app
+      - name: Spin up example app on localhost:8080
+        run: |
+          docker run -d -p 8080:80 --name test-app httpd:2.4
+
+      # Section 3: Momentic test script preparation
+      # Replace L63 with the actual tests you want to run
+      # You can commit this script to your codebase instead of creating it at runtime.
+      - name: Prepare testing script entrypoint
+        run: |
+          cat << 'EOF' > run_tests.sh
+          #!/bin/bash
+          set -e
+
+          export DEBIAN_FRONTEND=noninteractive
+          ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
+          apt-get update -y && apt-get install -y --no-install-recommends curl ca-certificates
+
+          # Install nvm
+          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+
+          # Load nvm
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          nvm install 20
+          nvm use 20
+
+          # Replace with your own app or waiting logic
+          echo "Checking if app is up"
+          curl --fail localhost:8080 || exit 1
+
+          # Run tests
+          npx momentic@latest run --local momentic/google-test.yaml
+
+          EOF
+
+          chmod +x run_tests.sh
+
+      # Section 4: Start the Momentic docker container
+      # Copies the Momentic tests from your codebase and the testing script into the container before kicking off the script.
+      - name: Run Momentic in ubuntu image
+        run: |
+          docker run -d --name momentic --network host -e MOMENTIC_API_KEY='${{ secrets.MOMENTIC_API_KEY }}' ubuntu:20.04 sleep infinity
+          docker cp run_tests.sh momentic:/run_tests.sh
+          docker cp momentic momentic:/
+          docker exec momentic bash /run_tests.sh
+
+      # Section 5: Cleanup
+      - name: Clean up Docker
+        if: always()
+        run: |
+          docker stop momentic
+          docker rm momentic
