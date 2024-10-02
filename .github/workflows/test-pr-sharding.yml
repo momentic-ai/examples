@@ -29,5 +29,9 @@ jobs:
           cache: "pnpm"
       - name: Install dependencies
         run: pnpm i
-      - run: npx momentic@latest install-browsers
-      - run: npx momentic@latest run momentic/create-react-app-test.yaml --local --start "npm run start" --env development --shard-index ${{ matrix.shardIndex }} --shard-count ${{ matrix.shardTotal }}
+      - run: |
+          npx momentic@^1 run momentic/create-react-app-test.test.yaml \
+            --start "npm run start" \
+            --env development \
+            --shard-index ${{ matrix.shardIndex }} \
+            --shard-count ${{ matrix.shardTotal }}

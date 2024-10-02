@@ -24,7 +24,4 @@ jobs:
         with:
           node-version: 21
           cache: "pnpm"
-      - name: Install dependencies
-        run: pnpm i
-      - run: npx momentic@latest install-browsers
-      - run: npx momentic@latest run momentic/input-from-csv-test.yaml --local --input-csv momentic/data/inputs.csv
+      - run: npx momentic@^1 run --input-csv momentic/data/inputs.csv momentic/input-from-csv-test.test.yaml
