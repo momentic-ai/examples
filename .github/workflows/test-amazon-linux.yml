@@ -60,6 +60,7 @@ jobs:
           curl --fail localhost:8080 || exit 1
 
           # Run tests
+          cat momentic.config.yaml
           npx momentic@^1 run momentic/google-test.test.yaml
 
           EOF
