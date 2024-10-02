@@ -1,0 +1,11 @@
+name: default
+include:
+  - "**/*.test.yaml"
+  - "**/*.module.yaml"
+environments:
+  - name: development
+    baseUrl: https://momentic-github-actions-demo.vercel.app/
+    envVariables: {}
+  - name: production
+    baseUrl: https://gptzero.me
+    envVariables: {}

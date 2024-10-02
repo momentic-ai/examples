@@ -60,7 +60,7 @@ jobs:
           curl --fail localhost:8080 || exit 1
 
           # Run tests
-          npx momentic@latest run --local momentic/google-test.yaml
+          npx momentic@^1 run momentic/google-test.test.yaml
 
           EOF
 
@@ -72,6 +72,7 @@ jobs:
         run: |
           docker run -d --name momentic --network host -e MOMENTIC_API_KEY='${{ secrets.MOMENTIC_API_KEY }}' ubuntu:20.04 sleep infinity
           docker cp run_tests.sh momentic:/run_tests.sh
+          docker cp momentic.config.yaml momentic:/momentic.config.yaml
           docker cp momentic momentic:/
           docker exec momentic bash /run_tests.sh
 
