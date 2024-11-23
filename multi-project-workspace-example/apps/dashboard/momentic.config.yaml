@@ -1,0 +1,5 @@
+name: dashboard
+include:
+  - "**/*.test.yaml"
+  - "**/*.module.yaml"
+  - "../../common/**/*.module.yaml"

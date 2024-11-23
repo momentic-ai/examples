@@ -1,0 +1,6 @@
+name: qa
+include:
+  - "**/*.test.yaml"
+  - "**/*.module.yaml"
+  - ../common/**/*.module.yaml"
+moduleCreationDir: ../common

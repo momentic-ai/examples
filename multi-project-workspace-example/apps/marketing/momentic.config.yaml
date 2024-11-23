@@ -1,0 +1,11 @@
+name: marketing
+include:
+  - "**/*.test.yaml"
+  - "**/*.module.yaml"
+  - "../../common/**/*.module.yaml"
+environments:
+  - name: test
+    baseUrl: https://google.com
+    envFile: ../../test.env
+    envVariables:
+      VAR_FROM_SHELL: ${VAR_FROM_SHELL}

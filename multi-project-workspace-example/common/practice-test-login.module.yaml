@@ -1,0 +1,33 @@
+fileType: momentic/module
+schemaVersion: 1.0.18
+moduleId: a0575e3f-bba8-48a3-91f6-1fb77de5188b
+name: practice-test-login
+description: ""
+enabled: true
+steps:
+  - id: 4657574e-caab-4c1e-9f50-2dfa4a4b4927
+    type: PRESET_ACTION
+    command:
+      id: 4f0c99f5-743d-4e21-b642-0d2772d32941
+      clearContent: true
+      type: TYPE
+      target:
+        type: description
+        elementDescriptor: username textbox
+      value: student
+  - id: 42056ded-31aa-458e-82ec-c3a981172e6f
+    type: PRESET_ACTION
+    command:
+      id: 4b56e24d-d471-4123-8bb6-5ab1d04ad06e
+      clearContent: true
+      type: TYPE
+      target:
+        type: description
+        elementDescriptor: password textbox
+      value: Password123
+  - id: d78e2d9c-9dff-4363-a9da-bc2222240258
+    type: PRESET_ACTION
+    command:
+      id: da49a90d-d83d-460c-99c1-ae0005ff80c8
+      type: PRESS
+      value: Enter

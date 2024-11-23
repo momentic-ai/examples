@@ -1,0 +1,24 @@
+fileType: momentic/test
+id: cfa6eb04-a97e-42c0-aeaa-5de0bc3cac0d
+name: google-search
+baseUrl: https://google.com
+schemaVersion: 1.0.18
+advanced:
+  disableAICaching: false
+  viewport:
+    width: 1920
+    height: 1080
+  browserType: Chromium
+retries: 0
+steps:
+  - id: 980f048a-7ab1-4b8f-b55d-0a0f7b195283
+    type: PRESET_ACTION
+    command:
+      id: e37b1fbc-bce3-4415-abd8-f5614db2b582
+      clearContent: true
+      pressEnter: true
+      type: TYPE
+      target:
+        type: description
+        elementDescriptor: search bar
+      value: hello world
