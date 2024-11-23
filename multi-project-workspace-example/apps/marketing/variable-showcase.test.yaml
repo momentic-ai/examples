@@ -1,0 +1,29 @@
+fileType: momentic/test
+id: 345ced8b-ba15-4681-9fab-ba5e8296aa28
+name: variable-showcase
+schemaVersion: 1.0.18
+advanced:
+  disableAICaching: false
+  viewport:
+    width: 1920
+    height: 1080
+retries: 0
+envs:
+  - name: test
+    default: true
+steps:
+  - id: 1ab5e9b2-eb86-4b05-a20e-a47338d9ceeb
+    type: PRESET_ACTION
+    command:
+      id: f2e39d7f-db4a-4ce4-9cc9-22988c9cb83e
+      code: |-
+        assert(env.VAR_FROM_FILE === "test-var-from-file")
+        assert(env.INTERPOLATED_VAR_FROM_FILE === "test-var-from-file-default")
+      type: JAVASCRIPT
+  - id: b8f38734-b3ab-45a7-bbd1-bc790fee8cf5
+    type: PRESET_ACTION
+    command:
+      id: 4b905660-e1d0-4209-b09c-f9d08598a167
+      code: |
+        assert(env.VAR_FROM_SHELL === "test-var-from-shell")
+      type: JAVASCRIPT

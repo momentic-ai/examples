@@ -1,0 +1,39 @@
+fileType: momentic/test
+id: 032132e8-0271-44d3-a439-5165d6c5e182
+name: practice-test-login
+baseUrl: https://practicetestautomation.com/practice-test-login/
+schemaVersion: 1.0.18
+advanced:
+  disableAICaching: false
+  viewport:
+    width: 1920
+    height: 1080
+  browserType: Chromium
+retries: 0
+steps:
+  - id: 4657574e-caab-4c1e-9f50-2dfa4a4b4927
+    type: PRESET_ACTION
+    command:
+      id: 4f0c99f5-743d-4e21-b642-0d2772d32941
+      clearContent: true
+      type: TYPE
+      target:
+        type: description
+        elementDescriptor: username textbox
+      value: student
+  - id: 42056ded-31aa-458e-82ec-c3a981172e6f
+    type: PRESET_ACTION
+    command:
+      id: 4b56e24d-d471-4123-8bb6-5ab1d04ad06e
+      clearContent: true
+      type: TYPE
+      target:
+        type: description
+        elementDescriptor: password textbox
+      value: Password123
+  - id: d78e2d9c-9dff-4363-a9da-bc2222240258
+    type: PRESET_ACTION
+    command:
+      id: da49a90d-d83d-460c-99c1-ae0005ff80c8
+      type: PRESS
+      value: Enter
