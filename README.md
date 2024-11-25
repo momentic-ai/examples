@@ -1,4 +1,4 @@
-# Momentic GitHub Actions demo
+# Examples
 
 This repo contains usage examples and patterns for the [Momentic CLI](https://momentic.ai/docs/cli/v1/installation).
 
