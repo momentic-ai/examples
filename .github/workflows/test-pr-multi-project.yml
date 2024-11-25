@@ -15,7 +15,7 @@ jobs:
       repository-projects: read
     defaults:
       run:
-        working-directory: ./multi-project-workspace-example
+        working-directory: ./multi-project-workspace
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
@@ -28,12 +28,12 @@ jobs:
       - name: Install dependencies
         run: pnpm i
       - name: Run specific marketing tests using project name and substring match
-        run: npx momentic@^1 run --filter marketing variable
+        run: npx momentic@latest run --filter marketing variable
         env:
           VAR_FROM_SHELL: test-var-from-shell
       - name: Run all QA tests using config path
-        run: npx momentic@^1 run --config qa/momentic.config.yaml .
+        run: npx momentic@latest run --config qa/momentic.config.yaml .
       - name: Run dashboard tests using absolute path
         run: |
           cd apps/dashboard
-          npx momentic@^1 run google-search.test.yaml
+          npx momentic@latest run google-search.test.yaml

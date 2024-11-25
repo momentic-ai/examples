@@ -7,7 +7,7 @@ on:
   push:
     branches:
       - main
-  
+
 jobs:
   run-tests-on-amazon-linux:
     name: Run tests
@@ -61,7 +61,7 @@ jobs:
 
           # Run tests
           cat momentic.config.yaml
-          npx momentic@^1 run momentic/google-test.test.yaml
+          npx momentic@latest run google-test.test.yaml
 
           EOF
 
@@ -73,8 +73,8 @@ jobs:
         run: |
           docker run -d --name momentic --network host -e MOMENTIC_API_KEY='${{ secrets.MOMENTIC_API_KEY }}' ubuntu:20.04 sleep infinity
           docker cp run_tests.sh momentic:/run_tests.sh
-          docker cp momentic.config.yaml momentic:/momentic.config.yaml
-          docker cp momentic momentic:/
+          docker cp single-project/momentic.config.yaml momentic:/momentic.config.yaml
+          docker cp single-project/ momentic:/
           docker exec momentic bash /run_tests.sh
 
       # Section 5: Cleanup

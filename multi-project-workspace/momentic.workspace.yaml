@@ -2,4 +2,3 @@ projects:
   - qa
   # immediate children directories of apps
   - apps/*
-

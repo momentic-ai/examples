@@ -1,6 +1,13 @@
 # Momentic GitHub Actions demo
 
-This repo uses the [Momentic CLI](https://docs.momentic.ai/cli/installation) to:
+This repo contains usage examples and patterns for the [Momentic CLI](https://momentic.ai/docs/cli/v1/installation).
 
-1. Trigger Momentic cloud test runs on every push to `main`.
-2. Run local tests against a local React app on every pull request.
+- [Workspace](multi-project-workspace/)
+- [Project](single-project/)
+- CI/CD workflows
+  - [Amazon Linux](.github/workflows/test-amazon-linux.yml)
+  - [CSV inputs](.github/workflows/test-pr-inputs.yml)
+  - [Multiple projects](.github/workflows/test-pr-multi-project.yml)
+  - [Sharding](.github/workflows/test-pr-sharding.yml)
+  - [Run in a PR](.github/workflows/test-pr.yml)
+  - [Queue in cloud](.github/workflows/test-prod.yml)

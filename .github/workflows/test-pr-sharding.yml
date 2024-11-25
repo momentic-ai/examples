@@ -18,6 +18,9 @@ jobs:
       matrix:
         shardIndex: [1, 2]
         shardTotal: [2]
+    defaults:
+      run:
+        working-directory: ./single-project
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
@@ -30,7 +33,7 @@ jobs:
       - name: Install dependencies
         run: pnpm i
       - run: |
-          npx momentic@^1 run momentic/create-react-app-test.test.yaml \
+          npx momentic@latest run create-react-app-test.test.yaml \
             --start "npm run start" \
             --env development \
             --shard-index ${{ matrix.shardIndex }} \

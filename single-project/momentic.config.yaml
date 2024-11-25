@@ -2,8 +2,6 @@ name: default
 include:
   - "**/*.test.yaml"
   - "**/*.module.yaml"
-exclude:
-  - "multi-project-workspace-example/**/*"
 environments:
   - name: development
     baseUrl: https://momentic-github-actions-demo.vercel.app/
