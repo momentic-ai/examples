@@ -1,0 +1,20 @@
+fileType: momentic/test
+id: ce4cf77e-c393-4e00-854b-871c90a3a8a5
+name: random-test
+baseUrl: http://neverssl.com
+description: ""
+schemaVersion: 1.0.19
+advanced:
+  viewport:
+    width: 1920
+    height: 1080
+  disableAICaching: false
+  browserType: Chromium
+retries: 0
+steps:
+  - id: a41045e0-3399-46a9-96fe-fea4c7211293
+    type: PRESET_ACTION
+    command:
+      id: 612338b5-43c5-43bc-b11d-e8c5769f357a
+      code: return 1
+      type: JAVASCRIPT
