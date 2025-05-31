@@ -27,5 +27,6 @@ jobs:
           cache: "pnpm"
       - name: Install dependencies
         run: pnpm i
+      - run: npx momentic@latest install-browsers chromium
       - run: npx momentic@latest run create-react-app-test.test.yaml --start "npm run start" --env development
       - run: npx momentic@latest results upload test-results
