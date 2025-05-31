@@ -4,6 +4,7 @@ env:
   MOMENTIC_API_KEY: ${{ secrets.MOMENTIC_API_KEY }}
 
 on:
+  pull_request:
   push:
     branches:
       - main
