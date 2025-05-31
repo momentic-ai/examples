@@ -35,6 +35,43 @@ jobs:
       - run: |
           npx momentic@latest run create-react-app-test.test.yaml \
             --start "npm run start" \
+            --output-dir test-results/shard-${{ matrix.shardIndex }} \
             --env development \
             --shard-index ${{ matrix.shardIndex }} \
             --shard-count ${{ matrix.shardTotal }}
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.shardIndex }}
+          path: test-results
+          retention-days: 1
+  upload_results:
+    name: Merge and upload test results
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      repository-projects: read
+    needs:
+      - run-tests
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 21
+          cache: "pnpm"
+      - name: Download all test results
+        uses: actions/download-artifact@v4
+        with:
+          path: ./test-results
+          pattern: test-results-*
+          merge-multiple: true
+      - name: Merge test results
+        run: |
+          npx momentic@latest results merge --output-dir test-results/merged test-results
+      - name: Upload test results
+        run: |
+          npx momentic@latest results upload test-results/merged

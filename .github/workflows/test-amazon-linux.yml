@@ -61,7 +61,7 @@ jobs:
 
           # Run tests
           cat momentic.config.yaml
-          npx momentic@latest run google-test.test.yaml
+          npx momentic@latest run --upload-results google-test.test.yaml
 
           EOF
 
