@@ -61,6 +61,7 @@ jobs:
 
           # Run tests
           cat momentic.config.yaml
+          npx momentic@latest install-browsers chromium
           npx momentic@latest run --upload-results google-test.test.yaml
 
           EOF

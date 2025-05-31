@@ -27,6 +27,7 @@ jobs:
           cache: "pnpm"
       - name: Install dependencies
         run: pnpm i
+      - run: npx momentic@latest install-browsers chromium
       - name: Run specific marketing tests using project name and substring match
         run: npx momentic@latest run --filter marketing variable
         env:
