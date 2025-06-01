@@ -9,3 +9,21 @@ environments:
   - name: production
     baseUrl: https://gptzero.me
     envVariables: {}
+browser:
+  # these are optional, see https://momentic.ai/docs/cli/configuration#browser-options
+  autoExpandIframes: true
+  disableSecondaryCacheResolution: true
+  globalLocatorRedirect: true
+  visualActions: true
+advanced:
+  # these are optional, see https://momentic.ai/docs/cli/configuration#advanced-options
+  fakerConstantSeed: true
+ai:
+  # these are optional, see https://momentic.ai/docs/cli/configuration#ai-options
+  aiPageFiltering: true
+  agentConfig:
+    locator: v2
+    assertion: v2
+gitMainBranch: main
+gitProtectedBranches:
+  - production

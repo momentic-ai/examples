@@ -24,4 +24,4 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 21
-      - run: npx momentic@latest queue tests create-react-app-test
+      - run: npx momentic@2.0.0 queue tests create-react-app-test

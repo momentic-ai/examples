@@ -68,10 +68,10 @@ jobs:
           at: .
       - run:
           name: Merge test results
-          command: pnpm dlx momentic@latest results merge --output-dir test-results/merged test-results
+          command: pnpm dlx momentic@2.0.0 results merge --output-dir test-results/merged test-results
       - run:
           name: Upload test results
-          command: pnpm dlx momentic@latest results upload test-results/merged
+          command: pnpm dlx momentic@2.0.0 results upload test-results/merged
 
 workflows:
   UI_Tests:
