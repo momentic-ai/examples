@@ -30,14 +30,18 @@ jobs:
           cache: "pnpm"
       - name: Install dependencies
         run: pnpm i
-      - run: npx momentic@2.0.1 install-browsers chromium
+      - name: Install Momentic globally
+        run: pnpm install -g momentic@2.0.2
+      - name: Install headless browsers for automation
+        # Choose which browsers you want to install, see https://momentic.ai/docs/browsers
+        run: momentic install-browsers chromium
       - name: Run specific marketing tests using project name and substring match
-        run: npx momentic@2.0.1 run --upload-results --filter marketing variable
+        run: momentic run --upload-results --filter marketing variable
         env:
           VAR_FROM_SHELL: test-var-from-shell
-      - name: Run all QA tests using config path
-        run: npx momentic@2.0.1 run --config qa/momentic.config.yaml .
+      - name: Run all QA tests using explicit config path
+        run: momentic run --config qa/momentic.config.yaml .
       - name: Run dashboard tests using absolute path
         run: |
           cd apps/dashboard
-          npx momentic@2.0.1 run google-search.test.yaml
+          momentic run google-search.test.yaml

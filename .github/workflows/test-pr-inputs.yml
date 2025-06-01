@@ -30,6 +30,12 @@ jobs:
         with:
           node-version: 21
           cache: "pnpm"
-      - run: npx momentic@2.0.1 install-browsers chromium
-      - run: npx momentic@2.0.1 run --output-dir test-results/results-with-inputs --input-csv data/inputs.csv input-from-csv-test.test.yaml
-      - run: npx momentic@2.0.1 results upload test-results/results-with-inputs
+      - name: "Install Momentic globally"
+        run: pnpm install -g momentic@2.0.2
+      - name: "Install headless browsers for automation"
+        # Choose which browsers you want to install, see https://momentic.ai/docs/browsers
+        run: momentic install-browsers chromium
+      - name: "Run tests and write outputs locally"
+        run: momentic run --output-dir test-results/results-with-inputs --input-csv data/inputs.csv input-from-csv-test.test.yaml
+      - name: "Upload results to Momentic Cloud for easy viewing"
+        run: momentic results upload test-results/results-with-inputs
