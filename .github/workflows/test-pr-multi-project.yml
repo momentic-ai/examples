@@ -32,7 +32,7 @@ jobs:
         run: pnpm i
       - run: npx momentic@latest install-browsers chromium
       - name: Run specific marketing tests using project name and substring match
-        run: npx momentic@latest run --filter marketing variable
+        run: npx momentic@latest run --upload-results --filter marketing variable
         env:
           VAR_FROM_SHELL: test-var-from-shell
       - name: Run all QA tests using config path
