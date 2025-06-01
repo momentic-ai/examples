@@ -1,0 +1,82 @@
+version: 2.1
+
+executors:
+  node:
+    docker:
+      - image: cimg/node:22.12.0
+
+jobs:
+  run-tests:
+    executor: node
+    parallelism: 2
+    working_directory: ~/repo/single-project
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore pnpm Package Cache
+          keys:
+            - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+      - run:
+          name: Install pnpm package manager
+          command: |
+            npm install --global corepack@latest
+            corepack enable
+            corepack prepare pnpm@latest-10 --activate
+            pnpm config set store-dir .pnpm-
+      - run:
+          name: Install Dependencies
+          command: |
+            pnpm install
+      - run:
+          name: Install Browsers
+          command: pnpm dlx momentic install-browsers chromium
+      - run:
+          name: Run tests
+          command: pnpm dlx momentic run create-react-app-test.test.yaml \
+            --start "npm run start" \
+            --output-dir test-results/shard-${SHARD} \
+            --env development \
+            --shard-index ${SHARD} \
+            --shard-count ${CIRCLE_NODE_TOTAL}
+      - store_artifacts:
+          path: ./test-results
+      - persist_to_workspace:
+          root: .
+          paths:
+            - test-results
+  upload-results:
+    executor: node
+    working_directory: ~/repo/single-project
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore pnpm Package Cache
+          keys:
+            - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+      - run:
+          name: Install pnpm package manager
+          command: |
+            npm install --global corepack@latest
+            corepack enable
+            corepack prepare pnpm@latest-10 --activate
+            pnpm config set store-dir .pnpm-
+      - run:
+          name: Install Dependencies
+          command: |
+            pnpm install
+      - attach_workspace:
+          at: .
+      - run:
+          name: Merge test results
+          command: pnpm dlx momentic@latest results merge --output-dir test-results/merged test-results
+      - run:
+          name: Upload test results
+          command: pnpm dlx momentic@latest results upload test-results/merged
+
+workflows:
+  UI_Tests:
+    jobs:
+      - run-tests
+      - upload-results:
+          requires:
+            - run-tests
