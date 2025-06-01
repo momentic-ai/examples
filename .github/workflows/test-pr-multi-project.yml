@@ -30,14 +30,14 @@ jobs:
           cache: "pnpm"
       - name: Install dependencies
         run: pnpm i
-      - run: npx momentic@latest install-browsers chromium
+      - run: npx momentic@2.0.0 install-browsers chromium
       - name: Run specific marketing tests using project name and substring match
-        run: npx momentic@latest run --upload-results --filter marketing variable
+        run: npx momentic@2.0.0 run --upload-results --filter marketing variable
         env:
           VAR_FROM_SHELL: test-var-from-shell
       - name: Run all QA tests using config path
-        run: npx momentic@latest run --config qa/momentic.config.yaml .
+        run: npx momentic@2.0.0 run --config qa/momentic.config.yaml .
       - name: Run dashboard tests using absolute path
         run: |
           cd apps/dashboard
-          npx momentic@latest run google-search.test.yaml
+          npx momentic@2.0.0 run google-search.test.yaml
