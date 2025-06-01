@@ -4,6 +4,7 @@ env:
   MOMENTIC_API_KEY: ${{ secrets.MOMENTIC_API_KEY }}
 
 on:
+  pull_request:
   push:
     branches:
       - main
@@ -61,7 +62,8 @@ jobs:
 
           # Run tests
           cat momentic.config.yaml
-          npx momentic@latest run google-test.test.yaml
+          npx momentic@latest install-browsers chromium
+          npx momentic@latest run --upload-results google-test.test.yaml
 
           EOF
 
