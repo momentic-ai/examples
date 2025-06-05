@@ -1,5 +1,5 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
 
 function App() {
   return (
@@ -11,11 +11,11 @@ function App() {
         </p>
         <a
           className="App-link"
-          href="https://reactjs.org"
+          href="https://momentic.ai"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Learn Momentic
         </a>
       </header>
     </div>
