@@ -28,11 +28,14 @@ jobs:
           command: |
             pnpm install
       - run:
+          name: Install Momentic globally
+          command: pnpm install -g momentic@2.0.2
+      - run:
           name: Install Browsers
-          command: pnpm dlx momentic install-browsers chromium
+          command: momentic install-browsers chromium
       - run:
           name: Run tests
-          command: pnpm dlx momentic run create-react-app-test.test.yaml \
+          command: momentic run create-react-app-test.test.yaml \
             --start "npm run start" \
             --output-dir test-results/shard-${SHARD} \
             --env development \
@@ -64,14 +67,17 @@ jobs:
           name: Install Dependencies
           command: |
             pnpm install
+      - run:
+          name: Install Momentic globally
+          command: pnpm install -g momentic@2.0.2
       - attach_workspace:
           at: .
       - run:
           name: Merge test results
-          command: pnpm dlx momentic@2.0.1 results merge --output-dir test-results/merged test-results
+          command: momentic results merge --output-dir test-results/merged test-results
       - run:
           name: Upload test results
-          command: pnpm dlx momentic@2.0.1 results upload test-results/merged
+          command: momentic results upload test-results/merged
 
 workflows:
   UI_Tests:

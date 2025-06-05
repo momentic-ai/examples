@@ -24,4 +24,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 21
-      - run: npx momentic@2.0.1 queue tests create-react-app-test
+      # Queue tests to run on Momentic Cloud, viewable on app.momentic.ai
+      - run: npx momentic@2.0.2 queue tests create-react-app-test

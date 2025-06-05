@@ -60,10 +60,13 @@ jobs:
           echo "Checking if app is up"
           curl --fail localhost:8080 || exit 1
 
+          # Install momentic
+          npm install -g momentic@2.0.2
+
           # Run tests
           cat momentic.config.yaml
-          npx momentic@2.0.1 install-browsers chromium
-          npx momentic@2.0.1 run --upload-results google-test.test.yaml
+          momentic install-browsers chromium
+          momentic run --upload-results google-test.test.yaml
 
           EOF
 
