@@ -30,6 +30,12 @@ jobs:
           cache: "pnpm"
       - name: Install dependencies
         run: pnpm i
-      - run: npx momentic@2.0.1 install-browsers chromium
-      - run: npx momentic@2.0.1 run create-react-app-test.test.yaml --start "npm run start" --env development
-      - run: npx momentic@2.0.1 results upload test-results
+      - name: Install Momentic globally
+        run: pnpm install -g momentic@2.0.2
+      - name: Install headless browsers for automation
+        # Choose which browsers you want to install, see https://momentic.ai/docs/browsers
+        run: momentic install-browsers chromium
+      - name: Start the app and then run the tests
+        run: momentic run create-react-app-test.test.yaml --start "npm run start" --env development
+      - name: Save test results artifact to Momentic Cloud
+        run: momentic results upload test-results
