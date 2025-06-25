@@ -1,0 +1,49 @@
+trigger:
+  - main
+
+pool:
+  name: momentic-ubuntu-xl
+
+variables:
+  - group: momentic-prod
+
+jobs:
+  - job: RunMomentic
+    displayName: "Run Momentic"
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: 20.x
+        displayName: "Use Node v20"
+
+      # - script: npm install -g yarn && yarn set version berry
+      #   displayName: install and upgrade yarn
+      - script: npm i -g corepack@latest && corepack enable
+        displayName: "Enable corepack"
+
+      - script: npm install -g pnpm@8.7.6 --force
+        displayName: "Install pnpm"
+
+      - script: cd yarn-example && pnpm i --frozen-lockfile
+        displayName: install dependencies
+
+      - script: cd yarn-example && ls -a
+        displayName: "List files in the current directory"
+
+      - script: node --version
+        displayName: "Node.js version"
+
+      - script: df -h
+        displayName: Check disk space
+
+      - task: Bash@3
+        inputs:
+          targetType: "filePath"
+          filePath: "azure.sh"
+        env:
+          CI: true
+
+      # cat the npm debug log
+      - script: ps aux && cat /home/AzDevOps/.npm/_logs/*.log
+        displayName: Check npm logs
+        condition: always()
