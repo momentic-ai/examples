@@ -13,9 +13,6 @@ jobs:
   run-tests:
     name: Run tests
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      repository-projects: read
     strategy:
       fail-fast: false
       matrix:
@@ -24,65 +21,59 @@ jobs:
     defaults:
       run:
         working-directory: ./single-project
+    timeout-minutes: 5
+
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
       - uses: actions/setup-node@v4
         with:
           node-version: 21
-          cache: "pnpm"
-      - name: Install dependencies
-        run: pnpm i
-      - name: Install Momentic globally
-        run: pnpm install -g momentic@2.0.2
+          cache: "npm"
+      - name: Install app dependencies
+        run: npm --prefix ../ ci
+      - name: Install testing dependencies
+        run: npm ci
       - name: Install headless browsers for automation
         # Choose which browsers you want to install, see https://momentic.ai/docs/browsers
-        run: momentic install-browsers chromium
+        run: npx momentic install-browsers chromium
       - run: |
-          momentic run create-react-app-test.test.yaml \
-            --start "npm run start" \
+          npx momentic run create-react-app-test.test.yaml \
+            --start "npm --prefix ../ run start" \
             --output-dir test-results/shard-${{ matrix.shardIndex }} \
             --env development \
             --shard-index ${{ matrix.shardIndex }} \
             --shard-count ${{ matrix.shardTotal }}
       - name: Save test results artifact
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: test-results-${{ matrix.shardIndex }}
           path: ./single-project/test-results
           retention-days: 1
 
-  upload_results:
+  upload-results:
     name: Merge and upload test results
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      repository-projects: read
+    if: always()
     needs:
       - run-tests
     timeout-minutes: 5
+
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
       - uses: actions/setup-node@v4
         with:
           node-version: 21
-          cache: "pnpm"
+          cache: "npm"
+      - name: Install dependencies
+        run: npm ci
       - name: Download all test results artifacts
         uses: actions/download-artifact@v4
         with:
           path: ./test-results
           pattern: test-results-*
           merge-multiple: true
-      - name: Install Momentic globally
-        run: pnpm install -g momentic@2.0.2
       - name: Merge test results
-        run: |
-          momentic results merge --output-dir test-results/merged test-results
+        run: npx momentic results merge --output-dir test-results/merged test-results
       - name: Upload test results to Momentic
-        run: |
-          momentic results upload test-results/merged
+        run: npx momentic results upload test-results/merged
