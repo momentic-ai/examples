@@ -30,7 +30,7 @@ steps:
       iframeDescriptor: null
       type: CLICK
       target:
-        elementDescriptor: learn react link
+        elementDescriptor: learn momentic link
       doubleClick: false
       rightClick: false
       force: false
@@ -38,12 +38,12 @@ steps:
     command:
       id: a335d9d4-3a8d-4226-8a37-704d0528943e
       type: TAB
-      url: react.dev
+      url: momentic.ai
   - type: PRESET_ACTION
     command:
       id: 29929fdd-d926-4320-b50b-194ef95c9406
       type: AI_ASSERTION
-      assertion: we are on the react documentation site
+      assertion: we are on the momentic landing page
       useVision: false
       filterByViewport: false
       cancelOnFailure: false
