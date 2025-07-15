@@ -9,75 +9,52 @@ jobs:
   run-tests:
     executor: node
     parallelism: 2
-    working_directory: ~/repo/single-project
+    working_directory: ~/project/single-project
     steps:
-      - checkout
-      - restore_cache:
-          name: Restore pnpm Package Cache
-          keys:
-            - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+      - checkout:
+          path: ~/project
       - run:
-          name: Install pnpm package manager
-          command: |
-            npm install --global corepack@latest
-            corepack enable
-            corepack prepare pnpm@latest-10 --activate
-            pnpm config set store-dir .pnpm-
+          name: Install app dependencies
+          command: npm --prefix ../ ci
       - run:
-          name: Install Dependencies
-          command: |
-            pnpm install
-      - run:
-          name: Install Momentic globally
-          command: pnpm install -g momentic@2.0.2
+          name: Install testing dependencies
+          command: npm ci
       - run:
           name: Install Browsers
-          command: momentic install-browsers chromium
+          command: npx momentic install-browsers chromium
       - run:
           name: Run tests
-          command: momentic run create-react-app-test.test.yaml \
-            --start "npm run start" \
-            --output-dir test-results/shard-${SHARD} \
-            --env development \
-            --shard-index ${SHARD} \
-            --shard-count ${CIRCLE_NODE_TOTAL}
+          command: |
+            npx momentic run create-react-app-test.test.yaml \
+              --start "npm --prefix ../ run start" \
+              --output-dir test-results/shard-${CIRCLE_NODE_INDEX} \
+              --env development \
+              --shard-index $(($CIRCLE_NODE_INDEX+1)) \
+              --shard-count ${CIRCLE_NODE_TOTAL}
       - store_artifacts:
+          when: always
           path: ./test-results
       - persist_to_workspace:
+          when: always
           root: .
           paths:
             - test-results
   upload-results:
     executor: node
-    working_directory: ~/repo/single-project
+    working_directory: ~/project/single-project
     steps:
       - checkout
-      - restore_cache:
-          name: Restore pnpm Package Cache
-          keys:
-            - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
-      - run:
-          name: Install pnpm package manager
-          command: |
-            npm install --global corepack@latest
-            corepack enable
-            corepack prepare pnpm@latest-10 --activate
-            pnpm config set store-dir .pnpm-
       - run:
           name: Install Dependencies
-          command: |
-            pnpm install
-      - run:
-          name: Install Momentic globally
-          command: pnpm install -g momentic@2.0.2
+          command: npm ci
       - attach_workspace:
           at: .
       - run:
           name: Merge test results
-          command: momentic results merge --output-dir test-results/merged test-results
+          command: npx momentic results merge --output-dir test-results/merged test-results
       - run:
           name: Upload test results
-          command: momentic results upload test-results/merged
+          command: npx momentic results upload test-results/merged
 
 workflows:
   UI_Tests:
