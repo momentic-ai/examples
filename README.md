@@ -1,6 +1,6 @@
 # Examples
 
-This repo contains usage examples and patterns for the [Momentic CLI](https://momentic.ai/docs/cli/v1/installation).
+This repo contains usage examples and patterns for the [Momentic CLI](https://momentic.ai/docs/quickstart/cli).
 
 - [Workspace](multi-project-workspace/)
 - [Project](single-project/)
@@ -11,3 +11,4 @@ This repo contains usage examples and patterns for the [Momentic CLI](https://mo
   - [Sharding](.github/workflows/test-pr-sharding.yml)
   - [Run in a PR](.github/workflows/test-pr.yml)
   - [Queue in cloud](.github/workflows/test-prod.yml)
+  - [CircleCI](.circleci/config.yml)

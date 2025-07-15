@@ -13,29 +13,24 @@ jobs:
   run-tests:
     name: Run tests
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      repository-projects: read
-    strategy:
-      fail-fast: false
     defaults:
       run:
         working-directory: ./single-project
+    timeout-minutes: 5
+
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
       - uses: actions/setup-node@v4
         with:
           node-version: 21
-          cache: "pnpm"
-      - name: "Install Momentic globally"
-        run: pnpm install -g momentic@2.0.2
-      - name: "Install headless browsers for automation"
+          cache: "npm"
+      - name: Install dependencies
+        run: npm ci
+      - name: Install headless browsers for automation
         # Choose which browsers you want to install, see https://momentic.ai/docs/browsers
-        run: momentic install-browsers chromium
-      - name: "Run tests and write outputs locally"
-        run: momentic run --output-dir test-results/results-with-inputs --input-csv data/inputs.csv input-from-csv-test.test.yaml
-      - name: "Upload results to Momentic Cloud for easy viewing"
-        run: momentic results upload test-results/results-with-inputs
+        run: npx momentic install-browsers chromium
+      - name: Run tests and write outputs locally
+        run: npx momentic run --output-dir test-results/results-with-inputs --input-csv data/inputs.csv input-from-csv-test.test.yaml
+      - name: Upload results to Momentic Cloud for easy viewing
+        run: npx momentic results upload test-results/results-with-inputs
+        if: always()

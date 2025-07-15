@@ -13,29 +13,26 @@ jobs:
   run-tests:
     name: Run tests
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      repository-projects: read
     defaults:
       run:
         working-directory: ./single-project
+    timeout-minutes: 5
+
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
       - uses: actions/setup-node@v4
         with:
           node-version: 21
-          cache: "pnpm"
-      - name: Install dependencies
-        run: pnpm i
-      - name: Install Momentic globally
-        run: pnpm install -g momentic@2.0.2
+          cache: "npm"
+      - name: Install app dependencies
+        run: npm --prefix ../ ci
+      - name: Install testing dependencies
+        run: npm ci
       - name: Install headless browsers for automation
         # Choose which browsers you want to install, see https://momentic.ai/docs/browsers
-        run: momentic install-browsers chromium
+        run: npx momentic install-browsers chromium
       - name: Start the app and then run the tests
-        run: momentic run create-react-app-test.test.yaml --start "npm run start" --env development
-      - name: Save test results artifact to Momentic Cloud
-        run: momentic results upload test-results
+        run: npx momentic run create-react-app-test.test.yaml --start "npm --prefix ../ run start" --env development
+      - name: Upload test results artifact to Momentic Cloud
+        run: npx momentic results upload test-results
+        if: always()

@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+node_modules
 /.pnp
 .pnp.js
 
@@ -23,3 +23,12 @@ yarn-debug.log*
 yarn-error.log*
 
 .idea
+
+yarn-example/.pnp.cjs
+yarn-example/.pnp.loader.mjs
+yarn-example/.yarn/*
+!yarn-example/.yarn/patches
+!yarn-example/.yarn/plugins
+!yarn-example/.yarn/releases
+!yarn-example/.yarn/sdks
+!yarn-example/.yarn/versions

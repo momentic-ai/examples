@@ -13,35 +13,29 @@ jobs:
   run-tests:
     name: Run all project tests
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      repository-projects: read
     defaults:
       run:
         working-directory: ./multi-project-workspace
+    timeout-minutes: 5
+
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
       - uses: actions/setup-node@v4
         with:
           node-version: 21
-          cache: "pnpm"
+          cache: "npm"
       - name: Install dependencies
-        run: pnpm i
-      - name: Install Momentic globally
-        run: pnpm install -g momentic@2.0.2
+        run: npm ci
       - name: Install headless browsers for automation
         # Choose which browsers you want to install, see https://momentic.ai/docs/browsers
-        run: momentic install-browsers chromium
+        run: npx momentic install-browsers chromium
       - name: Run specific marketing tests using project name and substring match
-        run: momentic run --upload-results --filter marketing variable
+        run: npx momentic run --upload-results --filter marketing variable
         env:
           VAR_FROM_SHELL: test-var-from-shell
       - name: Run all QA tests using explicit config path
-        run: momentic run --config qa/momentic.config.yaml .
+        run: npx momentic run --upload-results --config qa/momentic.config.yaml .
       - name: Run dashboard tests using absolute path
         run: |
           cd apps/dashboard
-          momentic run google-search.test.yaml
+          npx momentic run --upload-results google-search.test.yaml
