@@ -1,13 +1,11 @@
 version: 2.1
 
-executors:
-  node:
-    docker:
-      - image: cimg/node:22.12.0
+orbs:
+  node: circleci/node@5.0.2
 
 jobs:
   run-tests:
-    executor: node
+    executor: node/default
     parallelism: 2
     working_directory: ~/project/single-project
     steps:
@@ -40,10 +38,11 @@ jobs:
           paths:
             - test-results
   upload-results:
-    executor: node
+    executor: node/default
     working_directory: ~/project/single-project
     steps:
-      - checkout
+      - checkout:
+          path: ~/project
       - run:
           name: Install Dependencies
           command: npm ci
@@ -62,4 +61,6 @@ workflows:
       - run-tests
       - upload-results:
           requires:
-            - run-tests
+            - run-tests:
+              - success
+              - failed
