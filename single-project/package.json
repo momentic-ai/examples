@@ -3,6 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "momentic": "^2.7.3"
+    "momentic": "^2.21.4"
   }
 }
