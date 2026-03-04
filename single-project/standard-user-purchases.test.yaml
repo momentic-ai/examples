@@ -1,0 +1,86 @@
+fileType: momentic/test
+id: 41e55e84-4c74-4704-8159-d4155ef01058
+name: standard-user-purchases
+description: End-to-end checkout flow
+baseUrl: ""
+schemaVersion: 1.0.22
+advanced:
+  viewport:
+    width: 1920
+    height: 1080
+  browserType: Chromium
+  disableJavaScript: false
+  colorScheme: dark
+retries: 1
+envs:
+  - name: swag-labs
+    default: true
+disabled: false
+labels: []
+steps:
+  - id: dae7ebde-1cd0-4625-8b40-e15220bbf342
+    type: MODULE
+    moduleId: 68aab6c6-21e6-4e0b-a8cf-217765f4fb1f
+  - id: c8e669b3-8d41-4b18-8914-8bca7c4eb38e
+    inputs:
+      ITEM: '"sauce labs backpack"'
+    type: MODULE
+    moduleId: 4504fcb9-0bde-4be4-aada-fe17c6fcfd1f
+  - id: 8966d617-5144-4821-b5c5-74cf7f9e6da6
+    inputs:
+      ITEM: '"sauce labs onesie"'
+    type: MODULE
+    moduleId: 4504fcb9-0bde-4be4-aada-fe17c6fcfd1f
+  - id: e514cbde-d523-4cf9-af01-2209158c08d1
+    type: PRESET_ACTION
+    command:
+      id: abddb97d-7a50-4fb1-b931-e114d3bb56e4
+      type: CLICK
+      target:
+        type: description
+        elementDescriptor: Cart icon on the top right of the page
+  - id: 7722fa59-36c1-496f-a898-422c10e92ad1
+    type: PRESET_ACTION
+    command:
+      id: 141a175c-f4fa-4db2-9b2d-9a991c96db3b
+      type: AI_ASSERTION
+      assertion: Verify that both the backpack and the onesie is in the cart
+  - id: 42a74231-3914-40ed-9546-afa91307f235
+    type: PRESET_ACTION
+    command:
+      id: 7afadf53-d1de-4083-9069-d1082a213d45
+      type: CLICK
+      target:
+        type: description
+        elementDescriptor: Checkout button
+  - id: 51b19a2b-1f14-42d7-b09b-cbb955eb3581
+    type: MODULE
+    moduleId: 3a61e06e-73dd-4b46-8f56-9f69cb6039e3
+  - id: a8fe8a8d-e43e-4f68-8f1a-6e4118c3a408
+    type: PRESET_ACTION
+    command:
+      id: f7728540-2d3c-4b08-b2b8-fb88b813b764
+      type: CLICK
+      target:
+        type: description
+        elementDescriptor: Continue button
+  - id: 5e797dc4-4846-4dee-851f-0a196137dde8
+    type: PRESET_ACTION
+    command:
+      id: f7fa7dce-e315-40f9-8898-da5d5cfdad15
+      type: AI_ASSERTION
+      assertion: Verify the item total matches the amount listed for each item
+  - id: 5bd9b25d-a499-4c0e-a491-e4fae18d65c8
+    type: PRESET_ACTION
+    command:
+      id: 0181acf0-ea98-4d26-8264-6439dbac3041
+      type: AI_ASSERTION
+      assertion: Verify the total matches item total + tax
+  - id: 1ff25c80-fa74-4e92-a09f-16d064247e52
+    type: PRESET_ACTION
+    command:
+      id: 0fdb1011-dbac-4c58-8fb1-6031e72aa756
+      type: CLICK
+      target:
+        type: description
+        elementDescriptor: Finish button
