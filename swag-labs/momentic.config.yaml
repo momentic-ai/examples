@@ -1,0 +1,10 @@
+name: swag-labs
+include:
+  - "**/*.test.yaml"
+  - "**/*.module.yaml"
+environments:
+  - name: production
+    baseUrl: https://www.saucedemo.com/
+    envVariables:
+      USERNAME: standard_user
+      PASSWORD: secret_sauce
