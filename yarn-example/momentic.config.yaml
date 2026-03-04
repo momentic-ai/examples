@@ -1,4 +1,0 @@
-name: yarn-showcase
-include:
-  - "**/*.test.yaml"
-  - "**/*.module.yaml"

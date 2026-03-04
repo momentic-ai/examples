@@ -78,10 +78,10 @@ jobs:
         run: |
           docker run -d --name momentic --network host -e MOMENTIC_API_KEY='${{ secrets.MOMENTIC_API_KEY }}' ubuntu:20.04 sleep infinity
           docker cp run_tests.sh momentic:/run_tests.sh
-          docker cp single-project/momentic.config.yaml momentic:/momentic.config.yaml
-          docker cp single-project/package.json momentic:/package.json
-          docker cp single-project/package-lock.json momentic:/package-lock.json
-          docker cp single-project/ momentic:/
+          docker cp web-test/momentic.config.yaml momentic:/momentic.config.yaml
+          docker cp web-test/package.json momentic:/package.json
+          docker cp web-test/package-lock.json momentic:/package-lock.json
+          docker cp web-test/ momentic:/
           docker exec momentic bash /run_tests.sh
 
       # Section 5: Cleanup

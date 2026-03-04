@@ -7,7 +7,7 @@ jobs:
   run-tests:
     executor: node/default
     parallelism: 2
-    working_directory: ~/project/single-project
+    working_directory: ~/project/web-test
     steps:
       - checkout:
           path: ~/project
@@ -39,7 +39,7 @@ jobs:
             - test-results
   upload-results:
     executor: node/default
-    working_directory: ~/project/single-project
+    working_directory: ~/project/web-test
     steps:
       - checkout:
           path: ~/project

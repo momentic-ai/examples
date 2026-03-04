@@ -1,0 +1,25 @@
+name: swag-labs
+include:
+  - "**/*.test.yaml"
+  - "**/*.module.yaml"
+environments:
+  - name: production
+    baseUrl: https://www.saucedemo.com/
+    envVariables:
+      USERNAME: standard_user
+      PASSWORD: secret_sauce
+browser:
+  autoExpandIframes: true
+  disableSecondaryCacheResolution: false
+  globalLocatorRedirect: true
+  visualActions: true
+  showZeroOpacityElements: false
+advanced:
+  fakerConstantSeed: false
+ai:
+  aiPageFiltering: true
+  agentConfig:
+    locator: v4.0
+    assertion: v3.2
+    text-extraction: v3.0
+    visual-assertion: v3.2
