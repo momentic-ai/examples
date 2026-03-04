@@ -2,22 +2,20 @@
 
 This repo contains usage examples and patterns for the [Momentic CLI](https://momentic.ai/docs/quickstart/cli).
 
-## Examples
-
 ### Web
 
-- [Web test](web-test/) — end-to-end tests for [Swag Labs](https://www.saucedemo.com/), a demo e-commerce app. Includes:
-  - `standard-user-purchases` — end-to-end checkout flow (add items, verify cart, complete purchase)
-  - `cart-and-sorting-behavior` — verifies sorting changes the view without affecting cart state
+- [Web test](web-test/) - end-to-end tests for [Swag Labs](https://www.saucedemo.com/), a demo e-commerce app. Includes:
+  - `standard-user-purchases` - end-to-end checkout flow (add items, verify cart, complete purchase)
+  - `cart-and-sorting-behavior` - verifies sorting changes the view without affecting cart state
 
 ### Android
 
-- [Android test](android-test/) — mobile tests for the Google Maps Android app. The APK can be downloaded [here](https://drive.google.com/file/d/1JEagdPUFJ3jr_Ra4q1ghgGmWcaxhIvZf/view?usp=sharing). Includes:
-  - `android-google-maps` — searches for Italian restaurants in San Francisco and verifies results and restaurant details
+- [Android test](android-test/) - mobile tests for the Google Maps Android app. The APK can be downloaded [here](https://drive.google.com/file/d/1JEagdPUFJ3jr_Ra4q1ghgGmWcaxhIvZf/view?usp=sharing). Includes:
+  - `android-google-maps` - searches for Italian restaurants in San Francisco and verifies results and restaurant details
 
 ### Multi-project
 
-- [Workspace](multi-project-workspace/) — example of managing multiple projects in a single workspace
+- [Workspace](multi-project-workspace/) - example of managing multiple projects in a single workspace
 
 ## CI/CD workflows
 
