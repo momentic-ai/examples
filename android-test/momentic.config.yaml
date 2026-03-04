@@ -1,0 +1,4 @@
+name: android-test
+include:
+  - "**/*.test.yaml"
+  - "**/*.module.yaml"
