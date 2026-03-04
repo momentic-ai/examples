@@ -86,3 +86,9 @@ steps:
       target:
         type: description
         description: Reviews tab
+  - id: 7e35b40b-2a0e-46ef-937e-d14c5b276fa0
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 3064ba24-0545-4513-9623-34c9773c6eeb
+      type: AI_CHECK
+      assertion: A review from a user is visible

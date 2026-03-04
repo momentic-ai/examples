@@ -1,8 +1,8 @@
 fileType: momentic/test
 id: a2c56e37-97f7-43f4-8a87-3c460486a5bd
 name: cart-and-sorting-behavior
+baseUrl: https://saucedemo.com
 description: Sorting changes view, not state; cart remains consistent
-baseUrl: ""
 schemaVersion: 1.0.22
 advanced:
   viewport:
@@ -11,7 +11,7 @@ advanced:
   browserType: Chromium
 retries: 1
 envs:
-  - name: swag-labs
+  - name: production
     default: true
 disabled: false
 labels: []
@@ -87,3 +87,11 @@ steps:
       assertion:
         type: ELEMENT_EXISTENCE
         condition: EXISTS
+  - id: 489a4af2-30df-49ed-b0bc-22c98ff6f15b
+    type: PRESET_ACTION
+    command:
+      id: 067f1f07-5448-4077-9b6d-c94ed64381c0
+      type: TAB
+      action:
+        type: SUBSTRING
+        substring: ""
