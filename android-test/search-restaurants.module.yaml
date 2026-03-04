@@ -1,0 +1,15 @@
+fileType: momentic/mobile-module
+moduleId: e08cf534-716c-4d68-b0f1-1a5e803ec8c7
+description: ""
+enabled: true
+schemaVersion: 0.0.3
+steps:
+  - id: b4737714-7be6-48b1-ba5a-321fec63d7f0
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 55041fee-b7b9-436e-8400-2474aa01fcef
+      type: TYPE
+      target:
+        type: description
+        description: search bar
+      text: Italian restaurants in San Francisco
