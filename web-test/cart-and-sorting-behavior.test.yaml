@@ -95,3 +95,37 @@ steps:
       action:
         type: SUBSTRING
         substring: ""
+  - id: e2753169-a84c-4932-8c7f-06ced87acf23
+    type: PRESET_ACTION
+    command:
+      id: d8bd3e95-7519-4408-ba46-1d08c1507fcd
+      code: >-
+        faker.rawDefinitions.location.state = ['New South Wales', 'Victoria',
+        'Queensland', 'South Australia', 'Western Australia', 'Tasmania',
+        'Northern Territory', 'Australian Capital Territory'];
+
+        faker.rawDefinitions.location.state_abbr = ['NSW', 'VIC', 'QLD', 'SA',
+        'WA', 'TAS', 'NT', 'ACT'];
+
+        faker.rawDefinitions.location.postcode = ['####'];
+
+
+        const address = {
+          street: faker.location.streetAddress(),
+          city: faker.location.city(),
+          state: faker.location.state(),
+          postcode: faker.location.zipCode(),
+          country: 'Australia',
+        };
+
+
+        return address;
+      type: JAVASCRIPT
+  - id: df670d28-5df1-4d21-a7f0-d8b640192681
+    type: PRESET_ACTION
+    command:
+      id: 0dfe788a-eae3-4aa4-ada9-c906729b4912
+      code: |-
+        faker.location.state() // 'Mississippi'
+        faker.location.state({ abbreviated: true }) // 'LA'
+      type: JAVASCRIPT

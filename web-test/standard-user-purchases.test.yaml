@@ -3,7 +3,7 @@ id: 41e55e84-4c74-4704-8159-d4155ef01058
 name: standard-user-purchases
 baseUrl: https://saucedemo.com
 description: End-to-end checkout flow
-schemaVersion: 1.0.20
+schemaVersion: 1.0.22
 advanced:
   viewport:
     width: 1920
