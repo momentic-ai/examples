@@ -46,4 +46,4 @@ jobs:
       - name: Install dependencies
         run: npm --prefix ../ ci
       - name: Queue remote test runs
-        run: npx --prefix ../ momentic queue tests android-google-maps
+        run: npx --prefix ../ momentic-mobile app-run .

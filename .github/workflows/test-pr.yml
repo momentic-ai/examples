@@ -53,11 +53,8 @@ jobs:
           cache: "npm"
       - name: Install dependencies
         run: npm --prefix ../ ci
-      - name: Install headless browsers for automation
-        # Choose which browsers you want to install, see https://momentic.ai/docs/browsers
-        run: npx --prefix ../ momentic install-browsers chromium
       - name: Run tests
-        run: npx --prefix ../ momentic run .
+        run: npx --prefix ../ momentic-mobile app-run .
       - name: Upload test results artifact to Momentic Cloud
         run: npx --prefix ../ momentic results upload test-results
         if: always()
