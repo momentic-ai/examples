@@ -50,5 +50,5 @@ jobs:
         with:
           java-version: "17"
           distribution: "temurin"
-      - name: Queue remote test runs
-        run: npx momentic-mobile app
+      - name: Run tests
+        run: npx momentic-mobile run --upload-results .

@@ -59,7 +59,7 @@ jobs:
           java-version: "17"
           distribution: "temurin"
       - name: Run tests
-        run: npx momentic-mobile app
+        run: npx momentic-mobile run --upload-results .
       - name: Upload test results artifact to Momentic Cloud
         run: npx momentic results upload test-results
         if: always()
