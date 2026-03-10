@@ -44,6 +44,6 @@ jobs:
           node-version: 21
           cache: "npm"
       - name: Install dependencies
-        run: npm --prefix ../ ci
+        run: npm ci
       - name: Queue remote test runs
-        run: npx --prefix ../ momentic-mobile app-run .
+        run: npx momentic-mobile app-run .
