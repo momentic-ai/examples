@@ -31,8 +31,8 @@ jobs:
       - name: Install headless browsers for automation
         # Choose which browsers you want to install, see https://momentic.ai/docs/browsers
         run: npx momentic install-browsers chromium
-      - name: Start the app and then run the tests
-        run: npx momentic run create-react-app-test.test.yaml --start "npm --prefix ../ run start" --env development
+      - name: Run tests
+        run: npx momentic run .
       - name: Upload test results artifact to Momentic Cloud
         run: npx momentic results upload test-results
         if: always()

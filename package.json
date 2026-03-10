@@ -2,10 +2,8 @@
   "name": "momentic-cli-test",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "momentic": "^2.0.2"
-  },
   "devDependencies": {
+    "momentic": "^2.59.0",
     "momentic-mobile": "^0.36.4"
   }
 }

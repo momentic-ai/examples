@@ -27,4 +27,4 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Queue remote test runs
-        run: npx momentic queue tests create-react-app-test
+        run: npx momentic queue tests standard-user-purchases cart-and-sorting-behavior

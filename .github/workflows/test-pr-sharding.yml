@@ -37,10 +37,8 @@ jobs:
         # Choose which browsers you want to install, see https://momentic.ai/docs/browsers
         run: npx momentic install-browsers chromium
       - run: |
-          npx momentic run create-react-app-test.test.yaml \
-            --start "npm --prefix ../ run start" \
+          npx momentic run . \
             --output-dir test-results/shard-${{ matrix.shardIndex }} \
-            --env development \
             --shard-index ${{ matrix.shardIndex }} \
             --shard-count ${{ matrix.shardTotal }}
       - name: Save test results artifact

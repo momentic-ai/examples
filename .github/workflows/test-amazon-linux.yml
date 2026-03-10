@@ -64,9 +64,9 @@ jobs:
           npm ci
 
           # Run tests
-          cat momentic.config.yaml
+          cat /web-test/momentic.config.yaml
           npx momentic install-browsers chromium
-          npx momentic run --upload-results google-test.test.yaml
+          npx momentic run --upload-results --config /web-test/momentic.config.yaml /web-test/
 
           EOF
 
@@ -78,10 +78,9 @@ jobs:
         run: |
           docker run -d --name momentic --network host -e MOMENTIC_API_KEY='${{ secrets.MOMENTIC_API_KEY }}' ubuntu:20.04 sleep infinity
           docker cp run_tests.sh momentic:/run_tests.sh
-          docker cp web-test/momentic.config.yaml momentic:/momentic.config.yaml
-          docker cp web-test/package.json momentic:/package.json
-          docker cp web-test/package-lock.json momentic:/package-lock.json
-          docker cp web-test/ momentic:/
+          docker cp package.json momentic:/package.json
+          docker cp package-lock.json momentic:/package-lock.json
+          docker cp web-test/ momentic:/web-test
           docker exec momentic bash /run_tests.sh
 
       # Section 5: Cleanup

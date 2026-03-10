@@ -8,18 +8,18 @@ environments:
     envVariables:
       USERNAME: standard_user
       PASSWORD: secret_sauce
+ai:
+  agentConfig:
+    locator: v3
+    assertion: v3
+    text-extraction: v3
+    visual-assertion: v3
+  aiPageFiltering: true
 browser:
-  autoExpandIframes: true
+  showZeroOpacityElements: false
   disableSecondaryCacheResolution: false
   globalLocatorRedirect: true
   visualActions: true
-  showZeroOpacityElements: false
+  autoExpandIframes: true
 advanced:
   fakerConstantSeed: false
-ai:
-  aiPageFiltering: true
-  agentConfig:
-    locator: v4.0
-    assertion: v3.2
-    text-extraction: v3.0
-    visual-assertion: v3.2

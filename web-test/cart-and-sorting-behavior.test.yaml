@@ -19,24 +19,12 @@ steps:
   - id: 29139bff-9197-42f6-adbd-45effc4a82dd
     type: MODULE
     moduleId: 68aab6c6-21e6-4e0b-a8cf-217765f4fb1f
-  - id: 655f1143-f9ff-4625-8ffc-68701a507aca
-    type: PRESET_ACTION
-    command:
-      id: cde5008e-cd16-408e-8d22-76deaee92169
-      type: SELECT_OPTION
-      target:
-        type: description
-        elementDescriptor: sort dropdown
-      choice:
-        type: LABEL
-        label: Price (low to high)
-  - id: e7f7d41c-ad98-4eba-b46d-c0d749f3ce64
-    type: PRESET_ACTION
-    command:
-      id: 2d9513de-fecb-4e13-9ffc-59cb1ab61dfb
-      type: AI_ASSERTION
-      assertion: Verify the first item is the cheapest one on the page
   - id: 0bfccc52-e8d7-4bad-a29b-900f54bc4981
+    inputs:
+      ITEM: '"cheapest item"'
+    type: MODULE
+    moduleId: 4504fcb9-0bde-4be4-aada-fe17c6fcfd1f
+  - id: be5277d7-3f38-48a6-8055-c7c250c9f0f6
     inputs:
       ITEM: '"cheapest item"'
     type: MODULE
@@ -49,6 +37,12 @@ steps:
       target:
         type: description
         elementDescriptor: Cart icon on the top right
+  - id: e7f7d41c-ad98-4eba-b46d-c0d749f3ce64
+    type: PRESET_ACTION
+    command:
+      id: 2d9513de-fecb-4e13-9ffc-59cb1ab61dfb
+      type: AI_ASSERTION
+      assertion: Verify the first item is the cheapest one on the page
   - id: a04904d2-7755-4409-bfe4-b9f8145c20cf
     type: PRESET_ACTION
     command:
@@ -95,37 +89,3 @@ steps:
       action:
         type: SUBSTRING
         substring: ""
-  - id: e2753169-a84c-4932-8c7f-06ced87acf23
-    type: PRESET_ACTION
-    command:
-      id: d8bd3e95-7519-4408-ba46-1d08c1507fcd
-      code: >-
-        faker.rawDefinitions.location.state = ['New South Wales', 'Victoria',
-        'Queensland', 'South Australia', 'Western Australia', 'Tasmania',
-        'Northern Territory', 'Australian Capital Territory'];
-
-        faker.rawDefinitions.location.state_abbr = ['NSW', 'VIC', 'QLD', 'SA',
-        'WA', 'TAS', 'NT', 'ACT'];
-
-        faker.rawDefinitions.location.postcode = ['####'];
-
-
-        const address = {
-          street: faker.location.streetAddress(),
-          city: faker.location.city(),
-          state: faker.location.state(),
-          postcode: faker.location.zipCode(),
-          country: 'Australia',
-        };
-
-
-        return address;
-      type: JAVASCRIPT
-  - id: df670d28-5df1-4d21-a7f0-d8b640192681
-    type: PRESET_ACTION
-    command:
-      id: 0dfe788a-eae3-4aa4-ada9-c906729b4912
-      code: |-
-        faker.location.state() // 'Mississippi'
-        faker.location.state({ abbreviated: true }) // 'LA'
-      type: JAVASCRIPT
