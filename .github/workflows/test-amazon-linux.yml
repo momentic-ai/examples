@@ -64,9 +64,9 @@ jobs:
           npm ci
 
           # Run tests
-          cat /web-test/momentic.config.yaml
+          cat /web/momentic.config.yaml
           npx momentic install-browsers chromium
-          npx momentic run --upload-results --config /web-test/momentic.config.yaml /web-test/
+          npx momentic run --upload-results --config /web/momentic.config.yaml /web/
 
           EOF
 
@@ -80,7 +80,7 @@ jobs:
           docker cp run_tests.sh momentic:/run_tests.sh
           docker cp package.json momentic:/package.json
           docker cp package-lock.json momentic:/package-lock.json
-          docker cp web-test/ momentic:/web-test
+          docker cp web/ momentic:/web
           docker exec momentic bash /run_tests.sh
 
       # Section 5: Cleanup

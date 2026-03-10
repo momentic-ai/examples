@@ -20,7 +20,7 @@ jobs:
         shardTotal: [2]
     defaults:
       run:
-        working-directory: ./web-test
+        working-directory: ./web
     timeout-minutes: 5
 
     steps:
@@ -46,7 +46,7 @@ jobs:
         if: always()
         with:
           name: test-results-${{ matrix.shardIndex }}
-          path: ./web-test/test-results
+          path: ./web/test-results
           retention-days: 1
 
   upload-results:

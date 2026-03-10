@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./web-test
+        working-directory: ./web
     timeout-minutes: 5
 
     steps:

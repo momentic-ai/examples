@@ -10,12 +10,12 @@ on:
       - main
 
 jobs:
-  run-web-tests:
+  run-webs:
     name: Run web tests
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./web-test
+        working-directory: ./web
     timeout-minutes: 5
 
     steps:
@@ -29,12 +29,12 @@ jobs:
       - name: Queue remote test runs
         run: npx momentic queue tests standard-user-purchases cart-and-sorting-behavior
 
-  run-android-tests:
+  run-androids:
     name: Run android tests
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./android-test
+        working-directory: ./android
     timeout-minutes: 5
 
     steps:
