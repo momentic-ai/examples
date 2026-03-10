@@ -54,7 +54,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run tests
-        run: npx momentic-mobile app-run .
+        run: npx momentic-mobile app
       - name: Upload test results artifact to Momentic Cloud
         run: npx momentic results upload test-results
         if: always()
