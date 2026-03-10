@@ -53,13 +53,16 @@ jobs:
           cache: "npm"
       - name: Install dependencies
         run: npm ci
+      - name: Install headless browsers for automation
+        # Choose which browsers you want to install, see https://momentic.ai/docs/browsers
+        run: npx momentic-mobile install-browsers chromium
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           java-version: "17"
           distribution: "temurin"
       - name: Run tests
-        run: npx momentic-mobile app
+        run: npx momentic-mobile run .
       - name: Upload test results artifact to Momentic Cloud
-        run: npx momentic results upload test-results
+        run: npx momentic-mobile results upload test-results
         if: always()
