@@ -10,8 +10,8 @@ on:
       - main
 
 jobs:
-  run-tests:
-    name: Run tests
+  run-web-tests:
+    name: Run web tests
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -35,4 +35,29 @@ jobs:
         run: npx momentic run .
       - name: Upload test results artifact to Momentic Cloud
         run: npx momentic results upload test-results
+        if: always()
+
+  run-android-tests:
+    name: Run android tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./android-test
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 21
+          cache: "npm"
+      - name: Install dependencies
+        run: npm --prefix ../ ci
+      - name: Install headless browsers for automation
+        # Choose which browsers you want to install, see https://momentic.ai/docs/browsers
+        run: npx --prefix ../ momentic install-browsers chromium
+      - name: Run tests
+        run: npx --prefix ../ momentic run .
+      - name: Upload test results artifact to Momentic Cloud
+        run: npx --prefix ../ momentic results upload test-results
         if: always()

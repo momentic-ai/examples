@@ -10,8 +10,8 @@ on:
       - main
 
 jobs:
-  run-tests:
-    name: Run tests
+  run-web-tests:
+    name: Run web tests
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -28,3 +28,22 @@ jobs:
         run: npm ci
       - name: Queue remote test runs
         run: npx momentic queue tests standard-user-purchases cart-and-sorting-behavior
+
+  run-android-tests:
+    name: Run android tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./android-test
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 21
+          cache: "npm"
+      - name: Install dependencies
+        run: npm --prefix ../ ci
+      - name: Queue remote test runs
+        run: npx --prefix ../ momentic queue tests android-google-maps
