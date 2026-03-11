@@ -50,5 +50,7 @@ jobs:
         with:
           java-version: "17"
           distribution: "temurin"
+      - name: Install ADB
+        run: sudo apt-get install -y android-tools-adb
       - name: Run tests
         run: npx momentic-mobile run .
