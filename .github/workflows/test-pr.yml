@@ -10,7 +10,7 @@ on:
       - main
 
 jobs:
-  run-webs:
+  run-web-tests:
     name: Run web tests
     runs-on: ubuntu-latest
     defaults:
@@ -37,7 +37,7 @@ jobs:
         run: npx momentic results upload test-results
         if: always()
 
-  run-androids:
+  run-android-tests:
     name: Run android tests
     runs-on: ubuntu-latest
     defaults:
@@ -59,10 +59,10 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: "17"
+          java-version: "24"
           distribution: "temurin"
-      - name: Install ADB
-        run: sudo apt-get install -y android-tools-adb
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
       - name: Run tests
         run: npx momentic-mobile run .
       - name: Upload test results artifact to Momentic Cloud
