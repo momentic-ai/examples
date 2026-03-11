@@ -1,4 +1,4 @@
-name: yarn-showcase
+name: android
 include:
   - "**/*.test.yaml"
   - "**/*.module.yaml"

@@ -20,14 +20,14 @@ jobs:
         shardTotal: [2]
     defaults:
       run:
-        working-directory: ./single-project
+        working-directory: ./web
     timeout-minutes: 5
 
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 21
+          node-version: 24
           cache: "npm"
       - name: Install app dependencies
         run: npm --prefix ../ ci
@@ -37,10 +37,8 @@ jobs:
         # Choose which browsers you want to install, see https://momentic.ai/docs/browsers
         run: npx momentic install-browsers chromium
       - run: |
-          npx momentic run create-react-app-test.test.yaml \
-            --start "npm --prefix ../ run start" \
+          npx momentic run . \
             --output-dir test-results/shard-${{ matrix.shardIndex }} \
-            --env development \
             --shard-index ${{ matrix.shardIndex }} \
             --shard-count ${{ matrix.shardTotal }}
       - name: Save test results artifact
@@ -48,7 +46,7 @@ jobs:
         if: always()
         with:
           name: test-results-${{ matrix.shardIndex }}
-          path: ./single-project/test-results
+          path: ./web/test-results
           retention-days: 1
 
   upload-results:
@@ -63,7 +61,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 21
+          node-version: 24
           cache: "npm"
       - name: Install dependencies
         run: npm ci

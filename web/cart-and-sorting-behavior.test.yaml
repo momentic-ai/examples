@@ -1,0 +1,91 @@
+fileType: momentic/test
+id: a2c56e37-97f7-43f4-8a87-3c460486a5bd
+name: cart-and-sorting-behavior
+baseUrl: https://saucedemo.com
+description: Sorting changes view, not state; cart remains consistent
+schemaVersion: 1.0.22
+advanced:
+  viewport:
+    width: 1920
+    height: 1080
+  browserType: Chromium
+retries: 1
+envs:
+  - name: production
+    default: true
+disabled: false
+labels: []
+steps:
+  - id: 29139bff-9197-42f6-adbd-45effc4a82dd
+    type: MODULE
+    moduleId: 68aab6c6-21e6-4e0b-a8cf-217765f4fb1f
+  - id: 0bfccc52-e8d7-4bad-a29b-900f54bc4981
+    inputs:
+      ITEM: '"cheapest item"'
+    type: MODULE
+    moduleId: 4504fcb9-0bde-4be4-aada-fe17c6fcfd1f
+  - id: be5277d7-3f38-48a6-8055-c7c250c9f0f6
+    inputs:
+      ITEM: '"cheapest item"'
+    type: MODULE
+    moduleId: 4504fcb9-0bde-4be4-aada-fe17c6fcfd1f
+  - id: b025d9d3-60e6-4e7c-b442-943efdceb7db
+    type: PRESET_ACTION
+    command:
+      id: 6293ec66-4e9f-408d-bc6f-7a9b200213bb
+      type: CLICK
+      target:
+        type: description
+        elementDescriptor: Cart icon on the top right
+  - id: e7f7d41c-ad98-4eba-b46d-c0d749f3ce64
+    type: PRESET_ACTION
+    command:
+      id: 2d9513de-fecb-4e13-9ffc-59cb1ab61dfb
+      type: AI_ASSERTION
+      assertion: Verify the first item is the cheapest one on the page
+  - id: a04904d2-7755-4409-bfe4-b9f8145c20cf
+    type: PRESET_ACTION
+    command:
+      id: 05ca9837-071b-4fb2-b812-a9b86bdb7dd0
+      type: CLICK
+      target:
+        type: description
+        elementDescriptor: Checkout button
+  - id: f2f26692-565b-44ac-89da-add2736626dc
+    type: MODULE
+    moduleId: 3a61e06e-73dd-4b46-8f56-9f69cb6039e3
+  - id: f8a676a6-c509-4531-81fa-9ad362d52689
+    type: PRESET_ACTION
+    command:
+      id: 333da149-4752-45be-ad0a-a3199e1cffcb
+      type: CLICK
+      target:
+        type: description
+        elementDescriptor: Continue button
+  - id: 5f32fd8d-2a75-45eb-81fd-18f84269f7ad
+    type: PRESET_ACTION
+    command:
+      id: 36c0cc4b-9d62-46c3-a8ba-045c24eb1eb0
+      type: CLICK
+      target:
+        type: description
+        elementDescriptor: Finish button
+  - id: fa0418da-7451-4c42-be32-5d2a3f0812be
+    type: PRESET_ACTION
+    command:
+      id: 2e56ebe3-47db-4a11-a952-951bdbbbbcc2
+      type: ELEMENT_CHECK
+      target:
+        type: description
+        elementDescriptor: Back home button
+      assertion:
+        type: ELEMENT_EXISTENCE
+        condition: EXISTS
+  - id: 489a4af2-30df-49ed-b0bc-22c98ff6f15b
+    type: PRESET_ACTION
+    command:
+      id: 067f1f07-5448-4077-9b6d-c94ed64381c0
+      type: TAB
+      action:
+        type: SUBSTRING
+        substring: ""

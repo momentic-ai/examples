@@ -10,19 +10,19 @@ on:
       - main
 
 jobs:
-  run-tests:
-    name: Run tests
+  run-web-tests:
+    name: Run web tests
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./single-project
+        working-directory: ./web
     timeout-minutes: 5
 
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 21
+          node-version: 24
           cache: "npm"
       - name: Install app dependencies
         run: npm --prefix ../ ci
@@ -31,8 +31,40 @@ jobs:
       - name: Install headless browsers for automation
         # Choose which browsers you want to install, see https://momentic.ai/docs/browsers
         run: npx momentic install-browsers chromium
-      - name: Start the app and then run the tests
-        run: npx momentic run create-react-app-test.test.yaml --start "npm --prefix ../ run start" --env development
+      - name: Run tests
+        run: npx momentic run .
       - name: Upload test results artifact to Momentic Cloud
         run: npx momentic results upload test-results
+        if: always()
+
+  run-android-tests:
+    name: Run android tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./android
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: "npm"
+      - name: Install dependencies
+        run: npm ci
+      - name: Install headless browsers for automation
+        # Choose which browsers you want to install, see https://momentic.ai/docs/browsers
+        run: npx momentic-mobile install-browsers chromium
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: "24"
+          distribution: "temurin"
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+      - name: Run tests
+        run: npx momentic-mobile run .
+      - name: Upload test results artifact to Momentic Cloud
+        run: npx momentic-mobile results upload test-results
         if: always()

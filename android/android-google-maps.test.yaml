@@ -1,0 +1,94 @@
+fileType: momentic/mobile-test
+id: 8cf714f8-6561-4677-b0e5-cfc97817708d
+description: example android test apps
+schemaVersion: 0.0.3
+settings:
+  retries: 1
+  defaultChannel: google-maps
+  defaultTag: latest
+platform: ANDROID
+steps:
+  - id: 0dc467b5-4506-48c0-8096-f03d875d4cfc
+    type: MOBILE_PRESET_STEP
+    command:
+      id: b43920ff-444d-4360-ba64-51a84cb00a7b
+      type: OPEN_APP
+      packageName: com.google.android.apps.maps
+      activityName: ""
+  - id: f76b3238-9e91-4766-b435-386bfa2f6b35
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 397d88bd-322e-4951-afd4-161bbf461af7
+      type: TAP
+      target:
+        type: description
+        description: Skip button
+  - id: 2404ef07-09bb-48fb-a01e-ef3fa0be0f07
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 2bd41b8c-ad06-4699-9d33-2a199c44ff98
+      type: TAP
+      target:
+        type: description
+        description: Search Bar
+  - id: 27ce3826-1799-4bf3-842c-a088aaee71a6
+    moduleId: e08cf534-716c-4d68-b0f1-1a5e803ec8c7
+    type: MOBILE_MODULE_STEP
+  - id: e6f3c2a9-2044-489c-9f09-c06a397080c3
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 4828253d-2ae5-4065-9ab8-3eb733fa5124
+      type: AI_CHECK
+      assertion: check for atleast 5 options on the screen
+  - id: 39930262-f6d6-4b0c-803d-1ff29c1fad1a
+    type: MOBILE_PRESET_STEP
+    command:
+      id: f2d8f99d-3855-4601-81e1-65e82e17ac68
+      type: TAP
+      target:
+        type: description
+        description: the first element from the list
+  - id: 43071483-7147-456b-ada2-4accc68a44bd
+    type: MOBILE_PRESET_STEP
+    command:
+      id: f20754a9-5ced-4350-b68a-7719dace3fd6
+      type: ELEMENT_CHECK
+      target:
+        type: description
+        description: Directions
+      assertion:
+        type: ELEMENT_EXISTENCE
+        condition: EXISTS
+  - id: a72a52cf-a596-4f14-98c1-d56079d1bdd2
+    type: MOBILE_PRESET_STEP
+    command:
+      id: f9675d5f-fa5a-4fd5-bac8-1052e4944ded
+      type: TAP
+      target:
+        type: description
+        description: Menu
+  - id: 185d3e5a-acfc-4a50-b726-40056b231337
+    type: MOBILE_PRESET_STEP
+    command:
+      id: a400879e-50c7-4b8e-b9ed-e8d753cbeb65
+      type: SCROLL_TO
+      target:
+        type: description
+        description: first item from the menu
+      direction: down
+      scrollableElement:
+        type: OPEN_APP
+  - id: d8e77719-e6a6-4446-95da-7ac9816eea90
+    type: MOBILE_PRESET_STEP
+    command:
+      id: dcace5d2-a8f7-43f3-a4f6-00836d372692
+      type: TAP
+      target:
+        type: description
+        description: Reviews tab
+  - id: 7e35b40b-2a0e-46ef-937e-d14c5b276fa0
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 3064ba24-0545-4513-9623-34c9773c6eeb
+      type: AI_CHECK
+      assertion: A review from a user is visible
