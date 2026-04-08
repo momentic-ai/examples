@@ -1,0 +1,133 @@
+fileType: momentic/mobile-test
+id: 38e779be-0005-4c00-9910-911ea26cd494
+description: Tests the Dime app
+schemaVersion: 0.0.4
+settings:
+  retries: 1
+  defaultChannel: dime
+  emulator:
+    waitForStability: true
+platform: IOS
+steps:
+  - id: 2831da0e-9885-4227-b6d8-6b08d7ace666
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 5aa0981f-0db3-4e81-8b0a-2646242ef829
+      type: OPEN_APP
+      packageName: com.rafaelsoh.dime
+      intentExtras: '["--my-argument", "my-value"]'
+  - id: 6712c239-9398-4e40-9924-356a22542079
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 2a840fbd-8e32-4f98-b984-64614cb96377
+      type: WAIT
+      timeoutSecs: 2
+  - id: 97011f48-1fb9-405d-b508-94e6f5de2cbd
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 83f45618-5ccd-4461-9de0-1e13dfaeccb3
+      type: TAP
+      target:
+        type: description
+        description: get started
+  - id: 18f157fe-d876-4ab0-9799-3a1d59f290b4
+    type: MOBILE_PRESET_STEP
+    command:
+      id: d6bd42a2-2584-42e5-ac0b-1533270cf034
+      type: TAP
+      target:
+        type: description
+        description: the add food button
+  - id: fefbf4bd-329d-47d0-9750-b5a870fd65c6
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 6fb06dad-6888-4f8f-8a83-7b97edca3f40
+      type: TAP
+      target:
+        type: description
+        description: the add transport button
+  - id: 45644418-a6f5-4fe9-a073-2fb6eef4635c
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 47ab6a8f-dadf-471c-9934-bd306c8b9e23
+      type: SWIPE
+      direction: up
+      scrollableElement:
+        type: SCREEN
+      viewportPercent: 0.5
+  - id: 453c8a22-716d-4b8e-a0c7-439ac46ce497
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 7f79db84-53ea-4d30-85c6-607eebd11d4b
+      type: AI_CHECK
+      assertion: "'gifts' is visible on the screen"
+  - id: adc8cf1e-f7be-466e-901a-824b16c83b0d
+    type: MOBILE_PRESET_STEP
+    command:
+      id: e8b737c7-0e7d-43d9-8a49-b731cdc7eb98
+      type: TAP
+      target:
+        type: description
+        description: the next button
+  - id: 571bcebd-6f0f-4824-9f69-cfabe9820868
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 46b3ff39-8eb0-4cb3-a88b-d681b6f03d37
+      type: TAP
+      target:
+        type: description
+        description: the big + button
+  - id: 837a2858-66db-4e27-a967-c46376ee6b12
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 516810dc-c263-4bcd-a2ad-6eec92dee100
+      type: TAP
+      target:
+        type: description
+        description: the '2'
+  - id: 693da82c-27e8-42a0-ab47-b15577208648
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 01e069ea-ca07-4770-bcad-941120efde40
+      type: TAP
+      target:
+        type: description
+        description: category
+  - id: b7592a90-65d6-4e37-bb23-df38d11591d0
+    type: MOBILE_PRESET_STEP
+    command:
+      id: ae38bd38-23b6-4e1a-9179-a41902aa6fae
+      type: TAP
+      target:
+        type: description
+        description: the food category
+  - id: a82dafdb-c0e5-48e3-99a9-50adce6f905e
+    type: MOBILE_PRESET_STEP
+    command:
+      id: ea04e8d1-b8aa-426c-a95d-b208d61891cb
+      type: TAP
+      target:
+        type: description
+        description: the check mark
+  - id: 3dcdf08b-f64d-4f47-8698-9118233f5578
+    type: MOBILE_PRESET_STEP
+    command:
+      id: dc53ab51-b99c-4805-9443-654066452014
+      type: AI_CHECK
+      assertion: there's a single expense today called 'food'
+  - id: 66321de0-1397-4672-8d51-e44e2502c1c9
+    type: MOBILE_PRESET_STEP
+    command:
+      id: ff099d0a-9bef-4761-b44d-49301acae96f
+      type: TAP
+      target:
+        type: description
+        description: the settings tab in the bottom right
+  - id: c43aed98-1756-48e9-9563-8bcdb86c6491
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 774b2de5-09f4-4856-bb5a-9194645a0ce3
+      type: SCREEN_CHECK
+      assertion:
+        type: CONTENT
+        value: Display Cents

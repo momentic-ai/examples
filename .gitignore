@@ -32,3 +32,6 @@ yarn-example/.yarn/*
 !yarn-example/.yarn/releases
 !yarn-example/.yarn/sdks
 !yarn-example/.yarn/versions
+
+# Momentic test results
+test-results
