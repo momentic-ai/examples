@@ -4,6 +4,6 @@
   "private": true,
   "devDependencies": {
     "momentic": "^2.59.0",
-    "momentic-mobile": "^0.36.4"
+    "momentic-mobile": "^0.68.1"
   }
 }

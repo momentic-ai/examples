@@ -1,0 +1,39 @@
+format_version: "11"
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+project_type: other
+
+workflows:
+  ios-tests:
+    description: Run iOS Momentic tests from the ios/ directory.
+    steps:
+      - activate-ssh-key@4:
+          run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+      - git-clone@8: {}
+      - nvm@1:
+          inputs:
+            - node_version: "24"
+      - script@1:
+          title: Install dependencies
+          inputs:
+            - content: |
+                #!/usr/bin/env bash
+                set -euxo pipefail
+
+                npm ci
+      - script@1:
+          title: Run iOS tests
+          inputs:
+            - content: |
+                #!/usr/bin/env bash
+                set -euxo pipefail
+
+                cd ios
+                npx momentic-mobile run . --upload-results
+
+triggers:
+  push:
+    - branch: main
+      workflow: ios-tests
+  pull_request:
+    - target_branch: main
+      workflow: ios-tests
