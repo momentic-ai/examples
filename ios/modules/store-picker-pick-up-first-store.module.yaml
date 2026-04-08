@@ -1,0 +1,40 @@
+fileType: momentic/mobile-module
+moduleId: c4a70d6c-21c9-4f7d-b999-7a14aa7b6b81
+description: Store picker step to select the first store in the list for the pickup
+platform: IOS
+enabled: true
+schemaVersion: 0.0.4
+steps:
+  - id: 37a8a604-de82-47f6-ba92-e19a5d491430
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 2c6d3121-179e-4a99-828f-9a54003988ad
+      type: ELEMENT_CHECK
+      target:
+        type: description
+        description: 'The "Pick up" button in the selector on the top '
+      assertion:
+        type: ELEMENT_EXISTENCE
+        negated: false
+        condition: ENABLED
+  - id: b11dbe91-3e7d-4a22-bb70-af9140327943
+    type: MOBILE_PRESET_STEP
+    command:
+      id: ea35cdad-f29e-497d-92b0-b436bb4a989f
+      type: TAP
+      target:
+        type: description
+        description: The first "Order here" button on the list of available stores
+  - id: b3867dd7-3698-4fbe-bcd3-f24d5c2b9f31
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 10a9a600-3572-42bb-9b31-6b302497c7f7
+      type: WAIT
+      timeoutSecs: 2
+  - id: 1e3f6b5c-9768-40ea-8ac7-576e194c69c2
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 8962a461-57b3-423e-853a-89c72f3756de
+      type: AI_CHECK
+      assertion: The "Pick up" button in the selector on the top  is selected, while
+        “Delivery” button is deselected.

@@ -1,0 +1,21 @@
+fileType: momentic/mobile-module
+moduleId: ecbe7d80-9205-4ba3-89ad-c2a70ff80f6f
+description: ""
+platform: IOS
+enabled: true
+schemaVersion: 0.0.4
+steps:
+  - id: d3ec51b5-47ab-410f-a55d-45270d3b1242
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 0798370b-2eff-4b83-8bcc-fc5fb290dd42
+      type: TAP
+      target:
+        type: description
+        description: The "Scan" tab on the tab bar
+  - id: f76d500b-da8a-4ebc-bd87-4190f3155ec1
+    type: MOBILE_PRESET_STEP
+    command:
+      id: a4815573-518a-45ce-a35c-7153208375d4
+      type: AI_CHECK
+      assertion: Confirm that QR code is presented with a code under it

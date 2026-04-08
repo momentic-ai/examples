@@ -1,0 +1,130 @@
+fileType: momentic/mobile-module
+moduleId: 60cbfdd5-c3c6-4359-9afe-b1fa6a30611d
+description: Step for auth bottom sheet to proceed with the "Sign In" option and
+  finish auth via OTP.
+platform: IOS
+enabled: true
+schemaVersion: 0.0.4
+steps:
+  - id: 98ef154f-8a61-4f2e-a636-c1fc415944a2
+    type: MOBILE_PRESET_STEP
+    command:
+      id: bd0e4f84-c83a-434d-bf9a-183461e21d7b
+      type: TAP
+      target:
+        type: description
+        description: The Sign in Button
+  - id: 3e7af934-cf95-4c52-8db6-bf1aff00b605
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 10a9a600-3572-42bb-9b31-6b302497c7f7
+      type: WAIT
+      timeoutSecs: 4
+  - id: d6a83f48-74c4-4903-9bee-433dbbe5deb0
+    type: MOBILE_PRESET_STEP
+    command:
+      id: d40386ce-31b1-40af-955a-9e09f7db6310
+      type: TAP
+      target:
+        type: description
+        description: Tap the textbox input field with attribute "tel" under the "Enter
+          your phone number" label
+      relativePosition:
+        x: 175
+        y: 320
+  - id: 76365a5f-7958-47cb-87b4-eae262a1a6c9
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 10a9a600-3572-42bb-9b31-6b302497c7f7
+      type: WAIT
+      timeoutSecs: 2
+  - id: 0618215c-6d8a-4df0-87cf-9697265914f9
+    type: MOBILE_PRESET_STEP
+    command:
+      id: fcbca132-5f0a-4244-9ac9-9fce90419756
+      type: TYPE
+      target:
+        type: description
+        description: Phone number" field
+      text: 318 653 1449
+  - id: d40637f3-2bbe-4b5f-a2c3-cd2e08d7c1bf
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 10a9a600-3572-42bb-9b31-6b302497c7f7
+      type: WAIT
+      timeoutSecs: 2
+  - id: 4cd6941a-a4ef-4049-9eff-479784449221
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 55f820e7-2cf3-4b21-a3d5-9f5eab5f7818
+      type: TAP
+      target:
+        type: description
+        description: Tap the "Continue" button
+  - id: deea46f2-6c86-4892-9831-e08c833911a2
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 10a9a600-3572-42bb-9b31-6b302497c7f7
+      type: WAIT
+      timeoutSecs: 5
+  - id: c2bd3168-ba32-4d5f-a1a7-e9831658bbb8
+    envKey: SIGN_IN_CODE
+    type: MOBILE_PRESET_STEP
+    command:
+      id: e3a859ee-5f1e-4dfa-8fe6-0b9082d66ee7
+      type: JAVASCRIPT
+      code: |-
+        const msg = await sms.fetchLatest({
+          to: "+13186531449",
+        });
+
+        // Full message body
+        const body = msg.body;
+
+        // Extract 6-digit verification code using regex
+        const match = body.match(/\b\d{6}\b/);
+
+        const verificationCode = match ? match[0] : null;
+
+        return verificationCode;
+  - id: 9f2bf89c-8702-4f14-97b7-f1cd4ef87c45
+    envKey: MSG_BODY
+    type: MOBILE_PRESET_STEP
+    command:
+      id: e3a859ee-5f1e-4dfa-8fe6-0b9082d66ee7
+      type: JAVASCRIPT
+      code: |-
+        const msg = await sms.fetchLatest({
+          to: "+13186531449",
+        });
+        return msg.body;
+  - id: c9b97d4d-705b-43dc-8600-3f4072bd0eb9
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 10a9a600-3572-42bb-9b31-6b302497c7f7
+      type: WAIT
+      timeoutSecs: 2
+  - id: d67eec28-533f-471d-9d1f-8a5af8a0a967
+    type: MOBILE_PRESET_STEP
+    command:
+      id: cf571bb5-8d83-4748-99af-3eeaefc47602
+      type: TAP
+      target:
+        type: description
+        description: First text field of the verification code
+  - id: 793552c7-ec1b-49c8-8ced-8993e755881a
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 10a9a600-3572-42bb-9b31-6b302497c7f7
+      type: WAIT
+      timeoutSecs: 2
+  - id: a993d48c-d1f3-4567-bfd5-580a3dd6e45c
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 29a4dc41-9cdb-47a0-b5a0-ce671f52e96c
+      type: TYPE
+      target:
+        type: description
+        description: Verification code input fields
+      keyPressDelayMs: 1000
+      text: "{{ env.SIGN_IN_CODE }}"

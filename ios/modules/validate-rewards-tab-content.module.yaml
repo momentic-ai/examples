@@ -1,0 +1,59 @@
+fileType: momentic/mobile-module
+moduleId: 61b7e4eb-b562-4481-a8fc-a49c6faad44d
+description: >
+  Module to validate that rewards tab is showing points, "your rewards" tab with
+  rewards, and "how it works" tab with a list of rows explaining how rewards
+  work.
+platform: IOS
+enabled: true
+schemaVersion: 0.0.4
+steps:
+  - id: 38fb00e7-94b8-4ef2-a55c-4ee43f845944
+    type: MOBILE_PRESET_STEP
+    command:
+      id: da11e3ce-d601-42b6-9cf5-a3fd597d728b
+      type: TAP
+      target:
+        type: description
+        description: The "Rewards" tab on the tab bar
+  - id: 1d523836-d1a4-4233-b536-9913c1b52cdc
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 16019cc5-d1f7-431a-8d21-e208fb9b33b5
+      type: ELEMENT_CHECK
+      target:
+        type: description
+        description: The "Points" with a number
+      assertion:
+        type: ELEMENT_EXISTENCE
+        condition: EXISTS
+  - id: cf436d15-a153-403e-80b8-698f5fc73654
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 0a4f4177-6ae3-4e02-9e03-cccab7fde212
+      type: WAIT
+      timeoutSecs: 4
+  - id: 66984459-6bed-483d-b1b0-1f8a5c514405
+    type: MOBILE_PRESET_STEP
+    command:
+      id: d8342ce4-9779-4191-b1f3-9f2e320fa8c8
+      type: AI_CHECK
+      assertion: Check that "Your Rewards" tab is selected and shows a grid 2 by X of
+        rewards with title, expiration label and "Learn More" button. The
+        content/number of items can be 1 or more but the layout should follow 2
+        by X grid
+  - id: 7c6bf182-3e34-47b9-a8e6-59d7c04d961d
+    type: MOBILE_PRESET_STEP
+    command:
+      id: efb2d7da-2a35-4531-a34e-63d72b532194
+      type: TAP
+      target:
+        type: description
+        description: The "How It Works" tab button
+  - id: 6ea680ab-8b10-4080-99bc-befe94c01637
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 724dc45b-da5b-40ac-8e75-ba0ac5ea084f
+      type: AI_CHECK
+      assertion: Check that the "How it works" tab is selected and is presenting a
+        list of rows that explain how rewards work.

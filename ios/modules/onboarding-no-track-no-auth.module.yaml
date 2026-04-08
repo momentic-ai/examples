@@ -1,0 +1,70 @@
+fileType: momentic/mobile-module
+moduleId: 2d347212-fe3e-41fb-8c2a-a92b6e37cdf5
+description: Fresh launch onboarding selecting no tracking and continuing as
+  guest, without auth.
+platform: IOS
+enabled: true
+schemaVersion: 0.0.4
+steps:
+  - id: 936b2bb5-0758-4365-89f1-baf4dfe0e0a2
+    type: MOBILE_PRESET_STEP
+    command:
+      id: be5f7103-4868-4340-b284-6fc4328c3f51
+      type: OPEN_APP
+      packageName: com.paytronix.checkersandrallys
+  - id: 8d2b6659-e7a4-4d57-a767-5ec9b1c7f1f6
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 10a9a600-3572-42bb-9b31-6b302497c7f7
+      type: WAIT
+      timeoutSecs: 4
+  - id: 3d8b97a4-0210-4873-8c89-17654b0a7eef
+    type: MOBILE_PRESET_STEP
+    command:
+      id: d0084453-57d9-472e-9e5b-23a66ea9c3ba
+      type: TAP
+      target:
+        type: description
+        description: The "Ask App Not to Track" button on the tracking permission alert
+  - id: 96cac28b-9f3b-4d15-bb57-8c521bf216bb
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 10a9a600-3572-42bb-9b31-6b302497c7f7
+      type: WAIT
+      timeoutSecs: 2
+  - id: 94cd336d-9d79-4c0f-ab28-57bfa19ce755
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 2d552f57-e2bf-4bb7-8cd5-27b27a428e34
+      type: ELEMENT_CHECK
+      target:
+        type: description
+        description: The "Sign In" Button
+      assertion:
+        type: ELEMENT_EXISTENCE
+        condition: EXISTS
+  - id: cb26212c-7c20-4d3a-a403-b45495552a4c
+    type: MOBILE_PRESET_STEP
+    command:
+      id: da2dd7d4-2b6e-41b7-ba2b-2188ccb6fbb2
+      type: ELEMENT_CHECK
+      target:
+        type: description
+        description: The "Sign Up" Button
+      assertion:
+        type: ELEMENT_EXISTENCE
+        condition: EXISTS
+  - id: d6560a45-3036-475e-bfcd-9bd29d96a1e8
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 84313532-cfed-4849-8791-14d9394c0954
+      type: TAP
+      target:
+        type: description
+        description: The "Continue as guest" button
+  - id: 8e79824c-d997-46c7-b341-f59e7f4ec88d
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 10a9a600-3572-42bb-9b31-6b302497c7f7
+      type: WAIT
+      timeoutSecs: 2

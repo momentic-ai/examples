@@ -1,0 +1,32 @@
+fileType: momentic/mobile-module
+moduleId: 5e93800a-2382-427b-b325-68c43b832513
+description: Step clicking on the account tab while not authenticated
+platform: IOS
+enabled: true
+schemaVersion: 0.0.4
+steps:
+  - id: 00128bbe-8bb9-473e-8798-b35b3fc99423
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 6d5ba01d-ed1a-4838-927d-61bae57b89fc
+      type: TAP
+      target:
+        type: description
+        description: The Account tab on the tab bar
+  - id: a6d76225-ab0f-4719-afc5-a5e0b7b96402
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 10a9a600-3572-42bb-9b31-6b302497c7f7
+      type: WAIT
+      timeoutSecs: 2
+  - id: 00ac3ba0-7425-47df-8a34-c2a27bf50a89
+    type: MOBILE_PRESET_STEP
+    command:
+      id: da2dd7d4-2b6e-41b7-ba2b-2188ccb6fbb2
+      type: ELEMENT_CHECK
+      target:
+        type: description
+        description: The "Sign Up" Button
+      assertion:
+        type: ELEMENT_EXISTENCE
+        condition: EXISTS

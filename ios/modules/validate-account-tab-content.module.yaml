@@ -1,0 +1,59 @@
+fileType: momentic/mobile-module
+moduleId: 3f7fa319-a921-4b40-961d-155159466586
+description: ""
+platform: IOS
+enabled: true
+schemaVersion: 0.0.4
+steps:
+  - id: 4a003c44-b2a6-409a-bc09-6bc025fa0718
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 55da5d61-0629-48ae-85fb-bc8b5ed5d7e5
+      type: TAP
+      target:
+        type: description
+        description: The "Account" tab on the tab bar
+  - id: 828b24ee-7ea6-4154-a6aa-8c966edda59f
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 9ef097ff-4e23-44cc-81b3-a4fd15839934
+      type: ELEMENT_CHECK
+      target:
+        type: description
+        description: User's full name
+      assertion:
+        type: ELEMENT_EXISTENCE
+        condition: EXISTS
+  - id: 35c772b4-f58c-43c4-89eb-2ea0da4112e4
+    type: MOBILE_PRESET_STEP
+    command:
+      id: b188021c-7df5-4e0a-8197-515a4d18515d
+      type: ELEMENT_CHECK
+      target:
+        type: description
+        description: Phone number
+      assertion:
+        type: ELEMENT_EXISTENCE
+        condition: EXISTS
+  - id: c7f9575e-31b8-453c-9b39-6d328898701e
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 2be59dbe-8c74-462b-aae4-8272a6b4157d
+      type: ELEMENT_CHECK
+      target:
+        type: description
+        description: Email
+      assertion:
+        type: ELEMENT_EXISTENCE
+        condition: EXISTS
+  - id: 5498ab2c-c9e6-4c68-ab20-1b8b0b1584f5
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 40772572-05dd-4b68-8521-84a2483a6c51
+      type: ELEMENT_CHECK
+      target:
+        type: description
+        description: ID label
+      assertion:
+        type: ELEMENT_EXISTENCE
+        condition: EXISTS

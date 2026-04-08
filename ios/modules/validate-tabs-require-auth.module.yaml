@@ -1,0 +1,122 @@
+fileType: momentic/mobile-module
+moduleId: 22bc0c81-af30-4a7c-861c-334cf2553faa
+description: A step to validate that rewards, scan, and account tabs require
+  users to be authenticated
+platform: IOS
+enabled: true
+schemaVersion: 0.0.4
+steps:
+  - id: c037349b-f284-4427-be00-93c58ac5be4c
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 27e9c7c5-ddfe-4c92-849c-a7c4344bf8d4
+      type: TAP
+      target:
+        type: description
+        description: The "Rewards" tab on the tab bar
+  - id: 10b0c813-1dbd-4235-9edc-58e9b75be654
+    type: MOBILE_PRESET_STEP
+    command:
+      id: ef60693a-bd1d-448f-bc0f-a4e5561c8942
+      type: ELEMENT_CHECK
+      target:
+        type: description
+        description: The "Sign In" Button
+      assertion:
+        type: ELEMENT_EXISTENCE
+        condition: EXISTS
+  - id: b5e89aec-5db3-4fd0-8c41-bd775d2def25
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 12afe66e-3a42-483b-a771-a8cb877bd6b4
+      type: ELEMENT_CHECK
+      target:
+        type: description
+        description: The "Sign Up" Button
+      assertion:
+        type: ELEMENT_EXISTENCE
+        condition: EXISTS
+  - id: 7903593a-3d4a-445c-866c-fa794e8a8d0d
+    type: MOBILE_PRESET_STEP
+    command:
+      id: d73b4050-7002-4917-9a7a-31795e332ecc
+      type: SWIPE
+      direction: down
+      scrollableElement:
+        type: SCREEN
+  - id: 87ef1aea-c752-4a5d-aa2a-b549fd045436
+    type: MOBILE_PRESET_STEP
+    command:
+      id: d234dee5-f660-46f3-83ad-515b08418056
+      type: TAP
+      target:
+        type: description
+        description: The "Scan" tab on the tab bar
+  - id: 736ea3d6-f360-4c8f-b35d-72fffaa3a954
+    type: MOBILE_PRESET_STEP
+    command:
+      id: ef60693a-bd1d-448f-bc0f-a4e5561c8942
+      type: ELEMENT_CHECK
+      target:
+        type: description
+        description: The "Sign In" Button
+      assertion:
+        type: ELEMENT_EXISTENCE
+        condition: EXISTS
+  - id: 15f8b37a-8138-4078-9f96-e0f41c0bd377
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 12afe66e-3a42-483b-a771-a8cb877bd6b4
+      type: ELEMENT_CHECK
+      target:
+        type: description
+        description: The "Sign Up" Button
+      assertion:
+        type: ELEMENT_EXISTENCE
+        condition: EXISTS
+  - id: c6dc2846-d335-45e9-9215-6119949dcb26
+    type: MOBILE_PRESET_STEP
+    command:
+      id: d73b4050-7002-4917-9a7a-31795e332ecc
+      type: SWIPE
+      direction: down
+      scrollableElement:
+        type: SCREEN
+  - id: 1c1d64a4-a06e-41d6-b22b-a3ac1af26b05
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 7a10547b-0dbe-412d-be78-3da777661212
+      type: TAP
+      target:
+        type: description
+        description: The "Account" tab on the tab bar
+  - id: c7d5cfc8-c4d3-41d6-b7a3-b9ee877c9d81
+    type: MOBILE_PRESET_STEP
+    command:
+      id: ef60693a-bd1d-448f-bc0f-a4e5561c8942
+      type: ELEMENT_CHECK
+      target:
+        type: description
+        description: The "Sign In" Button
+      assertion:
+        type: ELEMENT_EXISTENCE
+        condition: EXISTS
+  - id: 178e62c5-1182-46f4-a1d1-0043d92e9898
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 12afe66e-3a42-483b-a771-a8cb877bd6b4
+      type: ELEMENT_CHECK
+      target:
+        type: description
+        description: The "Sign Up" Button
+      assertion:
+        type: ELEMENT_EXISTENCE
+        condition: EXISTS
+  - id: 3c42a664-6bc3-49bf-afec-3e24d8928802
+    type: MOBILE_PRESET_STEP
+    command:
+      id: d73b4050-7002-4917-9a7a-31795e332ecc
+      type: SWIPE
+      direction: down
+      scrollableElement:
+        type: SCREEN
