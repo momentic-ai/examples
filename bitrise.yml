@@ -1,6 +1,6 @@
 format_version: "11"
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
-project_type: other
+project_type: nodejs
 
 workflows:
   ios-tests:
@@ -33,4 +33,48 @@ workflows:
                 set -euxo pipefail
 
                 cd ios
+                npx momentic-mobile run . --upload-results
+
+  android-tests:
+    description: Run Android Momentic tests from the android/ directory.
+    triggers:
+      push:
+        - branch: main
+      pull_request:
+        - target_branch: main
+    steps:
+      - activate-ssh-key@4:
+          run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+      - git-clone@8: {}
+      - nvm@1:
+          inputs:
+            - node_version: "24"
+      - set-java-version@1:
+          inputs:
+            - set_java_version: "24"
+      - install-missing-android-tools: {}
+      - script@1:
+          title: Install dependencies
+          inputs:
+            - content: |
+                #!/usr/bin/env bash
+                set -euxo pipefail
+
+                npm ci
+      - script@1:
+          title: Install headless browsers for automation
+          inputs:
+            - content: |
+                #!/usr/bin/env bash
+                set -euxo pipefail
+
+                npx momentic-mobile install-browsers chromium
+      - script@1:
+          title: Run Android tests
+          inputs:
+            - content: |
+                #!/usr/bin/env bash
+                set -euxo pipefail
+
+                cd android
                 npx momentic-mobile run . --upload-results
