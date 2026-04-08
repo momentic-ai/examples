@@ -1,0 +1,47 @@
+fileType: momentic/mobile-module
+moduleId: 0dec53ae-0b88-4ea7-ad1c-6bd7a290bae4
+description: Module validates that menu presents featured items, condensed menu
+  and most ordered category is expandable and shows menu items when expanded.
+platform: IOS
+enabled: true
+schemaVersion: 0.0.4
+steps:
+  - id: 22e00efe-3576-4408-93c0-d0f5b59079a8
+    type: MOBILE_PRESET_STEP
+    command:
+      id: a0b24ea1-ceb7-422e-928e-d1c4f1e83e43
+      type: ELEMENT_CHECK
+      target:
+        type: description
+        description: Featured Items section with items in a scrollable horizontal list
+      assertion:
+        type: ELEMENT_EXISTENCE
+        condition: EXISTS
+      timeout: 5
+  - id: add8494a-6714-416b-aa94-17f2ed7ead7a
+    type: MOBILE_PRESET_STEP
+    command:
+      id: f09596e3-0eb4-47ee-ae4e-c80402a0c81b
+      type: SCROLL_TO
+      target:
+        type: description
+        description: '"Combo meals" label for the category'
+      direction: down
+      scrollableElement:
+        type: OPEN_APP
+      scrollStepPercent: 0.5
+  - id: 75de2176-ec5b-46cf-a879-24427f2088db
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 1d3955ae-caf8-4b69-9857-6189eba65aed
+      type: TAP
+      target:
+        type: description
+        description: '"Combo meals" Category'
+  - id: 7a71e4d6-85d0-41d0-a159-4c9d9a93b57a
+    type: MOBILE_PRESET_STEP
+    command:
+      id: c394c295-46df-4601-bfb7-9336fc286396
+      type: AI_CHECK
+      assertion: '"Combo meals" category should be expanded and should be showing a
+        grid of items 2 by X with image, title, price.'

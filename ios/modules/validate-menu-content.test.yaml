@@ -1,0 +1,21 @@
+fileType: momentic/mobile-test
+id: 23eef8ee-401d-47ba-896d-5450e060bb39
+description: Test to validate menu content after guest onboarding
+schemaVersion: 0.0.4
+settings:
+  retries: 1
+  defaultChannel: checkers
+platform: IOS
+steps:
+  - id: 9faa4931-fe95-4874-af4f-fbbb172ba899
+    moduleId: 2d347212-fe3e-41fb-8c2a-a92b6e37cdf5
+    type: MOBILE_MODULE_STEP
+  - id: 23219223-7b65-4192-8013-e81bf8f7fe7a
+    moduleId: a6b61e4f-f800-4c54-9572-23ec15130d66
+    type: MOBILE_MODULE_STEP
+  - id: 4b29e57a-aded-4074-8dc8-5ebcf8f00974
+    moduleId: c4a70d6c-21c9-4f7d-b999-7a14aa7b6b81
+    type: MOBILE_MODULE_STEP
+  - id: ee303d82-0bd3-4252-b027-1bf08f6000ea
+    moduleId: 0dec53ae-0b88-4ea7-ad1c-6bd7a290bae4
+    type: MOBILE_MODULE_STEP

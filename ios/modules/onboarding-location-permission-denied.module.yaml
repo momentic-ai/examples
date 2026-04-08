@@ -1,0 +1,36 @@
+fileType: momentic/mobile-module
+moduleId: a6b61e4f-f800-4c54-9572-23ec15130d66
+description: Onboarding step asking for location permission with selected "Don't
+  allow" option.
+platform: IOS
+enabled: true
+schemaVersion: 0.0.4
+steps:
+  - id: 3a4dcf9f-ef7e-4a5b-bbf2-d755edb99c12
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 57ce68a7-8f6a-4f74-893b-f47f788db85e
+      type: TAP
+      target:
+        type: description
+        description: The "Continue" button
+  - id: d0357d8d-b619-4195-b260-daf11a30b307
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 10a9a600-3572-42bb-9b31-6b302497c7f7
+      type: WAIT
+      timeoutSecs: 4
+  - id: fa98b432-dfec-4cd5-a5da-c0b86a062533
+    type: MOBILE_PRESET_STEP
+    command:
+      id: dfe01cc4-84a3-4cb2-9350-889eaf48cac9
+      type: TAP
+      target:
+        type: description
+        description: The "Don't allow" button on the location permissions alert
+  - id: bc851ce2-85cf-4982-a343-9f2fc4d2321e
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 10a9a600-3572-42bb-9b31-6b302497c7f7
+      type: WAIT
+      timeoutSecs: 2
