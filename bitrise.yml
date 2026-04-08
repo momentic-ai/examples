@@ -5,6 +5,11 @@ project_type: other
 workflows:
   ios-tests:
     description: Run iOS Momentic tests from the ios/ directory.
+    triggers:
+      push:
+        - branch: main
+      pull_request:
+        - target_branch: main
     steps:
       - activate-ssh-key@4:
           run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
@@ -29,11 +34,3 @@ workflows:
 
                 cd ios
                 npx momentic-mobile run . --upload-results
-
-triggers:
-  push:
-    - branch: main
-      workflow: ios-tests
-  pull_request:
-    - target_branch: main
-      workflow: ios-tests
