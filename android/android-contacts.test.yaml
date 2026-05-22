@@ -1,0 +1,99 @@
+fileType: momentic/mobile-test
+id: af85ea73-cc99-4fd6-be6a-ebae70734757
+schemaVersion: 0.0.4
+description: " "
+platform: ANDROID
+steps:
+  - id: 530b5974-0bee-441a-b794-13401f41f443
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 5c1c4258-5ca2-4510-b216-19842e0f287d
+      type: OPEN_APP
+      packageName: com.google.android.contacts
+      activityName: ""
+  - id: 55d75868-8ae4-4cca-ae09-b57650e8cbc9
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 04530b8b-2ed2-4926-a0a3-e2aa8cbd50fc
+      type: TAP
+      target:
+        type: description
+        description: New contact button
+  - id: 75a03126-d7ec-452b-8b2d-266ab3488faa
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 4162a74a-0369-47ba-959d-d21b9063cebe
+      type: TYPE
+      target:
+        type: description
+        description: First name input
+      text: "Android "
+  - id: 5bb6e579-a0a3-4b34-babf-e44e079227af
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 02c6e280-7fa6-4042-88f9-b2fb65a9e38c
+      type: TYPE
+      target:
+        type: description
+        description: Last name input
+      text: "Test "
+  - id: c994a6a4-acea-4f79-80a4-06182c6d3da6
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 268a1e73-7cb9-4bcd-87f2-8da6b126d9e9
+      type: TYPE
+      target:
+        type: description
+        description: Company input
+      text: "Momentic "
+  - id: c1691908-f943-4e1d-8053-8dd058b1b7a0
+    type: MOBILE_PRESET_STEP
+    command:
+      id: c512b5a6-7c57-492a-ada3-a441c3ddb350
+      type: SCROLL_TO
+      target:
+        type: description
+        description: Phone Input
+      direction: down
+      scrollableElement:
+        type: OPEN_APP
+      scrollStepPercent: 1
+  - id: abb4fee8-0edb-4861-886c-ace5939cb15c
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 6a1bfd43-754e-485a-b6d0-364694c742b1
+      type: AI_CHECK
+      assertion: Phone number input exists
+  - id: c7fb653d-2879-4787-b245-21b9985e8cd0
+    type: MOBILE_PRESET_STEP
+    command:
+      id: eabb3710-56c4-45ec-8117-5833c2376e0e
+      type: TYPE
+      target:
+        type: description
+        description: Phone input
+      text: "9194089905"
+  - id: c8c87831-e59e-4da0-9ff7-89e9b51ec01a
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 85dc0a1e-5ed6-4cec-bcfc-9aa1fb075b0f
+      type: TAP
+      target:
+        type: description
+        description: save button
+  - id: f8948c49-14eb-45cc-bf9a-4b55200e3e0c
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 71c4a134-10a9-4cde-af14-5f3fa1e7e3fa
+      type: AI_CHECK
+      assertion: Android Test contact has a company name and phone number
+  - id: ad1644b5-1186-4c59-84fc-b72d7503e4af
+    type: MOBILE_PRESET_STEP
+    command:
+      id: 9ff6b244-2865-4209-9ed8-5c0f7ef0b597
+      type: KILL_APP
+  - id: 9ac83626-fdef-4ba8-91d1-f47ae89ac3dd
+    type: MOBILE_AI_ACTION_STEP
+    text: open the phone app and call Android test - make sure there's a pop up when
+      we attempt to call
+    version: "3"
