@@ -23,10 +23,8 @@ jobs:
       - run:
           name: Run tests
           command: |
-            npx momentic run create-react-app-test.test.yaml \
-              --start "npm --prefix ../ run start" \
+            npx momentic run . \
               --output-dir test-results/shard-${CIRCLE_NODE_INDEX} \
-              --env development \
               --shard-index $(($CIRCLE_NODE_INDEX+1)) \
               --shard-count ${CIRCLE_NODE_TOTAL}
       - store_artifacts:

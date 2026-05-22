@@ -13,15 +13,15 @@ steps:
   - module:
       inputs:
         ITEM:
-          string: cheapest item
+          string: Sauce Labs Onesie
       path: ./add-item-to-cart.module.yaml
   - module:
       inputs:
         ITEM:
-          string: cheapest item
+          string: Sauce Labs Bike Light
       path: ./add-item-to-cart.module.yaml
   - click: Cart icon on the top right
-  - assert: Verify the first item is the cheapest one on the page
+  - assert: Verify both the Sauce Labs Onesie and the Sauce Labs Bike Light are in the cart
   - click: Checkout button
   - module: ./fill-out-personal-info.module.yaml
   - click: Continue button
