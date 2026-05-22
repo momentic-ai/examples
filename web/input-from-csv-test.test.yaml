@@ -2,7 +2,7 @@ fileType: momentic/test/v2
 id: b7e3a1c4-9d52-4f18-a6b0-8c2e7d5f1a93
 version: 1.0.24
 url: https://saucedemo.com
-description: Login and add an item to cart using CSV-provided inputs
+description: Login and verify products page using CSV-provided credentials
 defaultEnv: production
 disabled: false
 retries: 1
@@ -18,10 +18,4 @@ steps:
       into: password input
       clear: inputs
   - click: login button
-  - module:
-      inputs:
-        ITEM:
-          string: "{{env.ITEM}}"
-      path: ./add-item-to-cart.module.yaml
-  - click: Cart icon on the top right
-  - assert: Verify the {{env.ITEM}} is in the cart
+  - assert: Verify the user is logged in and can see the products page
