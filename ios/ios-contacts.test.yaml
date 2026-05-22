@@ -1,104 +1,30 @@
-fileType: momentic/mobile-test
+fileType: momentic/mobile-test/v2
 id: e51742f1-43ce-46fc-9a83-2a394e53efbe
-schemaVersion: 0.0.4
+version: 0.0.4
 description: " "
-platform: IOS
+platform: ios
 steps:
-  - id: a4750fd0-702a-42a8-88f2-dab4dc61b0ee
-    type: MOBILE_PRESET_STEP
-    command:
-      id: 0b25886b-dbec-4a1a-9ed9-725c33121151
-      type: OPEN_APP
-      packageName: com.apple.MobileAddressBook
-  - id: 4bd492f4-4c37-4f31-a4c5-ecf9811f18d7
-    type: MOBILE_PRESET_STEP
-    command:
-      id: a5ea4c14-5525-4186-86b3-649a772b78e9
-      type: TAP
-      target:
-        type: description
-        description: New contact button
-  - id: 75a0ca03-2113-4252-b3ca-3fe09d509a57
-    type: MOBILE_PRESET_STEP
-    command:
-      id: d25bae48-0528-4d03-b081-7df164c2fd24
-      type: TYPE
-      target:
-        type: description
-        description: First Name Input
+  - openApp: com.apple.MobileAddressBook
+  - tap: New contact button
+  - type:
       text: iOS
-  - id: 30121a64-d864-4868-a4b9-5a686e0bd56c
-    type: MOBILE_PRESET_STEP
-    command:
-      id: d92a7d75-0e18-4372-b456-e3256a5b1564
-      type: TYPE
-      target:
-        type: description
-        description: Last name Input
+      into: First Name Input
+  - type:
       text: Test
-  - id: 22ab0cc4-a1d9-429f-8755-ccc51da6587f
-    type: MOBILE_PRESET_STEP
-    command:
-      id: cddfeeae-e581-4ff3-b210-1a531cd5269d
-      type: TYPE
-      target:
-        type: description
-        description: Company Input
+      into: Last name Input
+  - type:
       text: Momentic
-  - id: cea4f003-f140-4224-9d81-a59db99a1648
-    type: MOBILE_PRESET_STEP
-    command:
-      id: 9f42d142-6bc3-4224-954d-97b080217344
-      type: SCROLL_TO
-      target:
-        type: description
-        description: add phone
-      direction: down
-      scrollableElement:
-        type: OPEN_APP
-  - id: 23215571-0f99-4106-810f-01a02aafcb79
-    type: MOBILE_PRESET_STEP
-    command:
-      id: 714fce5f-a25c-4aef-a3d1-45183dddc50a
-      type: AI_CHECK
-      assertion: add phone exists
-  - id: bd91eee5-cbc9-4b07-b4a8-b04b809a09b0
-    type: MOBILE_PRESET_STEP
-    command:
-      id: d9143942-5192-467b-8ba3-a1a8b3f14694
-      type: TAP
-      target:
-        type: description
-        description: add phone
-  - id: b693eb76-f46b-46dc-8ddc-d53b31f2c89e
-    type: MOBILE_PRESET_STEP
-    command:
-      id: 60acaf07-cb85-47df-a236-9e98d9f155b5
-      type: TYPE
-      target:
-        type: description
-        description: add phone
+      into: Company Input
+  - scrollTo:
+      on: add phone
+      in: app
+  - assert: add phone exists
+  - tap: add phone
+  - type:
       text: "9194089905"
-  - id: 9d3e50fd-42f5-40bd-8777-af0776c32fac
-    type: MOBILE_PRESET_STEP
-    command:
-      id: 58d7c1d4-3e83-48a8-81f3-c432c1118a2b
-      type: TAP
-      target:
-        type: description
-        description: Save button
-  - id: fc497177-5649-4b50-ad6f-5adff2198d58
-    type: MOBILE_PRESET_STEP
-    command:
-      id: 04203161-6a07-4c99-a6b4-22749628ac6e
-      type: AI_CHECK
-      assertion: iOS Test contact has a company name and phone number
-  - id: 73c47748-d535-4568-9530-aeb88165bdcc
-    type: MOBILE_PRESET_STEP
-    command:
-      id: 289fdacc-f131-46cd-a55d-e244345b2975
-      type: KILL_APP
-  - id: b2f4dfc1-28df-4935-b05b-129063f6e7f8
-    type: MOBILE_AI_ACTION_STEP
-    text: open the contact app and draft a text to iOS Test - Hey there, it's AI
+      into: add phone
+  - tap: Save button
+  - assert: iOS Test contact has a company name and phone number
+  - killApp
+  - act: open the contact app and draft a text to iOS Test - Hey there, it's AI
       ACTION!

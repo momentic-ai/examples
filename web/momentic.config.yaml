@@ -14,7 +14,6 @@ ai:
     assertion: v3
     text-extraction: v3
     visual-assertion: v3
-  aiPageFiltering: true
 browser:
   showZeroOpacityElements: false
   disableSecondaryCacheResolution: false
@@ -23,3 +22,4 @@ browser:
   autoExpandIframes: true
 advanced:
   fakerConstantSeed: false
+fileFormat: v2
