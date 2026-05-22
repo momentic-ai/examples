@@ -12,11 +12,8 @@ jobs:
       - checkout:
           path: ~/project
       - run:
-          name: Install app dependencies
+          name: Install dependencies
           command: npm --prefix ../ ci
-      - run:
-          name: Install testing dependencies
-          command: npm ci
       - run:
           name: Install Browsers
           command: npx momentic install-browsers chromium
@@ -42,8 +39,8 @@ jobs:
       - checkout:
           path: ~/project
       - run:
-          name: Install Dependencies
-          command: npm ci
+          name: Install dependencies
+          command: npm --prefix ../ ci
       - attach_workspace:
           at: .
       - run:
@@ -59,6 +56,4 @@ workflows:
       - run-tests
       - upload-results:
           requires:
-            - run-tests:
-              - success
-              - failed
+            - run-tests
