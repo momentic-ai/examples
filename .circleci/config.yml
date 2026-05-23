@@ -5,7 +5,9 @@ orbs:
 
 jobs:
   run-tests:
-    executor: node/default
+    docker:
+      - image: cimg/node:24.0
+    resource_class: large
     parallelism: 2
     working_directory: ~/project/web
     steps:
@@ -17,6 +19,7 @@ jobs:
       - run:
           name: Install Browsers
           command: npx momentic install-browsers chromium
+          no_output_timeout: 5m
       - run:
           name: Run tests
           command: |
@@ -33,7 +36,8 @@ jobs:
           paths:
             - test-results
   upload-results:
-    executor: node/default
+    docker:
+      - image: cimg/node:24.0
     working_directory: ~/project/web
     steps:
       - checkout:
