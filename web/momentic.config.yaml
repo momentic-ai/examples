@@ -14,7 +14,12 @@ ai:
     assertion: v3
     text-extraction: v3
     visual-assertion: v3
-  aiPageFiltering: true
+    failure-classification: v2
+  aiFailureAnalysis: true
+  classification: true
+  healing:
+    onFail: warn
+    onSuccess: pull-request
 browser:
   showZeroOpacityElements: false
   disableSecondaryCacheResolution: false
