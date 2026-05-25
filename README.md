@@ -9,7 +9,7 @@ This repo contains usage examples and patterns for the [Momentic CLI](https://mo
 - [Web test](web/) — end-to-end tests for [Swag Labs](https://www.saucedemo.com/), a demo e-commerce app. Includes:
   - `standard-user-purchases` — end-to-end checkout flow (add items, verify cart, complete purchase)
   - `cart-and-sorting-behavior` — verifies sorting changes the view without affecting cart state
-  - `autoheal-test-authorship-demo.test.yaml` — intentionally fails in a way that should classify as `TEST_AUTHORSHIP` and is only meant to be run by the dedicated AI-heal demo workflow
+  - `autoheal-test-authorship-demo.test.yaml` — intentionally fails in a way that should classify as `TEST_AUTHORSHIP` and is meant to be run by the dedicated AI-heal demo workflow
 
 ### Android
 
