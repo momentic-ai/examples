@@ -19,14 +19,14 @@ steps:
     type: MODULE
     moduleId: 68aab6c6-21e6-4e0b-a8cf-217765f4fb1f
     moduleName: log-in-username-password
-  - id: c600d8ec-6c24-46cd-9a1a-ed2f4a2463a0
+  - id: 7694c443-ca6e-459a-ad8c-dad5643ad271
     type: PRESET_ACTION
     command:
-      id: 589be41e-80e8-4908-bc46-2a9c56f004d4
+      id: d1a851bb-d1ad-47f3-80ab-883419646099
       type: CLICK
       target:
         type: description
-        elementDescriptor: add to cart for the Sauce Labs Backpack item
+        elementDescriptor: add to cart for the Sauce Labs Onesie item
   - id: e3bb4a38-3531-4cbe-a80f-6214ffb41ad5
     type: PRESET_ACTION
     command:
