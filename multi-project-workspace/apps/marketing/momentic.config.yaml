@@ -3,6 +3,14 @@ include:
   - "**/*.test.yaml"
   - "**/*.module.yaml"
   - "../../common/**/*.module.yaml"
+ai:
+  agentConfig:
+    failure-classification: v2
+  aiFailureAnalysis: true
+  classification: true
+  healing:
+    onFail: warn
+    onSuccess: pull-request
 environments:
   - name: test
     baseUrl: https://google.com
