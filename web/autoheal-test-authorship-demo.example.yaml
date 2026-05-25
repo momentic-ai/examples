@@ -2,7 +2,12 @@ fileType: momentic/test
 id: 70a188fc-e31c-4c94-85f8-a987fcfe49f8
 name: autoheal-test-authorship-demo
 baseUrl: https://saucedemo.com
-description: Add Sauce Labs Onesie to the cart and verify it appears there.
+description: >
+  Intentional auto-heal demo. The real test intent is to add Sauce Labs
+  Onesie to the cart and verify it appears there. If the run fails because the
+  test added a different item instead, treat that as a permanent
+  TEST_AUTHORSHIP issue and heal it by making the add-to-cart step explicitly
+  target Sauce Labs Onesie.
 schemaVersion: 1.0.24
 advanced:
   viewport:
@@ -14,11 +19,13 @@ envs:
   - name: production
     default: true
 disabled: false
+labels:
+  - autoheal
+  - classification
 steps:
   - id: 964e2ee6-c120-48c1-890a-1e010fe22916
     type: MODULE
     moduleId: 68aab6c6-21e6-4e0b-a8cf-217765f4fb1f
-    moduleName: log-in-username-password
   - id: c600d8ec-6c24-46cd-9a1a-ed2f4a2463a0
     type: PRESET_ACTION
     command:
