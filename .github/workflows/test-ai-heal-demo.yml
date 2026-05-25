@@ -1,0 +1,57 @@
+name: Test AI Heal Demo
+
+env:
+  MOMENTIC_API_KEY: ${{ secrets.MOMENTIC_API_KEY }}
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  run-ai-heal-demo:
+    name: Run AI heal demo
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./web
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: "npm"
+
+      - name: Install app dependencies
+        run: npm --prefix ../ ci
+
+      - name: Install testing dependencies
+        run: npm ci
+
+      - name: Install headless browsers for automation
+        run: npx momentic install-browsers chromium
+
+      - name: Run intentional failing auto-heal demo test
+        continue-on-error: true
+        run: |
+          npx momentic run autoheal-test-authorship-demo.test.yaml \
+            --output-dir test-results/autoheal-demo
+
+      - name: Upload raw demo results to Momentic Cloud
+        if: always()
+        run: npx momentic results upload test-results/autoheal-demo
+
+      - name: Run AI heal against the local demo results
+        if: always()
+        run: |
+          npx momentic ai heal test-results/autoheal-demo \
+            --config momentic.config.yaml \
+            --yes \
+            --timeout-minutes 10
