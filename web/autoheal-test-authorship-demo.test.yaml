@@ -9,7 +9,7 @@ advanced:
     width: 1920
     height: 1080
   browserType: Chromium
-retries: 1
+retries: 0
 envs:
   - name: production
     default: true
