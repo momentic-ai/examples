@@ -58,8 +58,18 @@ jobs:
 workflows:
   UI_Tests:
     jobs:
-      - run-tests
+      - run-tests:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              ignore: /.*/
       - upload-results:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              ignore: /.*/
           requires:
             - run-tests:
               - success
