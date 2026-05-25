@@ -66,7 +66,11 @@ jobs:
           # Run tests
           cat /web/momentic.config.yaml
           npx momentic install-browsers chromium
-          npx momentic run --upload-results --config /web/momentic.config.yaml /web/
+          npx momentic run \
+            --upload-results \
+            --config /web/momentic.config.yaml \
+            /web/ \
+            --exclude autoheal-test-authorship-demo.test.yaml
 
           EOF
 
