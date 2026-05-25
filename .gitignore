@@ -35,3 +35,6 @@ yarn-example/.yarn/*
 
 # Momentic test results
 test-results
+
+# Momentic MCP working directory
+.momentic-mcp
