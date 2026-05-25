@@ -42,14 +42,12 @@ jobs:
         continue-on-error: true
         run: |
           npx momentic run autoheal-test-authorship-demo.test.yaml \
-            --config web/momentic.config.yaml \
             --output-dir test-results/autoheal-demo --upload-results
 
       - name: Run AI heal against the local demo results
         if: always()
         run: |
           npx momentic ai heal test-results/autoheal-demo \
-            --config web/momentic.config.yaml \
             --yes \
             --timeout-minutes 10
 
