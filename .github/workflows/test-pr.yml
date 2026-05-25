@@ -4,7 +4,7 @@ env:
   MOMENTIC_API_KEY: ${{ secrets.MOMENTIC_API_KEY }}
 
 on:
-  workflow_dispatch:
+  pull_request:
 
 jobs:
   run-web-tests:
@@ -29,9 +29,7 @@ jobs:
         # Choose which browsers you want to install, see https://momentic.ai/docs/browsers
         run: npx momentic install-browsers chromium
       - name: Run tests
-        run: |
-          npx momentic run . \
-            --exclude autoheal-test-authorship-demo.test.yaml
+        run: npx momentic run .
       - name: Upload test results artifact to Momentic Cloud
         run: npx momentic results upload test-results
         if: always()

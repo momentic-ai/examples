@@ -4,7 +4,10 @@ env:
   MOMENTIC_API_KEY: ${{ secrets.MOMENTIC_API_KEY }}
 
 on:
-  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
 
 jobs:
   run-tests:
@@ -35,7 +38,6 @@ jobs:
         run: npx momentic install-browsers chromium
       - run: |
           npx momentic run . \
-            --exclude autoheal-test-authorship-demo.test.yaml \
             --output-dir test-results/shard-${{ matrix.shardIndex }} \
             --shard-index ${{ matrix.shardIndex }} \
             --shard-count ${{ matrix.shardTotal }}

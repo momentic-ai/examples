@@ -4,7 +4,10 @@ env:
   MOMENTIC_API_KEY: ${{ secrets.MOMENTIC_API_KEY }}
 
 on:
-  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
 
 jobs:
   run-tests-on-amazon-linux:
@@ -63,11 +66,7 @@ jobs:
           # Run tests
           cat /web/momentic.config.yaml
           npx momentic install-browsers chromium
-          npx momentic run \
-            --upload-results \
-            --config /web/momentic.config.yaml \
-            /web/ \
-            --exclude autoheal-test-authorship-demo.test.yaml
+          npx momentic run --upload-results --config /web/momentic.config.yaml /web/
 
           EOF
 

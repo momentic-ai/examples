@@ -4,7 +4,10 @@ env:
   MOMENTIC_API_KEY: ${{ secrets.MOMENTIC_API_KEY }}
 
 on:
-  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
 
 jobs:
   run-tests:
