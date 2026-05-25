@@ -1,0 +1,21 @@
+fileType: momentic/test/v2
+id: b7e3a1c4-9d52-4f18-a6b0-8c2e7d5f1a93
+version: 1.0.24
+url: https://saucedemo.com
+description: Login and verify products page using CSV-provided credentials
+defaultEnv: production
+disabled: false
+retries: 1
+viewport: 1920, 1080
+browserType: Chromium
+steps:
+  - type:
+      text: "{{env.USERNAME}}"
+      into: username input
+      clear: inputs
+  - type:
+      text: "{{env.PASSWORD}}"
+      into: password input
+      clear: inputs
+  - click: login button
+  - assert: Verify the user is logged in and can see the products page

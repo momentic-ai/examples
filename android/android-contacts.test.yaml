@@ -1,0 +1,32 @@
+fileType: momentic/mobile-test/v2
+id: af85ea73-cc99-4fd6-be6a-ebae70734757
+version: 0.0.4
+description: " "
+platform: android
+steps:
+  - openApp:
+      package: com.google.android.contacts
+      activity: ""
+  - tap: New contact button
+  - type:
+      text: "Android "
+      into: First name input
+  - type:
+      text: "Test "
+      into: Last name input
+  - type:
+      text: "Momentic "
+      into: Company input
+  - scrollTo:
+      on: Phone Input
+      in: app
+      scrollStepPercent: 100
+  - assert: Phone number input exists
+  - type:
+      text: "9194089905"
+      into: Phone input
+  - tap: save button
+  - assert: Android Test contact has a company name and phone number
+  - killApp
+  - act: open the phone app and call Android test - make sure there's a pop up when
+      we attempt to call

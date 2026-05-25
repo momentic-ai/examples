@@ -5,28 +5,26 @@ orbs:
 
 jobs:
   run-tests:
-    executor: node/default
+    docker:
+      - image: cimg/node:24.0
+    resource_class: large
     parallelism: 2
     working_directory: ~/project/web
     steps:
       - checkout:
           path: ~/project
       - run:
-          name: Install app dependencies
+          name: Install dependencies
           command: npm --prefix ../ ci
-      - run:
-          name: Install testing dependencies
-          command: npm ci
       - run:
           name: Install Browsers
           command: npx momentic install-browsers chromium
+          no_output_timeout: 5m
       - run:
           name: Run tests
           command: |
-            npx momentic run create-react-app-test.test.yaml \
-              --start "npm --prefix ../ run start" \
+            npx momentic run . \
               --output-dir test-results/shard-${CIRCLE_NODE_INDEX} \
-              --env development \
               --shard-index $(($CIRCLE_NODE_INDEX+1)) \
               --shard-count ${CIRCLE_NODE_TOTAL}
       - store_artifacts:
@@ -38,14 +36,15 @@ jobs:
           paths:
             - test-results
   upload-results:
-    executor: node/default
+    docker:
+      - image: cimg/node:24.0
     working_directory: ~/project/web
     steps:
       - checkout:
           path: ~/project
       - run:
-          name: Install Dependencies
-          command: npm ci
+          name: Install dependencies
+          command: npm --prefix ../ ci
       - attach_workspace:
           at: .
       - run:
@@ -61,6 +60,4 @@ workflows:
       - run-tests
       - upload-results:
           requires:
-            - run-tests:
-              - success
-              - failed
+            - run-tests

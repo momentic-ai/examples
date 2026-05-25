@@ -1,4 +1,5 @@
-name: android
+name: ios
 include:
   - "**/*.test.yaml"
   - "**/*.module.yaml"
+fileFormat: v2

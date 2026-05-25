@@ -28,3 +28,4 @@ browser:
   autoExpandIframes: true
 advanced:
   fakerConstantSeed: false
+fileFormat: v2
