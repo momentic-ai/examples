@@ -1,0 +1,10 @@
+fileType: momentic/mobile-module/v2
+id: 01468bcf-98a5-44fb-9918-bbdd92e07d56
+version: 0.0.4
+platform: android
+description: Demonstrates a no-input mobile module invocation.
+steps:
+  - javascript:
+      code: return "android kitchen-sink module entered"
+      saveAs: KS_MOBILE_MODULE_TRACE
+  - checkScreenContains: Create contact

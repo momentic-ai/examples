@@ -1,0 +1,665 @@
+fileType: momentic/test/v2
+id: c657591b-6850-4c56-9bde-d7f47be50b1d
+version: 1.0.24
+url: https://www.saucedemo.com
+description: >-
+  Kitchen-sink demo that exercises every web step type and every variant of
+  each step. Disabled by default - flip `disabled: false` to run.
+defaultEnv: production
+disabled: true
+retries: 0
+viewport: 1920, 1080
+browserType: Chromium
+colorScheme: light
+labels:
+  - kitchen-sink
+parameters:
+  - name: USERNAME
+    default:
+      string: standard_user
+  - name: ZIP_FALLBACK
+    defaultValue: "94016"
+before:
+  - javascript:
+      code: return faker.string.uuid()
+      saveAs: SESSION_ID
+  - javascript:
+      code: return faker.location.zipCode()
+      saveAs: ZIP_CODE
+  - javascript:
+      code: return env.ZIP_CODE ?? env.ZIP_FALLBACK
+      saveAs: FINAL_ZIP
+steps:
+  # ---------------------------------------------------------------
+  # Storage & headers - cookie, localStorage, header url-matcher variants
+  # ---------------------------------------------------------------
+  - cookie: ks-session-id={{ env.SESSION_ID }}
+  - cookie:
+      value: ks-detailed-cookie=hello
+  - localStorage:
+      key: ks-feature-flag
+      value: '{"newCheckout":true}'
+  - header:
+      name: X-Kitchen-Sink
+      value: hello
+      domain: saucedemo.com
+  - header:
+      name: X-Kitchen-Sink-Sub
+      value: from-substring
+      substring: saucedemo.com
+  - header:
+      name: X-Kitchen-Sink-Glob
+      value: from-glob
+      glob: "**/inventory.html"
+  - header:
+      name: X-Kitchen-Sink-Regex
+      value: from-regex
+      regex: .+saucedemo\.com.+inventory.html
+      method: GET
+  # ---------------------------------------------------------------
+  # Network recording / listeners
+  # ---------------------------------------------------------------
+  - recordRequests:
+      key: assets
+      regex: .+saucedemo\.com.+\.(?:png|js|css).*
+  - recordRequests:
+      key: posts
+      substring: saucedemo.com
+      method: POST
+  - registerRequestListener:
+      key: image-load
+      regex: .+saucedemo\.com.+\.png.*
+  - registerRequestListener:
+      key: inventory-doc
+      glob: "**/inventory.html"
+  # ---------------------------------------------------------------
+  # Modules - bare path + with-inputs path + javascript-valued inputs
+  # ---------------------------------------------------------------
+  - module: ./log-in-username-password.module.yaml
+  - waitForUrl: /inventory.html
+  - awaitListener: image-load
+  - awaitListener:
+      key: inventory-doc
+      timeout: 15000
+      saveAs: INVENTORY_REQUEST
+  - javascript: assert(env.INVENTORY_REQUEST.request.url.includes("/inventory.html"))
+  - getRecordedRequests: assets
+  - getRecordedRequests:
+      key: posts
+      saveAs: POSTS
+  - javascript: assert(Array.isArray(env.POSTS))
+  - module:
+      path: ./kitchen-sink-variants.module.yaml
+  - module:
+      path: ./kitchen-sink-with-inputs.module.yaml
+      inputs:
+        LABEL: literal-label
+        GREETING:
+          string: from-string-wrapper
+        COLOR:
+          javascript: return "blue"
+  # ---------------------------------------------------------------
+  # waitForUrl / waitForUrlNotToMatch - every matcher variant
+  # ---------------------------------------------------------------
+  - waitForUrl:
+      substring: /inventory.html
+      timeout: 15000
+  - waitForUrl:
+      glob: "**/inventory.html"
+  - waitForUrl:
+      regex: .+/inventory\.html$
+      caseInsensitive: true
+  - waitForUrlNotToMatch: /checkout-complete.html
+  - waitForUrlNotToMatch:
+      regex: .+/checkout-complete\.html$
+  # ---------------------------------------------------------------
+  # Page checks - shorthand + detailed, both polarities
+  # ---------------------------------------------------------------
+  - checkPageContains: Products
+  - checkPageContains:
+      text: Products
+      timeout: 10000
+  - checkPageDoesNotContain: This text should never appear on the inventory page
+  - checkPageDoesNotContain:
+      text: another-never-present-string
+      timeout: 5000
+  # ---------------------------------------------------------------
+  # Element checks - every alias in the cartesian product.
+  # ---------------------------------------------------------------
+  # element subject (existence-style conditions)
+  - checkElementExists: the cart icon in the top-right corner
+  - checkElementExists:
+      element: the cart icon in the top-right corner
+      timeout: 5000
+  - checkElementDoesNotExist: a button labeled "definitely not real"
+  - checkElementVisible: the product sort dropdown
+  - checkElementNotVisible: a button labeled "definitely not real"
+  - checkElementEnabled: the product sort dropdown
+  - checkElementNotEnabled:
+      element: the product sort dropdown
+      skipped: true
+  - checkElementEditable:
+      element: the product sort dropdown
+      skipped: true
+  - checkElementNotEditable: the page title at the top of the inventory page
+  - checkElementFocused:
+      element: the product sort dropdown
+      skipped: true
+  - checkElementNotFocused: the page title at the top of the inventory page
+  # content subject - text content of the element
+  - checkElementContentExists: the page title at the top of the inventory page
+  - checkElementContentDoesNotExist:
+      element: a heading labeled "definitely not real"
+      skipped: true
+  - checkElementContentContains:
+      element: the page title at the top of the inventory page
+      value: Product
+  - checkElementContentDoesNotContain:
+      element: the page title at the top of the inventory page
+      value: nothing-matches-this
+  - checkElementContentEquals:
+      element: the page title at the top of the inventory page
+      value: Products
+  - checkElementContentDoesNotEqual:
+      element: the page title at the top of the inventory page
+      value: Cart
+  - checkElementContentStartsWith:
+      element: the page title at the top of the inventory page
+      value: Prod
+  - checkElementContentDoesNotStartWith:
+      element: the page title at the top of the inventory page
+      value: Cart
+  # attribute subject - requires `name`
+  - checkElementAttributeExists:
+      element: the product sort dropdown
+      name: data-test
+  - checkElementAttributeDoesNotExist:
+      element: the product sort dropdown
+      name: data-nonexistent-attribute
+  - checkElementAttributeContains:
+      element: the product sort dropdown
+      name: data-test
+      value: sort
+  - checkElementAttributeDoesNotContain:
+      element: the product sort dropdown
+      name: data-test
+      value: not-sort
+  - checkElementAttributeEquals:
+      element: the product sort dropdown
+      name: data-test
+      value: product-sort-container
+  - checkElementAttributeDoesNotEqual:
+      element: the product sort dropdown
+      name: data-test
+      value: not-the-sort-container
+  - checkElementAttributeStartsWith:
+      element: the product sort dropdown
+      name: data-test
+      value: product
+  - checkElementAttributeDoesNotStartWith:
+      element: the product sort dropdown
+      name: data-test
+      value: not-product
+  # tag_name subject (alias prefix "Name") - the element's HTML tag name
+  - checkElementNameExists: the product sort dropdown
+  - checkElementNameDoesNotExist:
+      element: a button labeled "definitely not real"
+      skipped: true
+  - checkElementNameContains:
+      element: the product sort dropdown
+      value: select
+  - checkElementNameDoesNotContain:
+      element: the product sort dropdown
+      value: button
+  - checkElementNameEquals:
+      element: the product sort dropdown
+      value: select
+  - checkElementNameDoesNotEqual:
+      element: the product sort dropdown
+      value: button
+  - checkElementNameStartsWith:
+      element: the product sort dropdown
+      value: sel
+  - checkElementNameDoesNotStartWith:
+      element: the product sort dropdown
+      value: but
+  # style subject - requires `name` (CSS property)
+  - checkElementStyleExists:
+      element: the product sort dropdown
+      name: color
+  - checkElementStyleDoesNotExist:
+      element: the product sort dropdown
+      name: nonexistent-css-prop
+  - checkElementStyleContains:
+      element: the product sort dropdown
+      name: cursor
+      value: pointer
+  - checkElementStyleDoesNotContain:
+      element: the product sort dropdown
+      name: cursor
+      value: text
+  - checkElementStyleEquals:
+      element: the product sort dropdown
+      name: cursor
+      value: pointer
+  - checkElementStyleDoesNotEqual:
+      element: the product sort dropdown
+      name: cursor
+      value: text
+  - checkElementStyleStartsWith:
+      element: the product sort dropdown
+      name: cursor
+      value: poin
+  - checkElementStyleDoesNotStartWith:
+      element: the product sort dropdown
+      name: cursor
+      value: tex
+  # ---------------------------------------------------------------
+  # Selectors - select by label, value, index
+  # ---------------------------------------------------------------
+  - select:
+      from: the product sort dropdown
+      value: lohi
+  - assert: the items on the inventory page are now sorted from lowest price to highest price
+  - select:
+      from: the product sort dropdown
+      label: Price (high to low)
+  - select:
+      from: the product sort dropdown
+      index: 0
+  # ---------------------------------------------------------------
+  # Hover, focus, blur
+  # ---------------------------------------------------------------
+  - hover: the cart icon in the top-right corner
+  - hover:
+      on: the cart icon in the top-right corner
+      offset:
+        x: 4
+        y: 4
+  - focus: the product sort dropdown
+  - blur
+  # ---------------------------------------------------------------
+  # Scroll - shorthand + detailed for all four directions
+  # ---------------------------------------------------------------
+  - scrollDown: 400
+  - scrollDown:
+      pixels: 200
+      in: the inventory list
+  - scrollUp: 400
+  - scrollUp:
+      pixels: 100
+  - scrollRight: 50
+  - scrollRight:
+      pixels: 30
+  - scrollLeft: 50
+  - scrollLeft:
+      pixels: 30
+  # ---------------------------------------------------------------
+  # Add to cart - module with inputs
+  # ---------------------------------------------------------------
+  - module:
+      path: ./add-item-to-cart.module.yaml
+      inputs:
+        ITEM:
+          string: sauce labs backpack
+  - module:
+      path: ./add-item-to-cart.module.yaml
+      inputs:
+        ITEM:
+          string: sauce labs bike light
+  # ---------------------------------------------------------------
+  # AI extract - shorthand + detailed schema
+  # ---------------------------------------------------------------
+  - extract: Extract the page title
+  - extract:
+      goal: Extract the names of all items currently visible on the inventory list
+      schema:
+        type: object
+        properties:
+          items:
+            type: array
+            items:
+              type: string
+        required:
+          - items
+      saveAs: INVENTORY
+  - javascript: assert(Array.isArray(env.INVENTORY.items) && env.INVENTORY.items.length > 0)
+  # ---------------------------------------------------------------
+  # Visual - assertVisually + visualDiff (bare + shorthand + detailed)
+  # ---------------------------------------------------------------
+  - assertVisually: the cart icon shows two items
+  - assertVisually:
+      that: the cart icon shows two items
+      timeout: 10000
+  - visualDiff
+  - visualDiff: the cart icon in the top-right corner
+  - visualDiff:
+      on: the cart icon in the top-right corner
+      threshold: 0.4
+  # ---------------------------------------------------------------
+  # Click - shorthand + every targeting variant + every extra option
+  # ---------------------------------------------------------------
+  - click: the cart icon in the top-right corner
+  - waitForUrl: /cart.html
+  - click:
+      on: the Checkout button
+  - waitForUrl: /checkout-step-one.html
+  - click:
+      css: "[data-test='firstName']"
+  - click:
+      coords: 5, 5
+  - click:
+      x: 1
+      y: 1
+  - click:
+      on: the Last Name input
+      times: 1
+      delay: 25
+      force: false
+  - click:
+      on: the Last Name input
+      offset:
+        x: 0
+        y: 0
+  # ---------------------------------------------------------------
+  # Type - clear modes, pressEnter, delay, into vs focused element
+  # ---------------------------------------------------------------
+  - type:
+      text: Kitchen
+      into: the First Name input
+      clear: inputs
+      delay: 10
+  - type:
+      text: Sink
+      into: the Last Name input
+      clear: always
+  - type:
+      text: "{{ env.FINAL_ZIP }}"
+      into: the Zip/Postal Code input
+      clear: never
+  - type:
+      text: " #2"
+      into: the First Name input
+      clear: false
+  - focus: the First Name input
+  - type:
+      text: "!"
+      clear: true
+      pressEnter: false
+  # ---------------------------------------------------------------
+  # Keyboard - press shorthand + detailed, keyDown + keyUp
+  # ---------------------------------------------------------------
+  - press: Tab
+  - press:
+      key: Tab
+      repeat: 2
+      delay: 25
+      convertMeta: true
+  - keyDown: Shift
+  - keyUp: Shift
+  # ---------------------------------------------------------------
+  # Clipboard - copy with string, boolean, null + paste
+  # ---------------------------------------------------------------
+  - copy: "{{ env.SESSION_ID }}"
+  - copy:
+      value: "{{ env.SESSION_ID }}"
+  - copy: true
+  - copy:
+      value: null
+  - paste
+  # ---------------------------------------------------------------
+  # Double click + right click - shorthand + detailed + coords
+  # ---------------------------------------------------------------
+  - doubleClick: the Last Name input
+  - doubleClick:
+      coords: 5, 5
+  - doubleClick:
+      on: the Last Name input
+      delay: 10
+      rightClick: false
+  - rightClick:
+      coords: 5, 5
+  - rightClick:
+      on: the Last Name input
+      times: 1
+  # ---------------------------------------------------------------
+  # Drag and drop - every from/to variant pair + mouseDrag both forms
+  # ---------------------------------------------------------------
+  - dragAndDrop:
+      from: the First Name input
+      to: the Last Name input
+      hover: 200
+      steps: 5
+  - dragAndDrop:
+      fromCss: "[data-test='firstName']"
+      toCss: "[data-test='lastName']"
+  - dragAndDrop:
+      fromCoords: 1, 1
+      toCoords: 2, 2
+  - dragAndDrop:
+      fromX: 1
+      fromY: 1
+      toX: 2
+      toY: 2
+  - mouseDrag: 5, 5
+  - mouseDrag:
+      from: the First Name input
+      delta:
+        x: 11
+        y: 22
+      steps: 3
+  # ---------------------------------------------------------------
+  # Continue through the checkout flow
+  # ---------------------------------------------------------------
+  - click: the Continue button
+  - waitForUrl: /checkout-step-two.html
+  - assert: the item total reflects both items selected earlier
+  - click: the Finish button
+  - waitForUrl: /checkout-complete.html
+  # ---------------------------------------------------------------
+  # AI action (act) - shorthand + detailed
+  # ---------------------------------------------------------------
+  - act: confirm the Back Home button is visible without clicking it
+  - act:
+      goal: confirm the Back Home button is visible without clicking it
+      version: "2"
+  # ---------------------------------------------------------------
+  # Assert (AI check) - shorthand + detailed
+  # ---------------------------------------------------------------
+  - assert: there is a header confirming the order is complete
+  - assert:
+      that: there is a header confirming the order is complete
+      timeout: 10000
+  # ---------------------------------------------------------------
+  # Conditionals (if) - every assertion type at the top level
+  # ---------------------------------------------------------------
+  - if:
+      assert: the Back Home button is visible
+      then:
+        - checkPageContains: Thank you
+  - if:
+      assertVisually: a green check mark is visible
+      then:
+        - assert: there is a header confirming the order is complete
+  - if:
+      checkPageContains: Thank you
+      then:
+        - checkElementVisible: the Back Home button
+  - if:
+      checkPageDoesNotContain: this string should never appear
+      then:
+        - checkElementVisible: the Back Home button
+  - if:
+      checkElementExists: the Back Home button
+      then:
+        - checkElementVisible: the Back Home button
+  - if:
+      checkElementVisible: the Back Home button
+      then:
+        - checkPageContains: Thank you
+  - if:
+      checkElementContentContains:
+        element: the order confirmation heading
+        value: Thank you
+      then:
+        - checkElementVisible: the Back Home button
+  - if:
+      javascript: return env.SESSION_ID.length > 0
+      then:
+        - wait: 100
+  # ---------------------------------------------------------------
+  # Navigation - navigate, refresh, back/forward, newTab, switchTab, closeTab
+  # ---------------------------------------------------------------
+  - click: the Back Home button
+  - waitForUrl: /inventory.html
+  - navigate: https://www.saucedemo.com/cart.html
+  - navigate:
+      url: https://www.saucedemo.com/inventory.html
+      timeout: 30000
+  - goBack
+  - goForward
+  - refresh
+  - refresh:
+      timeout: 30000
+  - newTab: https://www.saucedemo.com/about.html
+  - newTab:
+      url: https://example.com
+      timeout: 15000
+  - switchTab: 0
+  - switchTab:
+      substring: /about
+  - switchTab:
+      regex: example\.com
+  - switchTab:
+      index: 0
+  - closeTab
+  - closeTab:
+      substring: /about
+  - switchTab:
+      index: 0
+  # ---------------------------------------------------------------
+  # Auth state - save/load both forms
+  # ---------------------------------------------------------------
+  - authSave
+  - authSave: ./kitchen-sink-auth.json
+  - authSave:
+      path: ./kitchen-sink-auth.json
+  - authLoad: ./kitchen-sink-auth.json
+  - authLoad:
+      path: ./kitchen-sink-auth.json
+  # ---------------------------------------------------------------
+  # HTTP - request (shorthand + detailed) + graphqlRequest
+  # ---------------------------------------------------------------
+  - request: https://postman-echo.com/get
+  - request:
+      url: https://postman-echo.com/get
+      headers:
+        x-test: kitchen-sink-{{ env.SESSION_ID }}
+      params:
+        source: kitchen-sink
+      saveAs: HTTP_GET
+  - javascript: assert(env.HTTP_GET.status === 200)
+  - request:
+      url: https://postman-echo.com/post
+      method: POST
+      headers:
+        x-test: kitchen-sink
+      contentType: json
+      body:
+        payload: "{{ env.SESSION_ID }}"
+      timeout: 15000
+      saveAs: HTTP_POST
+  - javascript: assert(env.HTTP_POST.status === 200)
+  - graphqlRequest:
+      url: https://rickandmortyapi.com/graphql
+      query: |-
+        query Characters($page: Int!) {
+          characters(page: $page) {
+            info { count }
+          }
+        }
+      variables:
+        page: 1
+      headers:
+        x-test: kitchen-sink-graphql
+      timeout: 15000
+      saveAs: CHARACTERS
+  - javascript: assert(env.CHARACTERS.data.characters.info.count > 0)
+  # ---------------------------------------------------------------
+  # Mocking + offline/online
+  # ---------------------------------------------------------------
+  - mock:
+      substring: /api/widgets
+      method: GET
+      key: WIDGETS_MOCK
+      responseGenerator: |-
+        return new Response(
+          JSON.stringify({ ok: true, mocked: true }),
+          { status: 200, headers: { "content-type": "application/json" } }
+        )
+  - mock:
+      regex: .+/api/orders.*
+      key: ORDERS_MOCK
+      fetchOriginalResponse: true
+      responseGenerator: |-
+        return new Response(
+          JSON.stringify({ ok: true, mocked: "orders" }),
+          { status: 200, headers: { "content-type": "application/json" } }
+        )
+  - mock:
+      glob: "**/api/users/**"
+      key: USERS_MOCK
+      method: POST
+      responseGenerator: |-
+        return new Response(
+          JSON.stringify({ ok: true }),
+          { status: 200 }
+        )
+  - removeRouteMock: WIDGETS_MOCK
+  - removeRouteMock:
+      key: ORDERS_MOCK
+  - removeRouteMock: USERS_MOCK
+  - offline
+  - online
+  # ---------------------------------------------------------------
+  # JavaScript - shorthand + detailed + browser env + node env + saveAs
+  # ---------------------------------------------------------------
+  - javascript: return 1 + 1
+  - javascript:
+      code: return env.SESSION_ID
+      environment: node
+      saveAs: SESSION_ECHO_NODE
+  - javascript:
+      code: return document.title
+      environment: browser
+      saveAs: PAGE_TITLE
+  - javascript:
+      code: return 42
+      fragment: true
+      timeout: 5000
+      saveAs: ANSWER
+  - javascript: assert(env.ANSWER === 42)
+  # ---------------------------------------------------------------
+  # Files, dialogs, captcha, wait
+  # ---------------------------------------------------------------
+  - navigate: https://www.csm-testcenter.org/test?do=show&subdo=common&test=file_upload
+  - fileUpload: momentic.config.yaml
+  - fileUpload:
+      path: momentic.config.yaml
+      name: kitchen-sink-renamed.yaml
+  - navigate: "data:text/html,<button id='trigger' onclick=\"alert('kitchen-sink')\">go</button>"
+  - dialog: ACCEPT
+  - dialog:
+      action: DISMISS
+  - click:
+      css: "#trigger"
+  - captcha:
+      skipped: true
+  - wait: 250
+  - wait:
+      ms: 100
+after:
+  - javascript:
+      code: return "kitchen-sink teardown"
+      environment: node
+  - authSave

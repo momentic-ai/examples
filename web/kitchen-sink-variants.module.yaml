@@ -1,0 +1,9 @@
+fileType: momentic/module/v2
+id: 7a34fe16-01d7-4382-bff2-c9e06c1213ca
+version: 1.0.24
+description: Demonstrates a module invocation with no inputs.
+steps:
+  - javascript:
+      code: return "kitchen-sink-variants module entered"
+      saveAs: KS_MODULE_TRACE
+  - checkPageContains: Swag Labs

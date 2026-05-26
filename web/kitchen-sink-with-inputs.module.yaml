@@ -1,0 +1,32 @@
+fileType: momentic/module/v2
+id: 6d0e6c99-d69d-403d-a52f-fcdd93546810
+version: 1.0.24
+description: Demonstrates a module invocation that accepts an input.
+parameters:
+  - name: LABEL
+    default:
+      string: kitchen-sink-default
+  - name: GREETING
+    default:
+      javascript: return `hello ${env.LABEL}`
+  - name: COLOR
+    enum:
+      - red
+      - green
+      - blue
+    default:
+      string: green
+steps:
+  - javascript:
+      code: return env.LABEL
+      saveAs: KS_LABEL_ECHO
+  - javascript:
+      code: return env.GREETING
+      saveAs: KS_GREETING_ECHO
+  - javascript:
+      code: return env.COLOR
+      saveAs: KS_COLOR_ECHO
+  - if:
+      javascript: return env.LABEL.length > 0
+      then:
+        - checkPageContains: Swag Labs

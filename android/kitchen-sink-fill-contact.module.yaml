@@ -1,0 +1,36 @@
+fileType: momentic/mobile-module/v2
+id: 4d7cafa6-6617-46bc-9a95-4d91f6aef8f0
+version: 0.0.4
+platform: android
+description: Fill out a new contact form on the Android Contacts app.
+parameters:
+  parameterNames:
+    - FIRST_NAME
+    - LAST_NAME
+    - GREETING
+  defaultParameters:
+    FIRST_NAME: '"KitchenSink"'
+    LAST_NAME: '"Demo"'
+    GREETING: "`hello ${env.FIRST_NAME}`"
+steps:
+  - javascript:
+      code: return env.GREETING
+      saveAs: KS_GREETING_ECHO
+  - type:
+      text: "{{ env.FIRST_NAME }}"
+      into: First name input
+      clearContent: true
+      keyPressDelay: 10
+  - type:
+      text: "{{ env.LAST_NAME }}"
+      into: Last name input
+  - type:
+      text: Momentic
+      into: Company input
+  - scrollTo:
+      on: Phone input
+      in: app
+      scrollStepPercent: 100
+  - type:
+      text: "9194089905"
+      into: Phone input

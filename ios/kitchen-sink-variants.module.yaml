@@ -1,0 +1,10 @@
+fileType: momentic/mobile-module/v2
+id: 1f8d2c46-2b73-4c91-9c4f-44a85bdbf21a
+version: 0.0.4
+platform: ios
+description: Demonstrates a no-input iOS mobile module invocation.
+steps:
+  - javascript:
+      code: return "ios kitchen-sink module entered"
+      saveAs: KS_MOBILE_MODULE_TRACE
+  - checkScreenContains: New Contact

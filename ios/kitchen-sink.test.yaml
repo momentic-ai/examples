@@ -1,0 +1,445 @@
+fileType: momentic/mobile-test/v2
+id: a1b2c3d4-e5f6-4a5b-9c8d-1e2f3a4b5c6d
+version: 0.0.4
+description: >-
+  Kitchen-sink demo that exercises every iOS mobile step type and every
+  variant of each step. Uses the Apple Contacts app as a test surface. Skipped
+  steps are syntax-only references for variants that require manual fixtures.
+platform: ios
+retries: 0
+emulator:
+  waitForStability: true
+labels:
+  - kitchen-sink
+before:
+  - javascript:
+      code: return faker.string.uuid()
+      saveAs: SESSION_ID
+  - javascript:
+      code: return `KitchenSink-${faker.string.alpha(5)}`
+      saveAs: FIRST_NAME
+steps:
+  # ---------------------------------------------------------------
+  # openApp - shorthand (bundle id) + detailed (with intentExtras)
+  # ---------------------------------------------------------------
+  - openApp: com.apple.MobileAddressBook
+  - openApp:
+      package: com.apple.MobileAddressBook
+  - wait: 1000
+  # ---------------------------------------------------------------
+  # Module invocations - bare + with inputs + javascript-valued inputs
+  # ---------------------------------------------------------------
+  - module: ./kitchen-sink-variants.module.yaml
+  - module:
+      path: ./kitchen-sink-fill-contact.module.yaml
+      inputs:
+        FIRST_NAME: "{{ env.FIRST_NAME }}"
+        LAST_NAME:
+          string: Demo
+        GREETING:
+          javascript: return `module saw ${env.FIRST_NAME}`
+  # ---------------------------------------------------------------
+  # Tap - shorthand string, percent-pair shorthand, detailed
+  # ---------------------------------------------------------------
+  - tap: New contact button
+  - tap: "50%, 50%"
+  - tap:
+      on: New contact button
+      iterations: 1
+      tapDelay: 5
+      offset: 4, 8
+  - tap:
+      on: New contact button
+      longPress: true
+      longPressDuration: 500
+  - tap:
+      on: New contact button
+      skipped: true
+      comment: variant kept for reference; skipped to avoid double-press
+  # ---------------------------------------------------------------
+  # Type - shorthand + detailed + clear/force variants
+  # ---------------------------------------------------------------
+  - type:
+      text: hello kitchen sink
+      into: First name input
+      clearContent: true
+      keyPressDelay: 5
+  - type:
+      text: " v2"
+      into: First name input
+      clearContent: false
+  - type:
+      text: another
+      into: Last name input
+      forceClearContent: true
+  - type:
+      text: from focus
+      skipped: true
+      comment: type without `into` types into the currently-focused field
+  # ---------------------------------------------------------------
+  # Press (physical button) - shorthand + detailed (iOS supports home + power)
+  # ---------------------------------------------------------------
+  - press: home
+  - press: power
+  - press:
+      key: home
+      longPress: true
+  - press:
+      key: power
+  # ---------------------------------------------------------------
+  # PressKey (keyboard) - shorthand + detailed (iOS supports enter + backspace)
+  # ---------------------------------------------------------------
+  - pressKey: enter
+  - pressKey: backspace
+  - pressKey:
+      key: enter
+  - pressKey:
+      key: backspace
+  # ---------------------------------------------------------------
+  # Re-open the contacts app for the rest of the flow
+  # ---------------------------------------------------------------
+  - openApp: com.apple.MobileAddressBook
+  # ---------------------------------------------------------------
+  # Swipe - all four directions, shorthand + detailed + custom coords
+  # ---------------------------------------------------------------
+  - swipe: up
+  - swipe: down
+  - swipe: left
+  - swipe: right
+  - swipe:
+      direction: up
+      in: screen
+      viewportPercent: 80
+      duration: 400
+  - swipe:
+      direction: down
+      in: app
+      viewportPercent: "60%"
+      offset: 0, 0
+  - swipe:
+      direction: left
+      in: webview
+  - swipe:
+      direction: right
+      in: contact list
+  - swipe:
+      direction: down
+      in:
+        x: 100
+        y: 200
+        delta: 400
+  # ---------------------------------------------------------------
+  # ScrollTo - shorthand + detailed
+  # ---------------------------------------------------------------
+  - scrollTo: Save button
+  - scrollTo:
+      on: Save button
+      in: screen
+      scrollStepPercent: 100
+      maxScrollAttempts: 5
+  - scrollTo:
+      on: Save button
+      direction: down
+      in: app
+  - scrollTo:
+      on: Save button
+      direction: up
+      in:
+        x: 100
+        y: 800
+        delta: 400
+  - tap: Save button
+  # ---------------------------------------------------------------
+  # Screen checks - shorthand + detailed, both polarities
+  # ---------------------------------------------------------------
+  - checkScreenContains: "{{ env.FIRST_NAME }}"
+  - checkScreenContains:
+      text: "{{ env.FIRST_NAME }}"
+      timeout: 10000
+  - checkScreenDoesNotContain: this-text-should-never-appear
+  - checkScreenDoesNotContain:
+      text: another-never-present
+      timeout: 5000
+  # ---------------------------------------------------------------
+  # Element checks - every alias in the cartesian product
+  # ---------------------------------------------------------------
+  # element subject
+  - checkElementExists: KitchenSink contact entry
+  - checkElementExists:
+      on: KitchenSink contact entry
+      timeout: 5000
+  - checkElementDoesNotExist: a button labeled "definitely not real"
+  - checkElementVisible: KitchenSink contact entry
+  - checkElementNotVisible: a button labeled "definitely not real"
+  - checkElementEnabled: KitchenSink contact entry
+  - checkElementNotEnabled:
+      on: KitchenSink contact entry
+      skipped: true
+  - checkElementEditable:
+      on: KitchenSink contact entry
+      skipped: true
+  - checkElementNotEditable: KitchenSink contact entry
+  - checkElementFocused:
+      on: KitchenSink contact entry
+      skipped: true
+  - checkElementNotFocused: KitchenSink contact entry
+  # content subject
+  - checkElementContentExists: KitchenSink contact entry
+  - checkElementContentDoesNotExist:
+      on: a heading labeled "definitely not real"
+      skipped: true
+  - checkElementContentContains:
+      on: KitchenSink contact entry
+      value: KitchenSink
+  - checkElementContentDoesNotContain:
+      on: KitchenSink contact entry
+      value: nothing-matches-this
+  - checkElementContentEquals:
+      on: KitchenSink contact entry
+      value: "{{ env.FIRST_NAME }} Demo"
+      skipped: true
+  - checkElementContentDoesNotEqual:
+      on: KitchenSink contact entry
+      value: another-name
+  - checkElementContentStartsWith:
+      on: KitchenSink contact entry
+      value: KitchenSink
+  - checkElementContentDoesNotStartWith:
+      on: KitchenSink contact entry
+      value: Other
+  # attribute subject - requires `name`
+  - checkElementAttributeExists:
+      on: KitchenSink contact entry
+      name: label
+  - checkElementAttributeDoesNotExist:
+      on: KitchenSink contact entry
+      name: nonexistent-attribute
+  - checkElementAttributeContains:
+      on: KitchenSink contact entry
+      name: label
+      value: KitchenSink
+  - checkElementAttributeDoesNotContain:
+      on: KitchenSink contact entry
+      name: label
+      value: not-here
+  - checkElementAttributeEquals:
+      on: KitchenSink contact entry
+      name: label
+      value: "{{ env.FIRST_NAME }} Demo"
+      skipped: true
+  - checkElementAttributeDoesNotEqual:
+      on: KitchenSink contact entry
+      name: label
+      value: other-value
+  - checkElementAttributeStartsWith:
+      on: KitchenSink contact entry
+      name: label
+      value: Kitchen
+  - checkElementAttributeDoesNotStartWith:
+      on: KitchenSink contact entry
+      name: label
+      value: Other
+  # tag_name subject (alias prefix "Name")
+  - checkElementNameExists: KitchenSink contact entry
+  - checkElementNameDoesNotExist:
+      on: a button labeled "definitely not real"
+      skipped: true
+  - checkElementNameContains:
+      on: KitchenSink contact entry
+      value: StaticText
+      skipped: true
+  - checkElementNameDoesNotContain:
+      on: KitchenSink contact entry
+      value: Image
+  - checkElementNameEquals:
+      on: KitchenSink contact entry
+      value: XCUIElementTypeStaticText
+      skipped: true
+  - checkElementNameDoesNotEqual:
+      on: KitchenSink contact entry
+      value: XCUIElementTypeImage
+  - checkElementNameStartsWith:
+      on: KitchenSink contact entry
+      value: XCUIElementType
+      skipped: true
+  - checkElementNameDoesNotStartWith:
+      on: KitchenSink contact entry
+      value: AndroidElement
+  # style subject - requires `name`
+  - checkElementStyleExists:
+      on: KitchenSink contact entry
+      name: enabled
+  - checkElementStyleDoesNotExist:
+      on: KitchenSink contact entry
+      name: nonexistent-style
+  - checkElementStyleContains:
+      on: KitchenSink contact entry
+      name: enabled
+      value: "true"
+      skipped: true
+  - checkElementStyleDoesNotContain:
+      on: KitchenSink contact entry
+      name: enabled
+      value: "false"
+  - checkElementStyleEquals:
+      on: KitchenSink contact entry
+      name: enabled
+      value: "true"
+      skipped: true
+  - checkElementStyleDoesNotEqual:
+      on: KitchenSink contact entry
+      name: enabled
+      value: "false"
+  - checkElementStyleStartsWith:
+      on: KitchenSink contact entry
+      name: enabled
+      value: "tr"
+      skipped: true
+  - checkElementStyleDoesNotStartWith:
+      on: KitchenSink contact entry
+      name: enabled
+      value: "fa"
+  # ---------------------------------------------------------------
+  # Assert (AI) - shorthand + detailed
+  # ---------------------------------------------------------------
+  - assert: a contact with the kitchen sink name appears in the list
+  - assert:
+      that: a contact with the kitchen sink name appears in the list
+      timeout: 10000
+  # ---------------------------------------------------------------
+  # Extract (AI) - shorthand + detailed
+  # ---------------------------------------------------------------
+  - extract: Extract the visible contact name
+  - extract:
+      goal: Extract the contact name and phone number
+      schema:
+        type: object
+        properties:
+          name:
+            type: string
+          phone:
+            type: string
+        required:
+          - name
+          - phone
+      saveAs: CONTACT
+  - javascript: assert(typeof env.CONTACT.name === "string")
+  # ---------------------------------------------------------------
+  # Drag and drop
+  # ---------------------------------------------------------------
+  - dragAndDrop:
+      from: KitchenSink contact entry
+      to: Favorites
+      hoverDuration: 200
+      dragDuration: 500
+      skipped: true
+  # ---------------------------------------------------------------
+  # AI action (act) - shorthand + detailed
+  # ---------------------------------------------------------------
+  - act: confirm the kitchen sink contact is starred without changing anything
+  - act:
+      goal: confirm the kitchen sink contact is starred without changing anything
+      version: "2"
+  # ---------------------------------------------------------------
+  # Conditionals (if) - every assertion type at the top level
+  # ---------------------------------------------------------------
+  - if:
+      assert: the contact list is visible
+      then:
+        - checkScreenContains: "{{ env.FIRST_NAME }}"
+  - if:
+      checkScreenContains: "{{ env.FIRST_NAME }}"
+      then:
+        - checkElementVisible: KitchenSink contact entry
+  - if:
+      checkScreenDoesNotContain: this-string-should-never-appear
+      then:
+        - checkElementVisible: KitchenSink contact entry
+  - if:
+      checkElementExists: KitchenSink contact entry
+      then:
+        - checkElementVisible: KitchenSink contact entry
+  - if:
+      checkElementVisible: KitchenSink contact entry
+      then:
+        - checkScreenContains: "{{ env.FIRST_NAME }}"
+  - if:
+      checkElementContentContains:
+        on: KitchenSink contact entry
+        value: KitchenSink
+      then:
+        - checkElementVisible: KitchenSink contact entry
+  - if:
+      javascript: return env.SESSION_ID.length > 0
+      then:
+        - wait: 100
+  # ---------------------------------------------------------------
+  # Wait + JavaScript - shorthand + detailed
+  # ---------------------------------------------------------------
+  - wait: 250
+  - wait:
+      ms: 100
+  - javascript: return env.SESSION_ID
+  - javascript:
+      code: return env.SESSION_ID
+      timeout: 5000
+      saveAs: SESSION_ECHO
+  # ---------------------------------------------------------------
+  # HTTP request - shorthand + detailed (GET + POST with body)
+  # ---------------------------------------------------------------
+  - request: https://postman-echo.com/get
+  - request:
+      url: https://postman-echo.com/get
+      method: GET
+      headers:
+        x-test: kitchen-sink-{{ env.SESSION_ID }}
+      params:
+        source: kitchen-sink-ios
+      timeout: 15000
+      saveAs: HTTP_GET
+  - javascript: assert(env.HTTP_GET.status === 200)
+  - request:
+      url: https://postman-echo.com/post
+      method: POST
+      headers:
+        x-test: kitchen-sink-ios
+      body: '{"sessionId":"{{ env.SESSION_ID }}"}'
+      bodyType: json
+      timeout: 15000
+      saveAs: HTTP_POST
+  - javascript: assert(env.HTTP_POST.status === 200)
+  # ---------------------------------------------------------------
+  # Rotate orientation - shorthand + detailed
+  # ---------------------------------------------------------------
+  - rotate: landscape
+  - rotate: portrait
+  - rotate:
+      orientation: landscape
+  - rotate:
+      orientation: portrait
+  # ---------------------------------------------------------------
+  # Appium passthrough
+  # ---------------------------------------------------------------
+  - appium:
+      script: mobile:scroll
+      args: '{"direction":"down"}'
+  - appium:
+      script: mobile:scrollBackTo
+      args: '{"elementId":"42"}'
+      skipped: true
+  # ---------------------------------------------------------------
+  # File transfer - kept for syntax reference
+  # ---------------------------------------------------------------
+  - addFile:
+      path: ./fixtures/payload.txt
+      location: /private/var/mobile/payload.txt
+      skipped: true
+  # ---------------------------------------------------------------
+  # Debug + teardown
+  # ---------------------------------------------------------------
+  - debugState
+  - killApp
+after:
+  - javascript:
+      code: return "ios kitchen-sink teardown"
+      saveAs: TEARDOWN
