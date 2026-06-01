@@ -1,7 +1,7 @@
 fileType: momentic/mobile-test/v2
 id: e51742f1-43ce-46fc-9a83-2a394e53efbe
 version: 0.0.4
-description: " "
+description: " Test the iOS contacts app"
 platform: ios
 steps:
   - openApp: com.apple.MobileAddressBook
@@ -20,11 +20,11 @@ steps:
       in: app
   - assert: add phone exists
   - tap: add phone
-  - type:
-      text: "9194089905"
-      into: add phone
+  - type: "9194089905"
   - tap: Save button
   - assert: iOS Test contact has a company name and phone number
   - killApp
-  - act: open the contact app and draft a text to iOS Test - Hey there, it's AI
-      ACTION!
+  - act:
+      goal: open the contact app and draft a text to iOS Test - Hey there, it's AI
+        ACTION!
+      version: "2"

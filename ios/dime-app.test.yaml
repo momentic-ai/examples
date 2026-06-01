@@ -4,14 +4,12 @@ version: 0.0.4
 description: Tests the Dime app
 platform: ios
 defaultChannel: dime
-retries: 1
 emulator:
   waitForStability: true
 steps:
   - openApp:
       package: com.rafaelsoh.dime
       intentExtras: '["--my-argument", "my-value"]'
-  - wait: 2000
   - tap: get started
   - tap: the add food button
   - tap: the add transport button
