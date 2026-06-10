@@ -29,10 +29,7 @@ jobs:
           node-version: 24
           cache: "npm"
 
-      - name: Install app dependencies
-        run: npm --prefix ../ ci
-
-      - name: Install testing dependencies
+      - name: Install dependencies
         run: npm ci
 
       - name: Install headless browsers for automation
@@ -44,13 +41,9 @@ jobs:
           npx momentic run autoheal-test-authorship-demo.test.yaml \
             --output-dir test-results/autoheal-demo --upload-results
 
-      - name: Run AI heal against the local demo results
+      - name: Classify and heal the local demo results
         if: always()
         run: |
-          npx momentic ai heal test-results/autoheal-demo \
+          npx momentic ai triage test-results/autoheal-demo \
             --yes \
             --timeout-minutes 10
-
-      - name: Upload raw demo results to Momentic Cloud
-        if: always()
-        run: npx momentic results upload test-results/autoheal-demo

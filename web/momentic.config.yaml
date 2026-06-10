@@ -9,17 +9,14 @@ environments:
       USERNAME: standard_user
       PASSWORD: secret_sauce
 ai:
+  useMemory: true
+  failureRecovery: true
   agentConfig:
     locator: v3
     assertion: v3
     text-extraction: v3
     visual-assertion: v3
-    failure-classification: v2
-  aiFailureAnalysis: true
-  classification: true
-  healing:
-    onFail: warn
-    onSuccess: pull-request
+    failure-recovery: v2
 browser:
   showZeroOpacityElements: false
   disableSecondaryCacheResolution: false

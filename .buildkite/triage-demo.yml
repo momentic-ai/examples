@@ -1,0 +1,13 @@
+steps:
+  - label: ":momentic: Run triage demo"
+    key: "momentic-triage-demo"
+    command: ".buildkite/scripts/local-triage-demo.sh"
+    agents:
+      queue: "linux-small"
+    timeout_in_minutes: 20
+    artifact_paths:
+      - "web/test-results/triage-demo/**/*"
+    secrets:
+      MOMENTIC_API_KEY: "MOMENTIC_API_KEY"
+    env:
+      MOMENTIC_TRIAGE_TIMEOUT_MINUTES: "10"
