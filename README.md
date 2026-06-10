@@ -37,8 +37,8 @@ This repo contains usage examples and patterns for the [Momentic CLI](https://mo
 ## CI/CD workflows
 
 - [Amazon Linux](.github/workflows/test-amazon-linux.yml)
-- [AI heal demo](.github/workflows/test-ai-heal-demo.yml)
-- [Buildkite AI heal demo](.buildkite/test-ai-heal-demo.yml)
+- [AI triage demo](.github/workflows/test-ai-heal-demo.yml)
+- [Buildkite AI triage demo](.buildkite/triage-demo.yml)
 - [CSV inputs](.github/workflows/test-pr-inputs.yml)
 - [Multiple projects](.github/workflows/test-pr-multi-project.yml)
 - [Sharding](.github/workflows/test-pr-sharding.yml)
@@ -46,14 +46,14 @@ This repo contains usage examples and patterns for the [Momentic CLI](https://mo
 - [Queue in cloud](.github/workflows/test-prod.yml)
 - [CircleCI](.circleci/config.yml)
 
-## Buildkite demo
+## Buildkite triage demo
 
-The Buildkite example at [.buildkite/test-ai-heal-demo.yml](.buildkite/test-ai-heal-demo.yml) runs the intentionally failing `web/autoheal-test-authorship-demo.test.yaml` test, saves a classification artifact to `web/test-results/autoheal-demo/classification.json`, and then runs Momentic healing against the same result set.
+The Buildkite example at [.buildkite/triage-demo.yml](.buildkite/triage-demo.yml) uses a single command step that installs dependencies, runs `web/autoheal-test-authorship-demo.test.yaml`, and then runs `momentic ai triage --quiet` against the resulting archive.
 
 ### Buildkite setup
 
 1. Create a `MOMENTIC_API_KEY` in the Momentic dashboard.
-2. Create or reuse a Buildkite pipeline for this repository and point it at `.buildkite/test-ai-heal-demo.yml`.
+2. Create or reuse a Buildkite pipeline for this repository and point it at `.buildkite/triage-demo.yml`.
 3. Provide `MOMENTIC_API_KEY` to jobs either as a Buildkite secret named `MOMENTIC_API_KEY` or through your agent environment hook.
 4. Make sure the step's `agents.queue` value matches a queue you actually run. The sample uses `linux-small`.
 
@@ -64,5 +64,5 @@ To run the same demo locally before wiring it into Buildkite:
 ```bash
 cd /Users/jkimling/examples
 export MOMENTIC_API_KEY=your_api_key_here
-.buildkite/scripts/test-ai-heal-demo.sh
+.buildkite/scripts/local-triage-demo.sh
 ```
