@@ -11,7 +11,7 @@ cd "$ROOT_DIR"
 
 npm ci
 
-pushd web >/dev/null
+cd web
 
 npx momentic install-browsers chromium
 rm -rf "$RESULTS_DIR"
@@ -23,6 +23,11 @@ npx momentic run autoheal-test-authorship-demo.test.yaml \
 run_status=$?
 set -e
 
+if [ ! -d "$RESULTS_DIR" ]; then
+  echo "Momentic run did not produce $RESULTS_DIR, so skipping classification/healing."
+  exit "$run_status"
+fi
+
 # Save a dry-run triage artifact so Buildkite shows the classification output directly.
 npx momentic ai triage "$RESULTS_DIR" \
   --dry-run \
@@ -32,9 +37,3 @@ npx momentic ai triage "$RESULTS_DIR" \
 npx momentic ai triage "$RESULTS_DIR" \
   --yes \
   --timeout-minutes "${MOMENTIC_HEAL_TIMEOUT_MINUTES:-10}"
-
-popd >/dev/null
-
-if [ "${MOMENTIC_EXIT_ON_TEST_FAILURE:-0}" = "1" ]; then
-  exit "$run_status"
-fi

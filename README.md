@@ -66,9 +66,3 @@ cd /Users/jkimling/examples
 export MOMENTIC_API_KEY=your_api_key_here
 .buildkite/scripts/test-ai-heal-demo.sh
 ```
-
-To make the Buildkite build fail when the original test run fails, even after classification and healing finish, set:
-
-```bash
-MOMENTIC_EXIT_ON_TEST_FAILURE=1
-```
