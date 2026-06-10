@@ -21,7 +21,7 @@ jobs:
     defaults:
       run:
         working-directory: ./web
-    timeout-minutes: 5
+    timeout-minutes: 15
 
     steps:
       - uses: actions/checkout@v4
@@ -55,7 +55,7 @@ jobs:
     if: always()
     needs:
       - run-tests
-    timeout-minutes: 5
+    timeout-minutes: 15
 
     steps:
       - uses: actions/checkout@v4

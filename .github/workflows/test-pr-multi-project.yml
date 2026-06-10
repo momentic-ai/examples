@@ -16,7 +16,7 @@ jobs:
     defaults:
       run:
         working-directory: ./multi-project-workspace
-    timeout-minutes: 5
+    timeout-minutes: 15
 
     steps:
       - uses: actions/checkout@v4

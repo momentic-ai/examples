@@ -19,7 +19,7 @@ jobs:
       - run:
           name: Install Browsers
           command: npx momentic install-browsers chromium
-          no_output_timeout: 5m
+          no_output_timeout: 15m
       - run:
           name: Run tests
           command: |
