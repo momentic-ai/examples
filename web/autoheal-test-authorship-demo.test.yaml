@@ -3,16 +3,16 @@ id: 70a188fc-e31c-4c94-85f8-a987fcfe49f8
 version: 1.0.24
 url: https://saucedemo.com
 description: Add Sauce Labs Onesie to the cart and verify it appears there.
+retries: 0
 defaultEnv: production
 disabled: false
-retries: 0
-viewport: 1920, 1080
-browserType: Chromium
 labels:
   - autoheal
   - classification
+viewport: 1920, 1080
+browserType: Chromium
 steps:
   - module: ./log-in-username-password.module.yaml
-  - click: add to cart for the Sauce Labs Backpack item
+  - click: add to cart for the Sauce Labs Onesie item
   - click: Cart icon on the top right of the page
   - assert: Verify that Sauce Labs Onesie is the only item in the cart
