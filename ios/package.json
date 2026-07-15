@@ -3,6 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "momentic-mobile": "^0.109.0"
+    "momentic-mobile": "0.109.0"
   }
 }

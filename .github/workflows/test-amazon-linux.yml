@@ -53,8 +53,8 @@ jobs:
           # Load nvm
           export NVM_DIR="$HOME/.nvm"
           [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-          nvm install 20
-          nvm use 20
+          nvm install 24
+          nvm use 24
 
           # Replace with your own app or waiting logic
           echo "Checking if app is up"

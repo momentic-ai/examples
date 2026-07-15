@@ -11,26 +11,26 @@ importers:
   android:
     devDependencies:
       momentic-mobile:
-        specifier: ^0.109.0
-        version: 0.109.3(@ai-sdk/provider@3.0.10)(@appium/logger@2.0.9)(@types/node@26.1.1)
+        specifier: 0.109.0
+        version: 0.109.0(@ai-sdk/provider@3.0.10)(@appium/logger@2.0.9)(@types/node@26.1.1)
 
   ios:
     devDependencies:
       momentic-mobile:
-        specifier: ^0.109.0
-        version: 0.109.3(@ai-sdk/provider@3.0.10)(@appium/logger@2.0.9)(@types/node@26.1.1)
+        specifier: 0.109.0
+        version: 0.109.0(@ai-sdk/provider@3.0.10)(@appium/logger@2.0.9)(@types/node@26.1.1)
 
   multi-project-workspace:
     devDependencies:
       momentic:
-        specifier: ^2.134.1
-        version: 2.144.0(@types/node@26.1.1)
+        specifier: 2.134.1
+        version: 2.134.1(@types/node@26.1.1)
 
   web:
     devDependencies:
       momentic:
-        specifier: ^2.134.1
-        version: 2.144.0(@types/node@26.1.1)
+        specifier: 2.134.1
+        version: 2.134.1(@types/node@26.1.1)
 
 packages:
 
@@ -172,25 +172,11 @@ packages:
     peerDependencies:
       '@opentelemetry/api': ^1.9.0
 
-  '@hapi/address@5.1.1':
-    resolution: {integrity: sha512-A+po2d/dVoY7cYajycYI43ZbYMXukuopIsqCjh5QzsBCipDtdofHntljDlpccMjIfTy6UOkg+5KPriwYch2bXA==}
-    engines: {node: '>=14.0.0'}
+  '@hapi/hoek@9.3.0':
+    resolution: {integrity: sha512-/c6rf4UJlmHlC9b5BaNvzAcFv7HZ2QHaV0D4/HNlBdvFnvQq8RI4kYdhyPCl7Xj+oWvTWQ8ujhqS53LIgAe6KQ==}
 
-  '@hapi/formula@3.0.2':
-    resolution: {integrity: sha512-hY5YPNXzw1He7s0iqkRQi+uMGh383CGdyyIGYtB+W5N3KHPXoqychklvHhKCC9M3Xtv0OCs/IHw+r4dcHtBYWw==}
-
-  '@hapi/hoek@11.0.7':
-    resolution: {integrity: sha512-HV5undWkKzcB4RZUusqOpcgxOaq6VOAH7zhhIr2g3G8NF/MlFO75SjOr2NfuSx0Mh40+1FqCkagKLJRykUWoFQ==}
-
-  '@hapi/pinpoint@2.0.1':
-    resolution: {integrity: sha512-EKQmr16tM8s16vTT3cA5L0kZZcTMU5DUOZTuvpnY738m+jyP3JIUj+Mm1xc1rsLkGBQ/gVnfKYPwOmPg1tUR4Q==}
-
-  '@hapi/tlds@1.1.7':
-    resolution: {integrity: sha512-MgNjRwy9Ti92yVAixLmDc8dd1bJIKwO9qlWCfFQRwRmUEDPQHYn4G6hwPFvFGUTzAa0FsS+inMjLin7GnyBRhA==}
-    engines: {node: '>=14.0.0'}
-
-  '@hapi/topo@6.0.2':
-    resolution: {integrity: sha512-KR3rD5inZbGMrHmgPxsJ9dbi6zEK+C3ZwUwTa+eMwWLz7oijWUTWD2pMSNNYJAU6Qq+65NkxXjqHr/7LM2Xkqg==}
+  '@hapi/topo@5.1.0':
+    resolution: {integrity: sha512-foQZKJig7Ob0BMAYBfcJk8d77QtOe7Wo4ox7ff1lQYoNNAb6jwcY1ncdoy2e9wQZzvNy7ODZCYJkK8kzmcAnAg==}
 
   '@hono/node-server@1.19.14':
     resolution: {integrity: sha512-GwtvgtXxnWsucXvbQXkRgqksiH2Qed37H9xHZocE5sA3N8O8O8/8FA3uclQXxXVzc9XBZuEOMK7+r02FmSpHtw==}
@@ -1359,6 +1345,15 @@ packages:
       '@opentelemetry/core': ^1.30.1 || ^2.1.0
       '@opentelemetry/sdk-trace-base': ^1.30.1 || ^2.1.0
       '@opentelemetry/semantic-conventions': ^1.39.0
+
+  '@sideway/address@4.1.5':
+    resolution: {integrity: sha512-IqO/DUQHUkPeixNQ8n0JA6102hT9CmaljNTPmQ1u8MEhBo/R4Q8eKLN/vGZxuebwOroDB4cbpjheD4+/sKFK4Q==}
+
+  '@sideway/formula@3.0.1':
+    resolution: {integrity: sha512-/poHZJJVjx3L+zVD6g9KgHfYnb443oi7wLu/XKojDviHy6HOEOA6z1Trk5aR1dGcmPenJEgb2sK2I80LeS3MIg==}
+
+  '@sideway/pinpoint@2.0.0':
+    resolution: {integrity: sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==}
 
   '@sidvind/better-ajv-errors@5.0.0':
     resolution: {integrity: sha512-FeI/V2KGtOaDX+r0akidCGYy79lVR4YnAqk1GFgZFuHADErCAEmtZL4+IdCAcDXHqfZsII3fs9DrfC1pIR+19w==}
@@ -2867,9 +2862,8 @@ packages:
     resolution: {integrity: sha512-AC/7JofJvZGrrneWNaEnJeOLUx+JlGt7tNa0wZiRPT4MY1wmfKjt2+6O2p2uz2+skll8OZZmJMNqeke7kKbNgQ==}
     hasBin: true
 
-  joi@18.2.3:
-    resolution: {integrity: sha512-N5A3KTWQpPWT4ExxxPlUx7WmykGXRzhNidWhV41d6Abu9YfI2NyWCJuxdPnslJCPWtbRpSVOWSnSS6GakLM/Rg==}
-    engines: {node: '>= 20'}
+  joi@17.13.4:
+    resolution: {integrity: sha512-1RuuER6kmt8K8I3nIWvPZKi5RQCb568ZPyY4Pwjlua+yo+63ZTmIwxLZH0heBmiKN4uxjvCiarDrjaeH84xicQ==}
 
   jose@6.2.3:
     resolution: {integrity: sha512-YYVDInQKFJfR/xa3ojUTl8c2KoTwiL1R5Wg9YCydwH0x0B9grbzlg5HC7mMjCtUJjbQ/YnGEZIhI5tCgfTb4Hw==}
@@ -3124,13 +3118,13 @@ packages:
   moment@2.30.1:
     resolution: {integrity: sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==}
 
-  momentic-mobile@0.109.3:
-    resolution: {integrity: sha512-dKbMVWu817CxQJUj2W96OrYk30rJibNuAtu3XIgbXp3imR09ACDW9PTwKX9dyh0/HODB5sYTv7n+5cMg66ivYA==}
+  momentic-mobile@0.109.0:
+    resolution: {integrity: sha512-GG2L9K8Xswxe1bcE+veDVDAyEVAefuSbkaUTrID38knrDORqa31qjo9sSIfVqGtH0Zey5RPafGUijbNipLKHPA==}
     engines: {node: ^20.19.0 || ^22.12.0 || >=24.0.0}
     hasBin: true
 
-  momentic@2.144.0:
-    resolution: {integrity: sha512-B2EsTfvooqWX/I8gd+5I20n2CcXND37lqaQngIiKVlSPDXQmckJoVC+nCwhL1y+94jVrSYJ2wIw/fjvgQBVF3A==}
+  momentic@2.134.1:
+    resolution: {integrity: sha512-CMgI/mcKVYKkc3SG4SU86fSWMnOEe6kU9VGDtfU71Uc0O04wtot8Uzbeh1LSlV1AyJEiYgrXu3N99eiZuOYR7g==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -4183,9 +4177,9 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
-  wait-on@9.0.10:
-    resolution: {integrity: sha512-rCoJEhvMr0X6alHmwc9abbrA5ZrLZFKpFQVKPNFwl2h7DapXOGdmimIHDtLOWhT4PjhZhxFEtZoQgEXbkDWdZw==}
-    engines: {node: '>=20.0.0'}
+  wait-on@7.2.0:
+    resolution: {integrity: sha512-wCQcHkRazgjG5XoAq9jbTMLpNIjoSlZslrJ2+N9MxDsGEv1HnFoVjOCexL0ESva7Y9cu350j+DWADdk54s4AFQ==}
+    engines: {node: '>=12.0.0'}
     hasBin: true
 
   wait-port@1.1.0:
@@ -4724,21 +4718,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@hapi/address@5.1.1':
+  '@hapi/hoek@9.3.0': {}
+
+  '@hapi/topo@5.1.0':
     dependencies:
-      '@hapi/hoek': 11.0.7
-
-  '@hapi/formula@3.0.2': {}
-
-  '@hapi/hoek@11.0.7': {}
-
-  '@hapi/pinpoint@2.0.1': {}
-
-  '@hapi/tlds@1.1.7': {}
-
-  '@hapi/topo@6.0.2':
-    dependencies:
-      '@hapi/hoek': 11.0.7
+      '@hapi/hoek': 9.3.0
 
   '@hono/node-server@1.19.14(hono@4.12.30)':
     dependencies:
@@ -5348,7 +5332,7 @@ snapshots:
       bluebird: 3.7.2
       lodash: 4.18.1
       node-simctl: '@limrun/node-simctl@8.1.3-lim.3'
-      semver: 7.8.0
+      semver: 7.8.4
       teen_process: 4.1.8
     transitivePeerDependencies:
       - bare-abort-controller
@@ -5390,7 +5374,7 @@ snapshots:
       appium-ios-simulator: 8.2.7
       async-lock: 1.4.1
       asyncbox: 3.0.0
-      axios: 1.16.1
+      axios: 1.18.0
       bluebird: 3.7.2
       lodash: 4.18.1
       source-map-support: 0.5.21
@@ -5411,7 +5395,7 @@ snapshots:
       bluebird: 3.7.2
       lodash: 4.18.1
       plist: 3.1.1
-      semver: 7.8.0
+      semver: 7.8.4
       teen_process: 4.1.8
     transitivePeerDependencies:
       - bare-abort-controller
@@ -5447,7 +5431,7 @@ snapshots:
       node-devicectl: 1.4.3
       node-simctl: '@limrun/node-simctl@8.1.3-lim.3'
       portscanner: 2.2.0
-      semver: 7.8.0
+      semver: 7.8.4
       teen_process: 3.0.6
       winston: 3.19.0
       ws: 8.21.0
@@ -5502,7 +5486,7 @@ snapshots:
       bluebird: 3.7.2
       lodash: 4.18.1
       rimraf: 6.1.3
-      semver: 7.8.0
+      semver: 7.8.4
       teen_process: 4.1.8
       uuid: 13.0.2
       which: 6.0.1
@@ -6070,7 +6054,7 @@ snapshots:
       '@opentelemetry/propagator-b3': 1.30.1(@opentelemetry/api@1.9.1)
       '@opentelemetry/propagator-jaeger': 1.30.1(@opentelemetry/api@1.9.1)
       '@opentelemetry/sdk-trace-base': 1.30.1(@opentelemetry/api@1.9.1)
-      semver: 7.8.0
+      semver: 7.8.4
 
   '@opentelemetry/sdk-trace@2.9.0(@opentelemetry/api@1.9.1)':
     dependencies:
@@ -6145,7 +6129,7 @@ snapshots:
       extract-zip: 2.0.1
       progress: 2.0.3
       proxy-agent: 6.5.0
-      semver: 7.8.0
+      semver: 7.8.4
       tar-fs: 3.1.3
       yargs: 17.7.3
     transitivePeerDependencies:
@@ -6213,6 +6197,14 @@ snapshots:
       '@opentelemetry/sdk-trace-base': 2.9.0(@opentelemetry/api@1.9.1)
       '@opentelemetry/semantic-conventions': 1.40.0
       '@sentry/core': 10.52.0
+
+  '@sideway/address@4.1.5':
+    dependencies:
+      '@hapi/hoek': 9.3.0
+
+  '@sideway/formula@3.0.1': {}
+
+  '@sideway/pinpoint@2.0.0': {}
 
   '@sidvind/better-ajv-errors@5.0.0(ajv@8.18.0)':
     dependencies:
@@ -6302,7 +6294,7 @@ snapshots:
 
   '@types/yauzl@2.10.3':
     dependencies:
-      '@types/node': 20.19.43
+      '@types/node': 26.1.1
     optional: true
 
   '@vercel/oidc@3.2.0': {}
@@ -6516,7 +6508,7 @@ snapshots:
       asyncbox: 6.3.5
       ini: 6.0.0
       lru-cache: 11.5.2
-      semver: 7.8.0
+      semver: 7.8.4
       teen_process: 4.1.8
     transitivePeerDependencies:
       - bare-abort-controller
@@ -6532,12 +6524,12 @@ snapshots:
       appium-adb: 15.0.8
       appium-chromedriver: 8.4.18(@appium/logger@2.0.9)
       asyncbox: 6.3.5
-      axios: 1.16.1
+      axios: 1.18.0
       dayjs: 1.11.21
       io.appium.settings: 7.1.10
       lru-cache: 11.5.2
       portscanner: 2.2.0
-      semver: 7.8.0
+      semver: 7.8.4
       teen_process: 4.1.8
       ws: 8.21.0
     transitivePeerDependencies:
@@ -6557,9 +6549,9 @@ snapshots:
       '@xmldom/xmldom': 0.9.10
       appium-adb: 15.0.8
       asyncbox: 6.3.5
-      axios: 1.16.1
+      axios: 1.18.0
       compare-versions: 6.1.1
-      semver: 7.8.0
+      semver: 7.8.4
       teen_process: 4.1.8
       xpath: 0.0.34
     transitivePeerDependencies:
@@ -6588,11 +6580,11 @@ snapshots:
     dependencies:
       '@appium/support': 7.2.5
       asyncbox: 6.3.5
-      axios: 1.16.1
+      axios: 1.18.0
       bplist-creator: 0.1.1
       bplist-parser: 0.3.2
       lodash: 4.18.1
-      semver: 7.8.0
+      semver: 7.8.4
     transitivePeerDependencies:
       - bare-abort-controller
       - bare-buffer
@@ -6607,7 +6599,7 @@ snapshots:
       '@types/node': 25.9.5
       '@xmldom/xmldom': 0.9.10
       appium-ios-tuntap: 0.6.1
-      axios: 1.16.1
+      axios: 1.18.0
       commander: 14.0.3
       dnssd: 0.4.1
       minimatch: 10.2.5
@@ -6629,7 +6621,7 @@ snapshots:
       '@xmldom/xmldom': 0.9.10
       appium-ios-tuntap: 0.6.1
       async-lock: 1.4.1
-      axios: 1.16.1
+      axios: 1.18.0
       commander: 14.0.3
       minimatch: 10.2.5
       node-devicectl: 1.4.3
@@ -6650,7 +6642,7 @@ snapshots:
       '@xmldom/xmldom': 0.9.10
       appium-ios-tuntap: 1.1.0
       async-lock: 1.4.1
-      axios: 1.16.1
+      axios: 1.18.0
       commander: 14.0.3
       minimatch: 10.2.5
       node-devicectl: 1.4.3
@@ -6672,7 +6664,7 @@ snapshots:
       async-lock: 1.4.1
       asyncbox: 6.3.5
       node-simctl: 8.2.3
-      semver: 7.8.0
+      semver: 7.8.4
       teen_process: 4.1.8
     transitivePeerDependencies:
       - bare-abort-controller
@@ -6735,7 +6727,7 @@ snapshots:
       appium-android-driver: 13.3.4(@appium/logger@2.0.9)(appium@3.3.1)
       appium-uiautomator2-server: 10.3.2
       asyncbox: 6.3.5
-      axios: 1.16.1
+      axios: 1.18.0
       css-selector-parser: 3.3.0
       io.appium.settings: 7.1.10
       portscanner: 2.2.0
@@ -6760,7 +6752,7 @@ snapshots:
       appium-ios-simulator: 8.2.7
       async-lock: 1.4.1
       asyncbox: 6.3.5
-      axios: 1.16.1
+      axios: 1.18.0
       teen_process: 4.1.8
     transitivePeerDependencies:
       - '@appium/logger'
@@ -6774,7 +6766,7 @@ snapshots:
     dependencies:
       '@appium/support': 7.2.5
       asyncbox: 6.3.5
-      semver: 7.8.0
+      semver: 7.8.4
       teen_process: 4.1.8
     transitivePeerDependencies:
       - bare-abort-controller
@@ -6795,7 +6787,7 @@ snapshots:
       appium-xcode: 6.2.6
       async-lock: 1.4.1
       asyncbox: 6.3.5
-      axios: 1.16.1
+      axios: 1.18.0
       commander: 14.0.3
       css-selector-parser: 3.3.0
       js2xmlparser2: 0.2.0
@@ -6805,7 +6797,7 @@ snapshots:
       node-devicectl: 1.4.3
       node-simctl: 8.2.3
       portscanner: 2.2.0
-      semver: 7.8.0
+      semver: 7.8.4
       teen_process: 4.1.8
       winston: 3.19.0
       ws: 8.21.0
@@ -7482,7 +7474,7 @@ snapshots:
       '@one-ini/wasm': 0.1.1
       commander: 10.0.1
       minimatch: 9.0.9
-      semver: 7.8.0
+      semver: 7.8.4
 
   ee-first@1.1.1: {}
 
@@ -7922,7 +7914,7 @@ snapshots:
 
   hosted-git-info@9.0.3:
     dependencies:
-      lru-cache: 11.3.5
+      lru-cache: 11.5.2
 
   hpack.js@2.1.6:
     dependencies:
@@ -8030,7 +8022,7 @@ snapshots:
     dependencies:
       '@appium/logger': 2.0.9
       asyncbox: 6.3.5
-      semver: 7.8.0
+      semver: 7.8.4
       teen_process: 4.1.8
 
   ip-address@10.2.0: {}
@@ -8121,15 +8113,13 @@ snapshots:
 
   jiti@2.7.0: {}
 
-  joi@18.2.3:
+  joi@17.13.4:
     dependencies:
-      '@hapi/address': 5.1.1
-      '@hapi/formula': 3.0.2
-      '@hapi/hoek': 11.0.7
-      '@hapi/pinpoint': 2.0.1
-      '@hapi/tlds': 1.1.7
-      '@hapi/topo': 6.0.2
-      '@standard-schema/spec': 1.1.0
+      '@hapi/hoek': 9.3.0
+      '@hapi/topo': 5.1.0
+      '@sideway/address': 4.1.5
+      '@sideway/formula': 3.0.1
+      '@sideway/pinpoint': 2.0.0
 
   jose@6.2.3: {}
 
@@ -8342,7 +8332,7 @@ snapshots:
 
   moment@2.30.1: {}
 
-  momentic-mobile@0.109.3(@ai-sdk/provider@3.0.10)(@appium/logger@2.0.9)(@types/node@26.1.1):
+  momentic-mobile@0.109.0(@ai-sdk/provider@3.0.10)(@appium/logger@2.0.9)(@types/node@26.1.1):
     dependencies:
       '@ai-sdk/anthropic': 3.0.78(zod@4.4.3)
       '@antfu/install-pkg': 1.1.0
@@ -8455,7 +8445,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  momentic@2.144.0(@types/node@26.1.1):
+  momentic@2.134.1(@types/node@26.1.1):
     dependencies:
       '@actions/exec': 1.1.1
       '@actions/io': 1.1.3
@@ -8536,7 +8526,7 @@ snapshots:
       tough-cookie: 5.1.2
       truncate-json: 2.0.0
       uuid: 14.0.0
-      wait-on: 9.0.10
+      wait-on: 7.2.0
       why-is-node-running: 3.2.2
       wrap-ansi: 9.0.0
       ws: 8.21.0
@@ -8613,7 +8603,7 @@ snapshots:
       '@appium/logger': 2.0.9
       asyncbox: 6.3.5
       rimraf: 6.1.3
-      semver: 7.8.0
+      semver: 7.8.4
       teen_process: 4.1.8
       which: 6.0.1
 
@@ -8634,7 +8624,7 @@ snapshots:
   normalize-package-data@8.0.0:
     dependencies:
       hosted-git-info: 9.0.3
-      semver: 7.8.0
+      semver: 7.8.4
       validate-npm-package-license: 3.0.4
 
   normalize-path@3.0.0: {}
@@ -8804,7 +8794,7 @@ snapshots:
 
   path-scurry@2.0.2:
     dependencies:
-      lru-cache: 11.3.5
+      lru-cache: 11.5.2
       minipass: 7.1.3
 
   path-to-regexp@0.1.13: {}
@@ -9056,7 +9046,7 @@ snapshots:
       '@types/normalize-package-data': 2.4.4
       normalize-package-data: 8.0.0
       parse-json: 8.3.0
-      type-fest: 5.6.0
+      type-fest: 5.7.0
       unicorn-magic: 0.4.0
 
   readable-stream@1.1.14:
@@ -9262,7 +9252,7 @@ snapshots:
     dependencies:
       '@img/colour': 1.1.0
       detect-libc: 2.1.2
-      semver: 7.8.0
+      semver: 7.8.4
     optionalDependencies:
       '@img/sharp-darwin-arm64': 0.34.5
       '@img/sharp-darwin-x64': 0.34.5
@@ -9600,7 +9590,7 @@ snapshots:
 
   teen_process@4.1.3:
     dependencies:
-      shell-quote: 1.8.4
+      shell-quote: 1.10.0
 
   teen_process@4.1.8:
     dependencies:
@@ -9762,10 +9752,10 @@ snapshots:
 
   vary@1.1.2: {}
 
-  wait-on@9.0.10:
+  wait-on@7.2.0:
     dependencies:
-      axios: 1.16.1
-      joi: 18.2.3
+      axios: 1.18.0
+      joi: 17.13.4
       lodash: 4.18.1
       minimist: 1.2.8
       rxjs: 7.8.2
