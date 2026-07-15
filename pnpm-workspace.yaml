@@ -11,3 +11,5 @@ allowBuilds:
   geckodriver: true
   protobufjs: true
   sharp: true
+
+nodeLinker: hoisted
