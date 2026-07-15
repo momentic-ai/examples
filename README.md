@@ -2,6 +2,34 @@
 
 This repo contains usage examples and patterns for the [Momentic CLI](https://momentic.ai/docs/quickstart/cli).
 
+## Repository structure
+
+This repo is a [pnpm workspace](https://pnpm.io/workspaces). Each example directory is its own package with its own `package.json`:
+
+- [`web/`](web/) — depends on [`momentic`](https://www.npmjs.com/package/momentic)
+- [`ios/`](ios/) — depends on [`momentic-mobile`](https://www.npmjs.com/package/momentic-mobile)
+- [`android/`](android/) — depends on [`momentic-mobile`](https://www.npmjs.com/package/momentic-mobile)
+- [`multi-project-workspace/`](multi-project-workspace/) — depends on [`momentic`](https://www.npmjs.com/package/momentic)
+
+### Getting started
+
+```bash
+pnpm install
+```
+
+Running `pnpm install` anywhere in the repo installs dependencies for all workspace packages.
+
+### Upgrading Momentic
+
+Because each example directory has its own `package.json`, you can upgrade the Momentic configuration in place:
+
+```bash
+cd web # or ios, android, multi-project-workspace
+npx momentic@latest upgrade
+```
+
+For the mobile examples, `npx momentic-mobile@latest` provides the equivalent mobile CLI commands.
+
 ## Examples
 
 ### Web
@@ -62,7 +90,6 @@ The Buildkite example at [.buildkite/triage-demo.yml](.buildkite/triage-demo.yml
 To run the same demo locally before wiring it into Buildkite:
 
 ```bash
-cd /Users/jkimling/examples
 export MOMENTIC_API_KEY=your_api_key_here
 .buildkite/scripts/local-triage-demo.sh
 ```

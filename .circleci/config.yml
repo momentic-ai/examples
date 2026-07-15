@@ -15,7 +15,9 @@ jobs:
           path: ~/project
       - run:
           name: Install dependencies
-          command: npm --prefix ../ ci
+          command: |
+            sudo corepack enable
+            pnpm install --frozen-lockfile
       - run:
           name: Install Browsers
           command: npx momentic install-browsers chromium
@@ -44,7 +46,9 @@ jobs:
           path: ~/project
       - run:
           name: Install dependencies
-          command: npm --prefix ../ ci
+          command: |
+            sudo corepack enable
+            pnpm install --frozen-lockfile
       - attach_workspace:
           at: .
       - run:

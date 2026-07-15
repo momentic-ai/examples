@@ -25,14 +25,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 24.15.0
-          cache: "npm"
-      - name: Install app dependencies
-        run: npm --prefix ../ ci
-      - name: Install testing dependencies
-        run: npm ci
+          cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
       - name: Install headless browsers for automation
         # Choose which browsers you want to install, see https://momentic.ai/docs/browsers
         run: npx momentic install-browsers chromium
@@ -55,20 +54,24 @@ jobs:
     if: always()
     needs:
       - run-tests
+    defaults:
+      run:
+        working-directory: ./web
     timeout-minutes: 5
 
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 24.15.0
-          cache: "npm"
+          cache: "pnpm"
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
       - name: Download all test results artifacts
         uses: actions/download-artifact@v4
         with:
-          path: ./test-results
+          path: ./web/test-results
           pattern: test-results-*
           merge-multiple: true
       - name: Merge test results

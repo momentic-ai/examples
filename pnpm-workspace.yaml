@@ -1,0 +1,13 @@
+packages:
+  - web
+  - ios
+  - android
+  - multi-project-workspace
+
+allowBuilds:
+  appium: true
+  appium-ios-tuntap: true
+  edgedriver: true
+  geckodriver: true
+  protobufjs: true
+  sharp: true

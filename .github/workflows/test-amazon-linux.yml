@@ -61,12 +61,15 @@ jobs:
           curl --fail localhost:8080 || exit 1
 
           # Install dependencies
-          npm ci
+          npm install -g pnpm
+          cd /repo
+          pnpm install --frozen-lockfile
 
           # Run tests
-          cat /web/momentic.config.yaml
+          cd /repo/web
+          cat momentic.config.yaml
           npx momentic install-browsers chromium
-          npx momentic run --upload-results --config /web/momentic.config.yaml /web/
+          npx momentic run --upload-results .
 
           EOF
 
@@ -78,9 +81,7 @@ jobs:
         run: |
           docker run -d --name momentic --network host -e MOMENTIC_API_KEY='${{ secrets.MOMENTIC_API_KEY }}' ubuntu:20.04 sleep infinity
           docker cp run_tests.sh momentic:/run_tests.sh
-          docker cp package.json momentic:/package.json
-          docker cp package-lock.json momentic:/package-lock.json
-          docker cp web/ momentic:/web
+          docker cp . momentic:/repo
           docker exec momentic bash /run_tests.sh
 
       # Section 5: Cleanup

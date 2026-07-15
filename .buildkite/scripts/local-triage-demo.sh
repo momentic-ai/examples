@@ -8,7 +8,8 @@ RESULTS_DIR="test-results/triage-demo"
 
 cd "$ROOT_DIR"
 
-npm ci
+command -v pnpm >/dev/null 2>&1 || npm install -g pnpm
+pnpm install --frozen-lockfile
 
 cd web
 

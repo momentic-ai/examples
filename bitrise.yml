@@ -24,7 +24,8 @@ workflows:
                 #!/usr/bin/env bash
                 set -euxo pipefail
 
-                npm ci
+                npm install -g pnpm
+                pnpm install --frozen-lockfile
       - script@1:
           title: Run iOS tests
           inputs:

@@ -1,9 +1,6 @@
 {
-  "name": "momentic-cli-test",
+  "name": "momentic-examples",
   "version": "0.1.0",
   "private": true,
-  "devDependencies": {
-    "momentic": "^2.134.1",
-    "momentic-mobile": "^0.109.0"
-  }
+  "packageManager": "pnpm@11.5.3"
 }
