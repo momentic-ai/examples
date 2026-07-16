@@ -11,6 +11,8 @@ environments:
 ai:
   useMemory: true
   failureRecovery: true
+  classification:
+    enabled: true
   agentConfig:
     locator: v3
     assertion: v3
