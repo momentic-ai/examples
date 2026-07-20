@@ -56,7 +56,8 @@ jobs:
       - name: Run selected tests
         working-directory: web
         run: npx momentic@latest run . --ai-select
+      # A valid zero-test selection creates no runs directory, so there is nothing to upload.
       - name: Upload test results
-        if: always()
+        if: ${{ always() && hashFiles('web/test-results/runs/**') != '' }}
         working-directory: web
         run: npx momentic@latest results upload test-results
