@@ -2,6 +2,9 @@ name: AI-selected tests
 
 on:
   pull_request:
+  push:
+    branches:
+      - main
 
 permissions:
   contents: read
@@ -26,8 +29,6 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
-      - name: Install browser
-        run: npx momentic@latest install-browsers chromium
       - name: Install code-index tools
         run: npx momentic@latest install-codetools
       - name: Restore code index
@@ -37,6 +38,21 @@ jobs:
           key: momentic-code-index-v1-${{ runner.os }}-${{ github.sha }}
           restore-keys: |
             momentic-code-index-v1-${{ runner.os }}-
+
+      # Standalone mode only computes and prints the selection; it does not run tests.
+      # On a PR, AI Select compares merge-base(origin/<PR base>, HEAD)..HEAD so the
+      # selection covers the whole PR. On a push to main, it compares the push
+      # event's before SHA..HEAD so the selection covers only commits in that push.
+      - name: Preview selected tests
+        working-directory: web
+        run: npx momentic@latest ai select --json
+
+      - name: Install browser
+        run: npx momentic@latest install-browsers chromium
+
+      # Execution mode resolves the same diff range, then runs the selected subset.
+      # If AI Select cannot produce a safe selection, `run --ai-select` falls open
+      # and runs the full in-scope test set instead.
       - name: Run selected tests
         working-directory: web
         run: npx momentic@latest run . --ai-select
