@@ -1,0 +1,46 @@
+name: AI-selected tests
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  MOMENTIC_API_KEY: ${{ secrets.MOMENTIC_API_KEY }}
+
+jobs:
+  run-tests:
+    name: Run AI-selected tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      # AI Select needs the base commit and full diff, not a shallow checkout.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.15.0
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Install browser
+        run: npx momentic@latest install-browsers chromium
+      - name: Install code-index tools
+        run: npx momentic@latest install-codetools
+      - name: Restore code index
+        uses: actions/cache@v4
+        with:
+          path: ~/.momentic/cache/
+          key: momentic-code-index-v1-${{ runner.os }}-${{ github.sha }}
+          restore-keys: |
+            momentic-code-index-v1-${{ runner.os }}-
+      - name: Run selected tests
+        working-directory: web
+        run: npx momentic@latest run . --ai-select
+      - name: Upload test results
+        if: always()
+        working-directory: web
+        run: npx momentic@latest results upload test-results
