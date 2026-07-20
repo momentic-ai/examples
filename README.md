@@ -37,6 +37,7 @@ This repo contains usage examples and patterns for the [Momentic CLI](https://mo
 ## CI/CD workflows
 
 - [Amazon Linux](.github/workflows/test-amazon-linux.yml)
+- [AI-selected tests with a cached code index](.github/workflows/test-ai-select.yml)
 - [AI triage demo](.github/workflows/test-ai-heal-demo.yml)
 - [Buildkite AI triage demo](.buildkite/triage-demo.yml)
 - [CSV inputs](.github/workflows/test-pr-inputs.yml)
@@ -45,6 +46,25 @@ This repo contains usage examples and patterns for the [Momentic CLI](https://mo
 - [Run in a PR](.github/workflows/test-pr.yml)
 - [Queue in cloud](.github/workflows/test-prod.yml)
 - [CircleCI](.circleci/config.yml)
+
+## AI Select and the code index
+
+The [AI Select workflow](.github/workflows/test-ai-select.yml) checks out full
+git history, installs Momentic's code-index tools, and restores the index from
+the GitHub Actions cache. It demonstrates both usage modes:
+
+- `momentic ai select --json` prints the selected tests without running them.
+- `momentic run . --ai-select` selects and runs the focused test set, falling
+  back to the full in-scope set when it cannot produce a safe selection.
+
+For pull requests, AI Select compares the merge base of the PR's target branch
+and `HEAD` through `HEAD`, covering the whole PR. For pushes to `main`, it
+compares the push event's previous SHA through `HEAD`, covering only the commits
+in that push.
+
+AI Select and App Graph are in alpha.
+[Contact Momentic](https://momentic.ai/sales) to join the waitlist before using
+this workflow.
 
 ## Buildkite triage demo
 
