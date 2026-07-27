@@ -38,6 +38,7 @@ This repo contains usage examples and patterns for the [Momentic CLI](https://mo
 
 - [Amazon Linux](.github/workflows/test-amazon-linux.yml)
 - [AI-selected tests with a cached code index](.github/workflows/test-ai-select.yml)
+- [AI-selected tests with dynamic GitHub Actions shards](.github/workflows/test-ai-select-dynamic.yml)
 - [AI triage demo](.github/workflows/test-ai-heal-demo.yml)
 - [Buildkite AI triage demo](.buildkite/triage-demo.yml)
 - [CSV inputs](.github/workflows/test-pr-inputs.yml)
@@ -56,6 +57,24 @@ the GitHub Actions cache. It demonstrates both usage modes:
 - `momentic ai select --json` prints the selected tests without running them.
 - `momentic run . --ai-select` selects and runs the focused test set, falling
   back to the full in-scope set when it cannot produce a safe selection.
+
+The separate
+[dynamic matrix workflow](.github/workflows/test-ai-select-dynamic.yml) runs
+`momentic ai select --json` once, converts the selected paths into a GitHub
+Actions matrix with
+[`build-ai-select-matrix.mjs`](.github/scripts/build-ai-select-matrix.mjs), and
+passes each shard's explicit paths to `momentic run`.
+
+The workflow also passes application-specific selection guidance:
+
+```bash
+npx momentic ai select --json \
+  --prompt "Prioritize authentication, cart state, sorting, and checkout behavior affected by this change."
+```
+
+`--prompt` augments Momentic's built-in selection instructions. If AI Select
+reports that it must fall back to the full suite, the dynamic workflow's matrix
+builder includes every in-scope test instead.
 
 For pull requests, AI Select compares the merge base of the PR's target branch
 and `HEAD` through `HEAD`, covering the whole PR. For pushes to `main`, it
