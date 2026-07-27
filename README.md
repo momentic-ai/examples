@@ -55,7 +55,8 @@ This repo contains usage examples and patterns for the
 ## CI/CD workflows
 
 - [Amazon Linux](.github/workflows/test-amazon-linux.yml)
-- [AI-selected tests with dynamic GitHub Actions shards](.github/workflows/test-ai-select.yml)
+- [AI-selected tests](.github/workflows/test-ai-select.yml)
+- [AI-selected tests with dynamic GitHub Actions shards](.github/workflows/test-ai-select-dynamic.yml)
 - [AI triage demo](.github/workflows/test-ai-heal-demo.yml)
 - [Buildkite AI triage demo](.buildkite/triage-demo.yml)
 - [CSV inputs](.github/workflows/test-pr-inputs.yml)
@@ -67,10 +68,14 @@ This repo contains usage examples and patterns for the
 
 ## AI Select and the code index
 
-The [AI Select workflow](.github/workflows/test-ai-select.yml) checks out full
-git history, installs Momentic's code-index tools, and restores the index from
-the GitHub Actions cache. It runs `momentic ai select --json` once, converts the
-selected paths into a GitHub Actions matrix with
+The [basic AI Select workflow](.github/workflows/test-ai-select.yml) checks out
+full git history, installs Momentic's code-index tools, and restores the index
+from the GitHub Actions cache. It previews the standalone JSON result, then uses
+`momentic run . --ai-select` to select and execute tests in one job.
+
+Use the [dynamic matrix workflow](.github/workflows/test-ai-select-dynamic.yml)
+when you need to control the handoff. It runs `momentic ai select --json` once,
+converts the selected paths into a GitHub Actions matrix with
 [`build-ai-select-matrix.mjs`](.github/scripts/build-ai-select-matrix.mjs), and
 passes each shard's explicit paths to `momentic run`. A new runner starts only
 when another shard is needed.
@@ -83,8 +88,8 @@ npx momentic ai select --json \
 ```
 
 `--prompt` augments Momentic's built-in selection instructions. If AI Select
-reports that it must fall back to the full suite, the matrix builder includes
-every in-scope test instead.
+reports that it must fall back to the full suite, the dynamic workflow's matrix
+builder includes every in-scope test instead.
 
 For pull requests, AI Select compares the merge base of the PR's target branch
 and `HEAD` through `HEAD`, covering the whole PR. For pushes to `main`, it

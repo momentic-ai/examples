@@ -13,13 +13,10 @@ env:
   MOMENTIC_API_KEY: ${{ secrets.MOMENTIC_API_KEY }}
 
 jobs:
-  select-tests:
-    name: Select tests and define shards
+  run-tests:
+    name: Run AI-selected tests
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    outputs:
-      has_tests: ${{ steps.matrix.outputs.has_tests }}
-      matrix: ${{ steps.matrix.outputs.matrix }}
 
     steps:
       # AI Select needs the base commit and full diff, not a shallow checkout.
@@ -42,98 +39,25 @@ jobs:
           restore-keys: |
             momentic-code-index-v1-${{ runner.os }}-
 
-      # Standalone mode computes one reusable plan for all downstream shards.
-      # The compatibility check can be removed once --prompt is in the minimum
-      # Momentic version supported by this example.
-      - name: Select tests
+      # Standalone mode only computes and prints the selection; it does not run tests.
+      # On a PR, AI Select compares merge-base(origin/<PR base>, HEAD)..HEAD so the
+      # selection covers the whole PR. On a push to main, it compares the push
+      # event's before SHA..HEAD so the selection covers only commits in that push.
+      - name: Preview selected tests
         working-directory: web
-        run: |
-          PROMPT_ARGS=()
-          if npx momentic@latest ai select --help | grep -q -- '--prompt'; then
-            PROMPT_ARGS+=(
-              --prompt
-              "Prioritize authentication, cart state, sorting, and checkout behavior affected by this change."
-            )
-          fi
+        run: npx momentic@latest ai select --json
 
-          npx momentic@latest ai select \
-            --json \
-            --budget 4 \
-            --exclude autoheal-test-authorship-demo \
-            "${PROMPT_ARGS[@]}" \
-            > ai-selection.json
-
-      # Turn the selected paths into a dynamic GitHub Actions matrix. The script
-      # also handles valid zero-test selections and fail-open run-all plans.
-      - name: Define dynamic shard matrix
-        id: matrix
-        run: |
-          node .github/scripts/build-ai-select-matrix.mjs \
-            web/ai-selection.json web >> "$GITHUB_OUTPUT"
-
-  run-tests:
-    name: Run selected tests (shard ${{ matrix.shard }}/${{ matrix.totalShards }})
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs:
-      - select-tests
-    if: needs['select-tests'].outputs.has_tests == 'true'
-    strategy:
-      fail-fast: false
-      matrix: ${{ fromJSON(needs['select-tests'].outputs.matrix) }}
-    defaults:
-      run:
-        working-directory: web
-
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24.15.0
-          cache: npm
-      - name: Install dependencies
-        run: npm --prefix .. ci
       - name: Install browser
         run: npx momentic@latest install-browsers chromium
+
+      # Execution mode resolves the same diff range, then runs the selected subset.
+      # If AI Select cannot produce a safe selection, `run --ai-select` falls open
+      # and runs the full in-scope test set instead.
       - name: Run selected tests
-        env:
-          TEST_ARGS: ${{ matrix.testArgs }}
-        run: |
-          read -r -a SELECTED_TESTS <<< "$TEST_ARGS"
-          npx momentic@latest run "${SELECTED_TESTS[@]}" \
-            --output-dir "test-results/shard-${{ matrix.shard }}"
-      - name: Save test results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: ai-selected-test-results-${{ matrix.shard }}
-          path: web/test-results
-          retention-days: 1
-
-  upload-results:
-    name: Merge and upload selected test results
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    needs:
-      - select-tests
-      - run-tests
-    if: always() && needs['select-tests'].outputs.has_tests == 'true'
-
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24.15.0
-          cache: npm
-      - name: Install dependencies
-        run: npm ci
-      - name: Download test results
-        uses: actions/download-artifact@v4
-        with:
-          path: test-results
-          pattern: ai-selected-test-results-*
-          merge-multiple: true
-      - name: Merge test results
-        run: npx momentic@latest results merge --output-dir test-results/merged test-results
+        working-directory: web
+        run: npx momentic@latest run . --ai-select
+      # A valid zero-test selection creates no runs directory, so there is nothing to upload.
       - name: Upload test results
-        run: npx momentic@latest results upload test-results/merged
+        if: ${{ always() && hashFiles('web/test-results/runs/**') != '' }}
+        working-directory: web
+        run: npx momentic@latest results upload test-results
