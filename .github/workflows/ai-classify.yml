@@ -1,16 +1,5 @@
 name: AI classify (categorize failures)
 
-# Runs the web suite, uploads the results, then classifies any failures. Classify
-# reads the run archive, the test's code-index context, and past run history to
-# label each failure with a category (for example TEST_AUTHORSHIP vs a real
-# product issue) and a short explanation, so you spend less time triaging.
-#
-# Only failed runs are classified; passing runs are skipped, so on an all-green
-# run this step is a no-op.
-#
-# Classify is in beta. Contact Momentic (https://momentic.ai/sales) to enable it
-# for your organization before using this workflow.
-
 on:
   pull_request:
   push:
@@ -47,14 +36,9 @@ jobs:
       - name: Install headless browsers for automation
         run: npx momentic install-browsers chromium
 
-      # `--upload-results` tags the runs with this commit so `ai classify
-      # --git-commit` can find them. Keep going on failure so the classify step
-      # still runs when a test fails.
       - name: Run tests
         run: npx momentic run . --upload-results
         continue-on-error: true
 
-      # Classify every failed run for this commit. Passing runs are skipped
-      # automatically.
       - name: Classify failures for this commit
         run: npx momentic ai classify --git-commit "$GITHUB_SHA"

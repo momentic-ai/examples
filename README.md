@@ -52,59 +52,20 @@ This repo contains usage examples and patterns for the [Momentic CLI](https://mo
 
 ## AI explore, classify, and triage
 
-These three agents can each run autonomously in GitHub Actions. Explore and
+Reference workflows for running the AI agents in GitHub Actions. Explore and
 classify are in beta — [contact Momentic](https://momentic.ai/sales) to enable
-them for your organization first.
+them. Delivery (draft vs. real PR, reviewers) is configured in the Momentic
+dashboard. See the [docs](https://momentic.ai/docs/ai/explore) for details.
 
-### Explore — generate tests from code changes
-
-The [explore workflow](.github/workflows/ai-explore.yml) runs the explore agent,
-which diffs a change, infers the user journeys it affects, drives them in a real
-browser, and opens a pull request with the Momentic tests it builds. It runs on
-merges to `main` — the same way Momentic runs explore on its own repo — so each
-landed change is explored once.
-
-- On a push to `main`, `momentic ai explore diff` diffs the commit that just
-  landed (`HEAD~1..HEAD`), so a squash-merged PR is explored as a single change.
-- Run manually (`workflow_dispatch`), `momentic ai explore latest` maps the
-  whole app to build a first set of tests for a greenfield project.
-
-Both commands take a repo-specific [`explore-prompt.md`](web/explore-prompt.md)
-via `--prompt-file`, which tells the agent which app to drive, how to sign in,
-and where to save the tests it writes.
-
-What a successful run produces (a real PR, a draft PR, a `git apply` patch, a
-direct commit, or nothing), its reviewers, and auto-close behavior are
-configured per project under **Settings > Explore** in the Momentic dashboard —
-not in the workflow file. Pull requests are opened by the **Momentic GitHub
-App**, so install that app on the repository first.
-
-### Classify — categorize failures
-
-The [classify workflow](.github/workflows/ai-classify.yml) runs the suite with
-`--upload-results`, then runs `momentic ai classify --git-commit "$GITHUB_SHA"`
-to label every failure for that commit. Classify uses the run archive, the
-test's code-index context, and past run history to assign a category (for
-example `TEST_AUTHORSHIP` versus a real product issue) plus a short explanation,
-so you triage less by hand. Only failed runs are classified — passing runs are
-skipped, so it is a no-op on an all-green run.
-
-You can also classify a single run or a whole run group:
-
-```bash
-npx momentic ai classify <run-id-or-url>
-npx momentic ai classify --run-group-id <run-group-id>
-```
-
-### Triage — fix failing tests
-
-Triage takes classified failures and either fixes the tests (stale descriptions,
-small flow changes, flakes) or flags real product issues. The
-[AI triage demo](.github/workflows/test-ai-heal-demo.yml) runs an intentionally
-failing test and then `momentic ai triage` against the results; the
-[Buildkite triage demo](.buildkite/triage-demo.yml) shows the same on Buildkite.
-As with explore, whether triage opens a draft or real PR and who reviews it is
-configured in the Momentic dashboard.
+- **Explore** ([`ai-explore.yml`](.github/workflows/ai-explore.yml)) — generates
+  tests from code changes. Runs `ai explore diff` on merges to `main`, and
+  `ai explore latest` (whole-app seed) on manual dispatch. Both use a
+  repo-specific [`explore-prompt.md`](web/explore-prompt.md).
+- **Classify** ([`ai-classify.yml`](.github/workflows/ai-classify.yml)) — runs
+  the suite and then `ai classify` to categorize any failures.
+- **Triage** ([`test-ai-heal-demo.yml`](.github/workflows/test-ai-heal-demo.yml),
+  [Buildkite](.buildkite/triage-demo.yml)) — runs `ai triage` to fix failing
+  tests or flag real product issues.
 
 ## AI Select and the code index
 

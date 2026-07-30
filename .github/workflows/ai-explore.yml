@@ -1,21 +1,5 @@
 name: AI explore (generate tests)
 
-# The explore agent diffs a change, infers the user journeys it affects, drives
-# them in a real browser, and opens a pull request with the Momentic tests it
-# builds. Run it on merges to main — the same way Momentic runs explore on its
-# own repo — so each landed change is explored once. The manual trigger seeds
-# coverage for the whole app, which is how you build the first set of tests for
-# a greenfield project.
-#
-# What a successful run produces (a PR, a draft PR, a patch, etc.), its
-# reviewers, and auto-close behavior are configured per project under
-# Settings > Explore in the Momentic dashboard, not in this file. Pull requests
-# are opened by the Momentic GitHub App, so install that app on the repository
-# first.
-#
-# Explore is in beta. Contact Momentic (https://momentic.ai/sales) to enable it
-# for your organization before using this workflow.
-
 on:
   push:
     branches:
@@ -38,7 +22,6 @@ jobs:
         working-directory: ./web
 
     steps:
-      # fetch-depth: 0 gives the agent the history it needs to diff the range.
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -55,16 +38,10 @@ jobs:
       - name: Install headless browsers for automation
         run: npx momentic install-browsers chromium
 
-      # On a push, `explore diff` diffs the commit that just landed
-      # (HEAD~1..HEAD), so a squash-merged PR is explored as a single change.
-      # explore-prompt.md tells the agent which app to drive, how to sign in,
-      # and where to save the tests it writes.
       - name: Explore the change that landed
         if: github.event_name == 'push'
         run: npx momentic ai explore diff --prompt-file explore-prompt.md
 
-      # Manual runs seed coverage for the entire app instead of a diff — use this
-      # to build the first set of tests for a greenfield project.
       - name: Explore the whole app
         if: github.event_name == 'workflow_dispatch'
         run: npx momentic ai explore latest --prompt-file explore-prompt.md
