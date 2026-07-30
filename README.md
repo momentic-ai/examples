@@ -38,7 +38,6 @@ This repo contains usage examples and patterns for the [Momentic CLI](https://mo
 
 - [Amazon Linux](.github/workflows/test-amazon-linux.yml)
 - [AI explore (generate tests)](.github/workflows/ai-explore.yml)
-- [AI classify (categorize failures)](.github/workflows/ai-classify.yml)
 - [AI triage demo](.github/workflows/test-ai-heal-demo.yml)
 - [AI-selected tests with a cached code index](.github/workflows/test-ai-select.yml)
 - [AI-selected tests with dynamic GitHub Actions shards](.github/workflows/test-ai-select-dynamic.yml)
@@ -61,8 +60,9 @@ dashboard. See the [docs](https://momentic.ai/docs/ai/explore) for details.
   tests from code changes. Runs `ai explore diff` on merges to `main`, and
   `ai explore latest` (whole-app seed) on manual dispatch. Both use a
   repo-specific [`explore-prompt.md`](web/explore-prompt.md).
-- **Classify** ([`ai-classify.yml`](.github/workflows/ai-classify.yml)) — runs
-  the suite and then `ai classify` to categorize any failures.
+- **Classify** — no separate workflow needed. `web/momentic.config.yaml` has
+  `ai.classification.enabled: true`, so `momentic run` classifies failures
+  in-flow and saves the verdict.
 - **Triage** ([`test-ai-heal-demo.yml`](.github/workflows/test-ai-heal-demo.yml),
   [Buildkite](.buildkite/triage-demo.yml)) — runs `ai triage` to fix failing
   tests or flag real product issues.
