@@ -51,10 +51,10 @@ This repo contains usage examples and patterns for the [Momentic CLI](https://mo
 
 ## AI explore, classify, and triage
 
-Reference workflows for running the AI agents in GitHub Actions. Explore and
-classify are in beta — [contact Momentic](https://momentic.ai/sales) to enable
-them. Delivery (draft vs. real PR, reviewers) is configured in the Momentic
-dashboard. See the [docs](https://momentic.ai/docs/ai/explore) for details.
+Reference workflows for running the AI agents in GitHub Actions. Explore is in
+beta — [contact Momentic](https://momentic.ai/sales) to enable it. Delivery
+(draft vs. real PR, reviewers) is configured in the Momentic dashboard. See the
+[docs](https://momentic.ai/docs/get-started/ai-quickstart) for details.
 
 - **Explore** ([`ai-explore.yml`](.github/workflows/ai-explore.yml)) — generates
   tests from code changes. Runs `ai explore diff` on merges to `main`, and
