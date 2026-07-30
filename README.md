@@ -59,11 +59,13 @@ them for your organization first.
 ### Explore — generate tests from code changes
 
 The [explore workflow](.github/workflows/ai-explore.yml) runs the explore agent,
-which reads a diff, infers the user journeys it affects, drives them in a real
-browser, and opens a pull request with the Momentic tests it builds.
+which diffs a change, infers the user journeys it affects, drives them in a real
+browser, and opens a pull request with the Momentic tests it builds. It runs on
+merges to `main` — the same way Momentic runs explore on its own repo — so each
+landed change is explored once.
 
-- On a `pull_request`, `momentic ai explore diff` explores just that PR's diff
-  and suggests new, updated, or deleted tests for it.
+- On a push to `main`, `momentic ai explore diff` diffs the commit that just
+  landed (`HEAD~1..HEAD`), so a squash-merged PR is explored as a single change.
 - Run manually (`workflow_dispatch`), `momentic ai explore latest` maps the
   whole app to build a first set of tests for a greenfield project.
 
@@ -71,10 +73,11 @@ Both commands take a repo-specific [`explore-prompt.md`](web/explore-prompt.md)
 via `--prompt-file`, which tells the agent which app to drive, how to sign in,
 and where to save the tests it writes.
 
-The explore PR is opened by the **Momentic GitHub App**, so install that app on
-the repository first. Whether the PR is a draft or ready for review, who is
-requested as a reviewer, and auto-close behavior are configured per project in
-the Momentic dashboard — not in the workflow file.
+What a successful run produces (a real PR, a draft PR, a `git apply` patch, a
+direct commit, or nothing), its reviewers, and auto-close behavior are
+configured per project under **Settings > Explore** in the Momentic dashboard —
+not in the workflow file. Pull requests are opened by the **Momentic GitHub
+App**, so install that app on the repository first.
 
 ### Classify — categorize failures
 
@@ -84,8 +87,7 @@ to label every failure for that commit. Classify uses the run archive, the
 test's code-index context, and past run history to assign a category (for
 example `TEST_AUTHORSHIP` versus a real product issue) plus a short explanation,
 so you triage less by hand. Only failed runs are classified — passing runs are
-skipped, so it is a no-op on an all-green run. `--save` writes the result back
-to each run in Momentic Cloud so you can read it in the dashboard.
+skipped, so it is a no-op on an all-green run.
 
 You can also classify a single run or a whole run group:
 

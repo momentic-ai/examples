@@ -1,20 +1,25 @@
 name: AI explore (generate tests)
 
-# The explore agent reads code changes, infers the user journeys they affect,
-# drives them in a real browser, and opens a pull request with the Momentic
-# tests it builds. On a pull request it explores just the diff; run it manually
-# (workflow_dispatch) to seed coverage for the whole app from scratch.
+# The explore agent diffs a change, infers the user journeys it affects, drives
+# them in a real browser, and opens a pull request with the Momentic tests it
+# builds. Run it on merges to main — the same way Momentic runs explore on its
+# own repo — so each landed change is explored once. The manual trigger seeds
+# coverage for the whole app, which is how you build the first set of tests for
+# a greenfield project.
 #
-# Whether the resulting PR is a draft or ready-for-review, who is requested as a
-# reviewer, and auto-close behavior are configured per project in the Momentic
-# dashboard, not in this file. The PR is opened by the Momentic GitHub App, so
-# that app must be installed on this repository first.
+# What a successful run produces (a PR, a draft PR, a patch, etc.), its
+# reviewers, and auto-close behavior are configured per project under
+# Settings > Explore in the Momentic dashboard, not in this file. Pull requests
+# are opened by the Momentic GitHub App, so install that app on the repository
+# first.
 #
 # Explore is in beta. Contact Momentic (https://momentic.ai/sales) to enable it
 # for your organization before using this workflow.
 
 on:
-  pull_request:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -27,19 +32,16 @@ jobs:
   explore:
     name: Explore changed user journeys
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     defaults:
       run:
         working-directory: ./web
 
     steps:
-      # Explore diff needs the base commit and full history, not a shallow
-      # checkout. Check out the PR's head branch (not the detached merge commit)
-      # so the agent has a real branch name to open its pull request against.
+      # fetch-depth: 0 gives the agent the history it needs to diff the range.
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: ${{ github.head_ref }}
 
       - uses: actions/setup-node@v4
         with:
@@ -53,15 +55,16 @@ jobs:
       - name: Install headless browsers for automation
         run: npx momentic install-browsers chromium
 
-      # On a pull request, `explore diff` compares merge-base(base, HEAD)..HEAD,
-      # so it covers the whole PR. `explore-prompt.md` tells the agent which app
-      # to drive, how to sign in, and where to save the tests it writes.
-      - name: Explore the pull request diff
-        if: github.event_name == 'pull_request'
-        run: npx momentic ai explore diff --prompt-file explore-prompt.md --upload-results
+      # On a push, `explore diff` diffs the commit that just landed
+      # (HEAD~1..HEAD), so a squash-merged PR is explored as a single change.
+      # explore-prompt.md tells the agent which app to drive, how to sign in,
+      # and where to save the tests it writes.
+      - name: Explore the change that landed
+        if: github.event_name == 'push'
+        run: npx momentic ai explore diff --prompt-file explore-prompt.md
 
       # Manual runs seed coverage for the entire app instead of a diff — use this
       # to build the first set of tests for a greenfield project.
       - name: Explore the whole app
         if: github.event_name == 'workflow_dispatch'
-        run: npx momentic ai explore latest --prompt-file explore-prompt.md --upload-results
+        run: npx momentic ai explore latest --prompt-file explore-prompt.md

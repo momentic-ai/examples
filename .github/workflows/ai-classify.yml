@@ -6,9 +6,7 @@ name: AI classify (categorize failures)
 # product issue) and a short explanation, so you spend less time triaging.
 #
 # Only failed runs are classified; passing runs are skipped, so on an all-green
-# run this step is a no-op. The classifications are saved back to the runs in
-# Momentic Cloud (`--save`) so you can read them in the dashboard, and the JSON
-# is printed to the logs.
+# run this step is a no-op.
 #
 # Classify is in beta. Contact Momentic (https://momentic.ai/sales) to enable it
 # for your organization before using this workflow.
@@ -56,7 +54,7 @@ jobs:
         run: npx momentic run . --upload-results
         continue-on-error: true
 
-      # Classify every failed run for this commit and persist the result to the
-      # cloud. Passing runs are skipped automatically.
+      # Classify every failed run for this commit. Passing runs are skipped
+      # automatically.
       - name: Classify failures for this commit
-        run: npx momentic ai classify --git-commit "$GITHUB_SHA" --save --output-format json
+        run: npx momentic ai classify --git-commit "$GITHUB_SHA"
