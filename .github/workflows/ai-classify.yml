@@ -1,0 +1,62 @@
+name: AI classify (categorize failures)
+
+# Runs the web suite, uploads the results, then classifies any failures. Classify
+# reads the run archive, the test's code-index context, and past run history to
+# label each failure with a category (for example TEST_AUTHORSHIP vs a real
+# product issue) and a short explanation, so you spend less time triaging.
+#
+# Only failed runs are classified; passing runs are skipped, so on an all-green
+# run this step is a no-op. The classifications are saved back to the runs in
+# Momentic Cloud (`--save`) so you can read them in the dashboard, and the JSON
+# is printed to the logs.
+#
+# Classify is in beta. Contact Momentic (https://momentic.ai/sales) to enable it
+# for your organization before using this workflow.
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+env:
+  MOMENTIC_API_KEY: ${{ secrets.MOMENTIC_API_KEY }}
+
+jobs:
+  run-and-classify:
+    name: Run tests and classify failures
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: ./web
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.15.0
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: .
+
+      - name: Install headless browsers for automation
+        run: npx momentic install-browsers chromium
+
+      # `--upload-results` tags the runs with this commit so `ai classify
+      # --git-commit` can find them. Keep going on failure so the classify step
+      # still runs when a test fails.
+      - name: Run tests
+        run: npx momentic run . --upload-results
+        continue-on-error: true
+
+      # Classify every failed run for this commit and persist the result to the
+      # cloud. Passing runs are skipped automatically.
+      - name: Classify failures for this commit
+        run: npx momentic ai classify --git-commit "$GITHUB_SHA" --save --output-format json
