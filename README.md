@@ -58,8 +58,7 @@ beta — [contact Momentic](https://momentic.ai/sales) to enable it. Delivery
 
 - **Explore** ([`ai-explore.yml`](.github/workflows/ai-explore.yml)) — generates
   tests from code changes. Runs `ai explore diff` on merges to `main`, and
-  `ai explore latest` (whole-app seed) on manual dispatch. Both use a
-  repo-specific [`explore-prompt.md`](web/explore-prompt.md).
+  `ai explore latest` (whole-app seed) on manual dispatch.
 - **Classify** — no separate workflow needed. `web/momentic.config.yaml` has
   `ai.classification.enabled: true`, so `momentic run` classifies failures
   in-flow and saves the verdict.

@@ -40,8 +40,8 @@ jobs:
 
       - name: Explore the change that landed
         if: github.event_name == 'push'
-        run: npx momentic ai explore diff --prompt-file explore-prompt.md
+        run: npx momentic ai explore diff
 
       - name: Explore the whole app
         if: github.event_name == 'workflow_dispatch'
-        run: npx momentic ai explore latest --prompt-file explore-prompt.md
+        run: npx momentic ai explore latest

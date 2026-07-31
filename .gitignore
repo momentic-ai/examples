@@ -38,6 +38,3 @@ test-results
 
 # Momentic MCP working directory
 .momentic-mcp
-
-# Throwaway tests created while the explore agent crawls the app
-momentic/junk/
