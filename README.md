@@ -37,9 +37,10 @@ This repo contains usage examples and patterns for the [Momentic CLI](https://mo
 ## CI/CD workflows
 
 - [Amazon Linux](.github/workflows/test-amazon-linux.yml)
+- [AI explore (generate tests)](.github/workflows/ai-explore.yml)
+- [AI triage demo](.github/workflows/test-ai-heal-demo.yml)
 - [AI-selected tests with a cached code index](.github/workflows/test-ai-select.yml)
 - [AI-selected tests with dynamic GitHub Actions shards](.github/workflows/test-ai-select-dynamic.yml)
-- [AI triage demo](.github/workflows/test-ai-heal-demo.yml)
 - [Buildkite AI triage demo](.buildkite/triage-demo.yml)
 - [CSV inputs](.github/workflows/test-pr-inputs.yml)
 - [Multiple projects](.github/workflows/test-pr-multi-project.yml)
@@ -47,6 +48,23 @@ This repo contains usage examples and patterns for the [Momentic CLI](https://mo
 - [Run in a PR](.github/workflows/test-pr.yml)
 - [Queue in cloud](.github/workflows/test-prod.yml)
 - [CircleCI](.circleci/config.yml)
+
+## AI explore, classify, and triage
+
+Reference workflows for running the AI agents in GitHub Actions. Explore is in
+beta — [contact Momentic](https://momentic.ai/sales) to enable it. Delivery
+(draft vs. real PR, reviewers) is configured in the Momentic dashboard. See the
+[docs](https://momentic.ai/docs/get-started/ai-quickstart) for details.
+
+- **Explore** ([`ai-explore.yml`](.github/workflows/ai-explore.yml)) — generates
+  tests from code changes. Runs `ai explore diff` on merges to `main`, and
+  `ai explore latest` (whole-app seed) on manual dispatch.
+- **Classify** — no separate workflow needed. `web/momentic.config.yaml` has
+  `ai.classification.enabled: true`, so `momentic run` classifies failures
+  in-flow and saves the verdict.
+- **Triage** ([`test-ai-heal-demo.yml`](.github/workflows/test-ai-heal-demo.yml),
+  [Buildkite](.buildkite/triage-demo.yml)) — runs `ai triage` to fix failing
+  tests or flag real product issues.
 
 ## AI Select and the code index
 
