@@ -54,7 +54,7 @@ This repo contains usage examples and patterns for the [Momentic CLI](https://mo
 Reference workflows for running the AI agents in GitHub Actions. Explore is in
 beta — [contact Momentic](https://momentic.ai/sales) to enable it. Delivery
 (draft vs. real PR, reviewers) is configured in the Momentic dashboard. See the
-[docs](https://momentic.ai/docs/guides/ai-quickstart/classification) for details.
+[docs](https://momentic.ai/docs/ai/explore) for details.
 
 - **Explore** ([`test-ai-explore.yml`](.github/workflows/test-ai-explore.yml)) —
   generates tests from code changes. Runs `ai explore diff` on merges to `main`,
