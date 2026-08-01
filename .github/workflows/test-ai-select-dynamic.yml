@@ -133,7 +133,63 @@ jobs:
           path: test-results
           pattern: ai-selected-test-results-*
           merge-multiple: true
+      # --allow-empty keeps shards without runs (e.g. a zero-test selection)
+      # in the merged archive so their selection plans reach Momentic.
       - name: Merge test results
-        run: npx momentic@latest results merge --output-dir test-results/merged test-results
+        run: npx momentic@latest results merge --allow-empty --output-dir test-results/merged test-results
       - name: Upload test results
         run: npx momentic@latest results upload test-results/merged
+
+  # A valid zero-test selection skips the shard matrix entirely, so no run
+  # group would ever be uploaded and the pull request would get no Momentic
+  # comment. Running the selection in execution mode reuses the plan computed
+  # above (zero tests execute), and the upload carries the plan so the pull
+  # request comment can explain why nothing ran.
+  report-zero-selection:
+    name: Report zero-test selection
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs:
+      - select-tests
+    if: needs['select-tests'].outputs.has_tests == 'false'
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.15.0
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Install code-index tools
+        run: npx momentic@latest install-codetools
+      - name: Restore code index
+        uses: actions/cache@v4
+        with:
+          path: ~/.momentic/cache/
+          key: momentic-code-index-v1-${{ runner.os }}-${{ github.sha }}
+          restore-keys: |
+            momentic-code-index-v1-${{ runner.os }}-
+      # Mirror the planning job's selection arguments exactly so this reuses
+      # the plan computed above instead of resolving a new one.
+      - name: Run zero-test selection
+        working-directory: web
+        run: |
+          PROMPT_ARGS=()
+          if npx momentic@latest run --help | grep -q -- '--prompt'; then
+            PROMPT_ARGS+=(
+              --prompt
+              "Prioritize authentication, cart state, sorting, and checkout behavior affected by this change."
+            )
+          fi
+
+          npx momentic@latest run . \
+            --ai-select \
+            --ai-select-budget 4 \
+            --exclude autoheal-test-authorship-demo \
+            "${PROMPT_ARGS[@]}"
+      - name: Upload selection result
+        working-directory: web
+        run: npx momentic@latest results upload test-results
