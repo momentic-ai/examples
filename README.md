@@ -94,6 +94,13 @@ npx momentic ai select --json \
 reports that it must fall back to the full suite, the dynamic workflow's matrix
 builder includes every in-scope test instead.
 
+A valid selection can also choose **zero** tests (for example on a docs-only
+change). Both workflows still upload the run group in that case — the upload
+carries the selection plan, and Momentic's pull request comment explains why
+nothing ran. When merging sharded results, pass `--allow-empty` to
+`momentic results merge` so shards without runs keep their plans; never gate
+the upload step on the runs directory existing.
+
 For pull requests, AI Select compares the merge base of the PR's target branch
 and `HEAD` through `HEAD`, covering the whole PR. For pushes to `main`, it
 compares the push event's previous SHA through `HEAD`, covering only the commits
