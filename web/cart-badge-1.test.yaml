@@ -2,14 +2,12 @@ fileType: momentic/test/v2
 id: 5e5593cf-aecb-414f-b7c0-aeb1413cb773
 url: https://saucedemo.com
 description: Add a product to the cart and verify the cart badge shows the count.
+retries: 0
 defaultEnv: production
 disabled: false
-retries: 0
-viewport: 1920, 1080
-browserType: Chromium
 labels:
   - autoheal
 steps:
   - module: ./log-in-username-password.module.yaml
   - click: add to cart for the Sauce Labs Backpack item
-  - assert: Verify the cart badge in the top right shows the number 7
+  - assert: Verify the cart badge in the top right shows the number 1
