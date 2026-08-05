@@ -2,15 +2,14 @@ fileType: momentic/test/v2
 id: 3f9c1b28-77aa-4e51-9f30-2a6cf1d40b11
 url: https://saucedemo.com
 description: Sort products low to high and verify the cheapest item is listed first.
+retries: 0
 defaultEnv: production
 disabled: false
-retries: 0
-viewport: 1920, 1080
-browserType: Chromium
 labels:
   - autoheal
 steps:
   - module: ./log-in-username-password.module.yaml
-  - click: the product sort dropdown
-  - click: the "Price (low to high)" sort option
-  - assert: Verify that Sauce Labs Fleece Jacket is the first product shown
+  - select:
+      from: the product sort dropdown
+      label: Price (low to high)
+  - assert: Verify that Sauce Labs Onesie is the first product shown
