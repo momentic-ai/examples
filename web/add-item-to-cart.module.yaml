@@ -1,8 +1,0 @@
-fileType: momentic/module/v2
-description: Add the specified item to cart
-parameters:
-  - name: ITEM
-id: 4504fcb9-0bde-4be4-aada-fe17c6fcfd1f
-version: 1.0.24
-steps:
-  - click: add to cart for the {{env.ITEM}} item

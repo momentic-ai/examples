@@ -30,7 +30,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Install code-index tools
-        run: npx momentic@latest install-codetools
+        run: npx momentic install-codetools
       - name: Restore code index
         uses: actions/cache@v4
         with:
@@ -45,19 +45,19 @@ jobs:
       # event's before SHA..HEAD so the selection covers only commits in that push.
       - name: Preview selected tests
         working-directory: web
-        run: npx momentic@latest ai select --json
+        run: npx momentic ai select --json --exclude autoheal-test-authorship-demo
 
       - name: Install browser
-        run: npx momentic@latest install-browsers chromium
+        run: npx momentic install-browsers chromium
 
       # Execution mode resolves the same diff range, then runs the selected subset.
       # If AI Select cannot produce a safe selection, `run --ai-select` falls open
       # and runs the full in-scope test set instead.
       - name: Run selected tests
         working-directory: web
-        run: npx momentic@latest run . --ai-select
+        run: npx momentic run --ai-select --exclude autoheal-test-authorship-demo
       # A valid zero-test selection creates no runs directory, so there is nothing to upload.
       - name: Upload test results
         if: ${{ always() && hashFiles('web/test-results/runs/**') != '' }}
         working-directory: web
-        run: npx momentic@latest results upload test-results
+        run: npx momentic results upload

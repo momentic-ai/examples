@@ -25,12 +25,9 @@ jobs:
           node-version: 24.15.0
           cache: "npm"
       - name: Install dependencies
-        run: npm ci
+        run: npm --prefix ../ ci
       - name: Install headless browsers for automation
         # Choose which browsers you want to install, see https://momentic.ai/docs/browsers
         run: npx momentic install-browsers chromium
-      - name: Run tests and write outputs locally
-        run: npx momentic run --output-dir test-results/results-with-inputs --input-csv data/inputs.csv input-from-csv-test.test.yaml
-      - name: Upload results to Momentic Cloud for easy viewing
-        run: npx momentic results upload test-results/results-with-inputs
-        if: always()
+      - name: Run tests
+        run: npx momentic run --upload-results --input-csv data/inputs.csv input-from-csv-test.test.yaml

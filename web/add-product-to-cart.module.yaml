@@ -1,0 +1,8 @@
+fileType: momentic/module/v2
+name: Add product to cart
+description: Find a product and add it to the cart
+parameters:
+  - name: ITEM
+id: 4504fcb9-0bde-4be4-aada-fe17c6fcfd1f
+steps:
+  - Find {{ env.ITEM }}, open its product page, choose any required options, and add it to the cart

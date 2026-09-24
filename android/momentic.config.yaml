@@ -1,5 +1,36 @@
+# Project name. Appears in reports and in the Momentic app.
 name: android
+
+# Globs that select test and module files, relative to this file. Add exclude: ["out/**"] to skip files.
 include:
   - "**/*.test.yaml"
   - "**/*.module.yaml"
+
+# Main branch of the repo. New branches seed their step cache from the nearest commit on it. See https://momentic.ai/docs/reliability/step-cache
+gitMainBranch: main
+
+# Test file format version.
 fileFormat: v2
+
+# Advanced options. See https://momentic.ai/docs/configuration/advanced
+advanced:
+  # Save short AI action goals as bare strings. See https://momentic.ai/docs/configuration/advanced#advanced-aiactionshorthand
+  aiActionShorthand: true
+  # Store a separate step cache per environment. See https://momentic.ai/docs/reliability/step-cache
+  # isolateCachesByEnvironment: true
+
+# AI agent settings. See https://momentic.ai/docs/configuration/ai
+ai:
+  # Reuse decisions from past runs so the AI picks the same elements and assertions. See https://momentic.ai/docs/ai/memory
+  useMemory: true
+  # Let the AI find a path forward when a step fails. See https://momentic.ai/docs/reliability/auto-maintenance#failure-recovery
+  failureRecovery: true
+  # Version of each AI agent. See https://momentic.ai/docs/ai/agents
+  agentConfig:
+    locator: v5
+    assertion: v5
+    visual-assertion: v4.0
+    text-extraction: v3.0
+    failure-recovery: v2.1
+    android-locator: v2
+    ios-locator: v2

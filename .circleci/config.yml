@@ -23,7 +23,8 @@ jobs:
       - run:
           name: Run tests
           command: |
-            npx momentic run . \
+            npx momentic run \
+              --exclude autoheal-test-authorship-demo \
               --output-dir test-results/shard-${CIRCLE_NODE_INDEX} \
               --shard-index $(($CIRCLE_NODE_INDEX+1)) \
               --shard-count ${CIRCLE_NODE_TOTAL}

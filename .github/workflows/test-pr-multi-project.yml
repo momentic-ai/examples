@@ -25,17 +25,17 @@ jobs:
           node-version: 24.15.0
           cache: "npm"
       - name: Install dependencies
-        run: npm ci
+        run: npm --prefix .. ci
       - name: Install headless browsers for automation
         # Choose which browsers you want to install, see https://momentic.ai/docs/browsers
         run: npx momentic install-browsers chromium
-      - name: Run specific marketing tests using project name and substring match
-        run: npx momentic run --upload-results --filter marketing variable
+      - name: Run the marketing project
+        run: npx momentic run --upload-results -f marketing
         env:
           VAR_FROM_SHELL: test-var-from-shell
       - name: Run all QA tests using explicit config path
-        run: npx momentic run --upload-results --config qa/momentic.config.yaml .
-      - name: Run dashboard tests using absolute path
+        run: npx momentic run --upload-results -c qa/momentic.config.yaml
+      - name: Run the dashboard project
         run: |
           cd apps/dashboard
-          npx momentic run --upload-results google-search.test.yaml
+          npx momentic run --upload-results

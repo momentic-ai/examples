@@ -1,7 +1,6 @@
 fileType: momentic/mobile-test/v2
 id: 38e779be-0005-4c00-9910-911ea26cd494
-version: 0.0.4
-description: Tests the Dime app
+description: Create and inspect an expense in the Dime app
 platform: ios
 defaultChannel: dime
 emulator:
@@ -10,20 +9,7 @@ steps:
   - openApp:
       package: com.rafaelsoh.dime
       intentExtras: '["--my-argument", "my-value"]'
-  - tap: get started
-  - tap: the add food button
-  - tap: the add transport button
-  - swipe:
-      direction: up
-      in: screen
-      viewportPercent: 50
-  - assert: "'gifts' is visible on the screen"
-  - tap: the next button
-  - tap: the big + button
-  - tap: the '2'
-  - tap: category
-  - tap: the food category
-  - tap: the check mark
-  - assert: there's a single expense today called 'food'
-  - tap: the settings tab in the bottom right
+  - Complete onboarding, enable the Food and Transport categories, and create a $2 Food expense
+  - assert: A single $2 Food expense appears in today's transactions
+  - Open the Settings tab
   - checkScreenContains: Display Cents

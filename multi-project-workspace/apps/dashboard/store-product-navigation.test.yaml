@@ -1,0 +1,8 @@
+fileType: momentic/test/v2
+id: cfa6eb04-a97e-42c0-aeaa-5de0bc3cac0d
+description: Open a product from the Vercel Store home page
+defaultEnv: production
+retries: 1
+steps:
+  - Open the product named Acme Circles T-Shirt
+  - assert: The Acme Circles T-Shirt product page shows its price and an Add to Cart button
