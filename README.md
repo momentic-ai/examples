@@ -1,28 +1,39 @@
 # Examples
 
-This repo contains usage examples and patterns for the [Momentic CLI](https://momentic.ai/docs/quickstart/cli).
+This repository shows current Momentic setup patterns for web, Android, iOS,
+multi-project workspaces, and CI.
+
+Install the pinned CLIs once from the repository root:
+
+```bash
+npm ci
+```
+
+The root package installs `momentic`, `momentic-mobile`, `@momentic/wizard`, and
+`qa`. Project configs use the current init-generated defaults and comments.
+Tests use the V2 file format and AI Action V3 shorthand.
 
 ## Examples
 
 ### Web
 
-- [Web test](web/) — end-to-end tests for [Swag Labs](https://www.saucedemo.com/), a demo e-commerce app. Includes:
-  - `standard-user-purchases` — end-to-end checkout flow (add items, verify cart, complete purchase)
-  - `cart-and-sorting-behavior` — verifies sorting changes the view without affecting cart state
-  - `input-from-csv-test` — logs in and verifies the products page using credentials supplied via CSV
+- [Web tests](web/) — browser tests for the [Vercel Store demo](https://demo.vercel.store/). Includes:
+  - `add-products-to-cart` — adds two products and verifies cart state
+  - `search-and-cart-behavior` — searches for a product and verifies it stays in the cart
+  - `input-from-csv-test` — searches for a product supplied through a CSV input
   - `autoheal-test-authorship-demo` — intentionally fails in a way that should classify as `TEST_AUTHORSHIP` and is meant to be run by the dedicated AI-heal demo workflow
-  - **Modules**: `log-in-username-password`, `add-item-to-cart`, `fill-out-personal-info`
+  - **Modules**: `add-product-to-cart`
 
 ### Android
 
-- [Android test](android/) — mobile tests for Android apps. Includes:
+- [Android tests](android/) — mobile tests for Android apps. Includes:
   - `android-google-maps` — searches for Italian restaurants in San Francisco and verifies results and restaurant details. The APK can be downloaded [here](https://drive.google.com/file/d/1JEagdPUFJ3jr_Ra4q1ghgGmWcaxhIvZf/view?usp=sharing).
   - `android-contacts` — creates a contact in the Google Contacts app and verifies it, then attempts a call via the phone app
   - **Modules**: `search-restaurants`
 
 ### iOS
 
-- [iOS test](ios/) — mobile tests for iOS apps. Includes:
+- [iOS tests](ios/) — mobile tests for iOS apps. Includes:
   - `dime-app` — tests onboarding and expense creation in the [Dime](https://apps.apple.com/us/app/dime-budget-expense-tracker/id1635280255) personal finance app
   - `ios-contacts` — creates a contact in the iOS Contacts app and drafts a text message to that contact
 
@@ -86,8 +97,8 @@ passes each shard's explicit paths to `momentic run`.
 The workflow also passes application-specific selection guidance:
 
 ```bash
-npx momentic ai select --json \
-  --prompt "Prioritize authentication, cart state, sorting, and checkout behavior affected by this change."
+npx --no-install momentic ai select --json \
+  --prompt "Prioritize product search, product details, and cart behavior affected by this change."
 ```
 
 `--prompt` augments Momentic's built-in selection instructions. If AI Select
@@ -119,7 +130,7 @@ The Buildkite example at [.buildkite/triage-demo.yml](.buildkite/triage-demo.yml
 To run the same demo locally before wiring it into Buildkite:
 
 ```bash
-cd /Users/jkimling/examples
+npm ci
 export MOMENTIC_API_KEY=your_api_key_here
 .buildkite/scripts/local-triage-demo.sh
 ```

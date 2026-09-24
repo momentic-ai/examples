@@ -1,8 +1,14 @@
 fileType: momentic/mobile-module/v2
+name: Search restaurants
+description: Search Google Maps by cuisine and city
 platform: android
 id: e08cf534-716c-4d68-b0f1-1a5e803ec8c7
-version: 0.0.4
+parameters:
+  parameterNames:
+    - CUISINE
+    - CITY
+  defaultParameters:
+    CUISINE: '"Italian"'
+    CITY: '"San Francisco"'
 steps:
-  - type:
-      text: Italian restaurants in San Francisco
-      into: search bar
+  - Search for {{ env.CUISINE }} restaurants in {{ env.CITY }} and show the results

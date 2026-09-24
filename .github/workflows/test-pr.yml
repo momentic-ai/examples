@@ -21,17 +21,15 @@ jobs:
         with:
           node-version: 24.15.0
           cache: "npm"
-      - name: Install app dependencies
+      - name: Install dependencies
         run: npm --prefix ../ ci
-      - name: Install testing dependencies
-        run: npm ci
       - name: Install headless browsers for automation
         # Choose which browsers you want to install, see https://momentic.ai/docs/browsers
-        run: npx momentic install-browsers chromium
+        run: npx --no-install momentic install-browsers chromium
       - name: Run tests
-        run: npx momentic run .
+        run: npx --no-install momentic run .
       - name: Upload test results artifact to Momentic Cloud
-        run: npx momentic results upload test-results
+        run: npx --no-install momentic results upload test-results
         if: always()
 
   run-android-tests:
@@ -49,19 +47,19 @@ jobs:
           node-version: 24.15.0
           cache: "npm"
       - name: Install dependencies
-        run: npm ci
+        run: npm --prefix ../ ci
       - name: Install headless browsers for automation
         # Choose which browsers you want to install, see https://momentic.ai/docs/browsers
-        run: npx momentic-mobile install-browsers chromium
+        run: npx --no-install momentic-mobile install-browsers chromium
       - name: Set up JDK
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: "24"
           distribution: "temurin"
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
       - name: Run tests
-        run: npx momentic-mobile run .
+        run: npx --no-install momentic-mobile run .
       - name: Upload test results artifact to Momentic Cloud
-        run: npx momentic-mobile results upload test-results
+        run: npx --no-install momentic-mobile results upload test-results
         if: always()

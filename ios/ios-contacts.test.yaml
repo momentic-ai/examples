@@ -1,30 +1,11 @@
 fileType: momentic/mobile-test/v2
 id: e51742f1-43ce-46fc-9a83-2a394e53efbe
-version: 0.0.4
-description: " Test the iOS contacts app"
+description: Create an iOS contact and draft a text message
 platform: ios
 steps:
   - openApp: com.apple.MobileAddressBook
-  - tap: New contact button
-  - type:
-      text: iOS
-      into: First Name Input
-  - type:
-      text: Test
-      into: Last name Input
-  - type:
-      text: Momentic
-      into: Company Input
-  - scrollTo:
-      on: add phone
-      in: app
-  - assert: add phone exists
-  - tap: add phone
-  - type: "9194089905"
-  - tap: Save button
+  - Create a contact named iOS Test at Momentic with phone number 9194089905
   - assert: iOS Test contact has a company name and phone number
   - killApp
-  - act:
-      goal: open the contact app and draft a text to iOS Test - Hey there, it's AI
-        ACTION!
-      version: "2"
+  - Open Contacts and draft a text to iOS Test that says "Hey there, it's AI ACTION!" without sending it
+  - assert: A draft message to iOS Test contains "Hey there, it's AI ACTION!"

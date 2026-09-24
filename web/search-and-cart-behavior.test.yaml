@@ -1,0 +1,14 @@
+fileType: momentic/test/v2
+id: a2c56e37-97f7-43f4-8a87-3c460486a5bd
+description: Search for a product and verify it remains in the cart
+defaultEnv: production
+retries: 1
+steps:
+  - Search for hoodie and open the search results
+  - assert: The visible search results are relevant to hoodies
+  - module:
+      path: ./add-product-to-cart.module.yaml
+      inputs:
+        ITEM:
+          string: Acme Hoodie
+  - Open the cart and confirm the Acme Hoodie is present

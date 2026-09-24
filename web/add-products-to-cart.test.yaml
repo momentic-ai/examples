@@ -1,0 +1,18 @@
+fileType: momentic/test/v2
+id: 41e55e84-4c74-4704-8159-d4155ef01058
+description: Add two products to the cart and verify the cart state
+defaultEnv: production
+retries: 1
+steps:
+  - module:
+      path: ./add-product-to-cart.module.yaml
+      inputs:
+        ITEM:
+          string: Acme Circles T-Shirt
+  - module:
+      path: ./add-product-to-cart.module.yaml
+      inputs:
+        ITEM:
+          string: Acme Drawstring Bag
+  - Open the cart, confirm both selected products are present, and increase the quantity of one product
+  - assert: The cart contains both selected products, one has a quantity greater than one, and the subtotal is greater than zero

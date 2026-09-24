@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Install code-index tools
-        run: npx momentic@latest install-codetools
+        run: npx --no-install momentic install-codetools
       - name: Restore code index
         uses: actions/cache@v4
         with:
@@ -43,24 +43,14 @@ jobs:
             momentic-code-index-v1-${{ runner.os }}-
 
       # Standalone mode computes one reusable plan for all downstream shards.
-      # The compatibility check can be removed once --prompt is in the minimum
-      # Momentic version supported by this example.
       - name: Select tests
         working-directory: web
         run: |
-          PROMPT_ARGS=()
-          if npx momentic@latest ai select --help | grep -q -- '--prompt'; then
-            PROMPT_ARGS+=(
-              --prompt
-              "Prioritize authentication, cart state, sorting, and checkout behavior affected by this change."
-            )
-          fi
-
-          npx momentic@latest ai select \
+          npx --no-install momentic ai select \
             --json \
             --budget 4 \
             --exclude autoheal-test-authorship-demo \
-            "${PROMPT_ARGS[@]}" \
+            --prompt "Prioritize product search, product details, and cart behavior affected by this change." \
             > ai-selection.json
 
       # Turn the selected paths into a dynamic GitHub Actions matrix. The script
@@ -94,13 +84,13 @@ jobs:
       - name: Install dependencies
         run: npm --prefix .. ci
       - name: Install browser
-        run: npx momentic@latest install-browsers chromium
+        run: npx --no-install momentic install-browsers chromium
       - name: Run selected tests
         env:
           TEST_ARGS: ${{ matrix.testArgs }}
         run: |
           read -r -a SELECTED_TESTS <<< "$TEST_ARGS"
-          npx momentic@latest run "${SELECTED_TESTS[@]}" \
+          npx --no-install momentic run "${SELECTED_TESTS[@]}" \
             --output-dir "test-results/shard-${{ matrix.shard }}"
       - name: Save test results
         if: always()
@@ -134,6 +124,6 @@ jobs:
           pattern: ai-selected-test-results-*
           merge-multiple: true
       - name: Merge test results
-        run: npx momentic@latest results merge --output-dir test-results/merged test-results
+        run: npx --no-install momentic results merge --output-dir test-results/merged test-results
       - name: Upload test results
-        run: npx momentic@latest results upload test-results/merged
+        run: npx --no-install momentic results upload test-results/merged

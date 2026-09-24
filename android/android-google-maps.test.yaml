@@ -1,7 +1,6 @@
 fileType: momentic/mobile-test/v2
 id: 8cf714f8-6561-4677-b0e5-cfc97817708d
-version: 0.0.4
-description: example android test apps
+description: Search for Italian restaurants in San Francisco and inspect a review
 platform: android
 defaultChannel: google-maps
 defaultTag: latest
@@ -10,15 +9,8 @@ steps:
   - openApp:
       package: com.google.android.apps.maps
       activity: ""
-  - tap: Skip button
-  - tap: Search Bar
+  - Skip sign-in and dismiss any first-run prompts
   - module: ./search-restaurants.module.yaml
-  - assert: check for atleast 5 options on the screen
-  - tap: the first element from the list
-  - checkElementExists: Directions
-  - tap: Menu
-  - scrollTo:
-      on: first item from the menu
-      in: app
-  - tap: Reviews tab
-  - assert: A review from a user is visible
+  - assert: At least five restaurant options are visible
+  - Open the first restaurant result and navigate to its Reviews tab
+  - assert: The restaurant shows directions and at least one customer review
