@@ -3,6 +3,13 @@ id: b7e3a1c4-9d52-4f18-a6b0-8c2e7d5f1a93
 description: Search for and open a product supplied through CSV inputs
 defaultEnv: production
 retries: 1
+parameters:
+  - name: QUERY
+    default:
+      string: shirt
+  - name: PRODUCT
+    default:
+      string: Acme Circles T-Shirt
 steps:
   - Search for {{ env.QUERY }} and open the product named {{ env.PRODUCT }}
   - assert: The product page is open for {{ env.PRODUCT }} and shows a price and an Add to Cart button

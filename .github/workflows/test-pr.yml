@@ -48,9 +48,6 @@ jobs:
           cache: "npm"
       - name: Install dependencies
         run: npm --prefix ../ ci
-      - name: Install headless browsers for automation
-        # Choose which browsers you want to install, see https://momentic.ai/docs/browsers
-        run: npx momentic-mobile install-browsers chromium
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
