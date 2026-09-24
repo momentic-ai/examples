@@ -12,7 +12,6 @@
     "lint:workspace": "momentic lint --config multi-project-workspace/apps/dashboard/momentic.config.yaml && momentic lint --config multi-project-workspace/apps/marketing/momentic.config.yaml && momentic lint --config multi-project-workspace/qa/momentic.config.yaml"
   },
   "devDependencies": {
-    "@momentic/wizard": "1.7.4",
     "momentic": "3.59.3",
     "momentic-mobile": "1.33.2",
     "qa": "0.19.0"

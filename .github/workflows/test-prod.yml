@@ -52,4 +52,4 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v4
       - name: Run tests
-        run: npx momentic-mobile run .
+        run: npx momentic-mobile run

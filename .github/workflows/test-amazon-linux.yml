@@ -64,9 +64,10 @@ jobs:
           npm ci
 
           # Run tests
-          cat /web/momentic.config.yaml
+          cd /web
+          cat momentic.config.yaml
           npx momentic install-browsers chromium
-          npx momentic run --upload-results --config /web/momentic.config.yaml /web/ --exclude autoheal-test-authorship-demo
+          npx momentic run --upload-results --exclude autoheal-test-authorship-demo
 
           EOF
 

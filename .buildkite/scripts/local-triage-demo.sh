@@ -14,10 +14,7 @@ cd web
 
 npx momentic install-browsers chromium
 npx momentic run autoheal-test-authorship-demo.test.yaml \
-  --output-dir "$RESULTS_DIR" \
-  --upload-results
+  --output-dir "$RESULTS_DIR"
 
 npx momentic ai triage "$RESULTS_DIR" \
-  --yes \
-  --quiet \
   --timeout-minutes "${MOMENTIC_TRIAGE_TIMEOUT_MINUTES:-10}"

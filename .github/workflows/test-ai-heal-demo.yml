@@ -40,11 +40,9 @@ jobs:
         continue-on-error: true
         run: |
           npx momentic run autoheal-test-authorship-demo.test.yaml \
-            --output-dir test-results/autoheal-demo --upload-results
+            --output-dir test-results/autoheal-demo
 
       - name: Classify and heal the local demo results
         if: always()
         run: |
-          npx momentic ai triage test-results/autoheal-demo \
-            --yes \
-            --timeout-minutes 10
+          npx momentic ai triage test-results/autoheal-demo --timeout-minutes 10

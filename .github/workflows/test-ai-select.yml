@@ -55,9 +55,9 @@ jobs:
       # and runs the full in-scope test set instead.
       - name: Run selected tests
         working-directory: web
-        run: npx momentic run . --ai-select --exclude autoheal-test-authorship-demo
+        run: npx momentic run --ai-select --exclude autoheal-test-authorship-demo
       # A valid zero-test selection creates no runs directory, so there is nothing to upload.
       - name: Upload test results
         if: ${{ always() && hashFiles('web/test-results/runs/**') != '' }}
         working-directory: web
-        run: npx momentic results upload test-results
+        run: npx momentic results upload

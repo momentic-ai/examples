@@ -25,7 +25,6 @@ The root package installs:
 | --- | --- |
 | `momentic` | Run, lint, select, classify, and triage web tests |
 | `momentic-mobile` | Run and lint Android and iOS tests |
-| `@momentic/wizard` | Create Momentic projects and configuration files |
 | `qa` | Start and manage Mo QA sessions |
 
 Set your API key before running tests:
@@ -73,15 +72,13 @@ Run the normal web examples together. This excludes the intentional triage
 failure:
 
 ```bash
-npx momentic run . --exclude autoheal-test-authorship-demo
+npx momentic run --exclude autoheal-test-authorship-demo
 ```
 
 Run the CSV example with the included fixture:
 
 ```bash
-npx momentic run \
-  --input-csv data/inputs.csv \
-  input-from-csv-test.test.yaml
+npx momentic run --input-csv data/inputs.csv input-from-csv-test.test.yaml
 ```
 
 The CSV headers match the test parameters:
@@ -173,24 +170,24 @@ cd multi-project-workspace
 npx momentic install-browsers chromium
 ```
 
-Run the marketing example by project name and test-name substring:
+Run the marketing project by name:
 
 ```bash
 VAR_FROM_SHELL=test-var-from-shell \
-  npx momentic run --filter marketing variable
+  npx momentic run -f marketing
 ```
 
 Run the QA project with an explicit config:
 
 ```bash
-npx momentic run --config qa/momentic.config.yaml .
+npx momentic run -c qa/momentic.config.yaml
 ```
 
 Run the dashboard project from its directory:
 
 ```bash
 cd apps/dashboard
-npx momentic run store-product-navigation.test.yaml
+npx momentic run
 ```
 
 ## AI test selection
@@ -201,16 +198,13 @@ the change. Fetch the base branch history before running it locally:
 ```bash
 git fetch origin main
 cd web
-npx momentic ai select . \
-  --base origin/main \
-  --json \
-  --prompt "Prioritize product search, product details, and cart behavior affected by this change."
+npx momentic ai select --base origin/main
 ```
 
 To select and run tests in one command:
 
 ```bash
-npx momentic run . --ai-select
+npx momentic run --ai-select --exclude autoheal-test-authorship-demo
 ```
 
 The examples include two GitHub Actions implementations:
@@ -230,16 +224,13 @@ test-authorship failure and save its artifacts:
 ```bash
 cd web
 npx momentic run autoheal-test-authorship-demo.test.yaml \
-  --output-dir test-results/triage-demo \
-  --upload-results
+  --output-dir test-results/triage-demo
 ```
 
 Run triage against those artifacts:
 
 ```bash
-npx momentic ai triage test-results/triage-demo \
-  --yes \
-  --quiet
+npx momentic ai triage test-results/triage-demo
 ```
 
 The Buildkite example wraps these commands in
@@ -255,7 +246,7 @@ Run one half of the web suite:
 
 ```bash
 cd web
-npx momentic run . \
+npx momentic run \
   --exclude autoheal-test-authorship-demo \
   --shard-index 1 \
   --shard-count 2 \
@@ -276,16 +267,14 @@ their artifacts, merges them, and uploads one result set.
 
 ## Create a new project
 
-Run the wizard from the repository root and choose the target platform:
+Run the latest wizard from the project directory:
 
 ```bash
-npx momentic-wizard --platform web --cwd ./path/to/project
-npx momentic-wizard --platform android --cwd ./path/to/project
-npx momentic-wizard --platform ios --cwd ./path/to/project
+npx @momentic/wizard@latest
 ```
 
-The wizard writes a commented `momentic.config.yaml` and offers the setup
-options supported by the installed CLI version.
+Choose web, Android, or iOS when prompted. The wizard writes a commented
+`momentic.config.yaml` with the latest supported setup options.
 
 ## Run Mo
 

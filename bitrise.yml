@@ -33,4 +33,4 @@ workflows:
                 set -euxo pipefail
 
                 cd ios
-                npx momentic-mobile run . --upload-results
+                npx momentic-mobile run --upload-results

@@ -27,10 +27,7 @@ jobs:
         # Choose which browsers you want to install, see https://momentic.ai/docs/browsers
         run: npx momentic install-browsers chromium
       - name: Run tests
-        run: npx momentic run . --exclude autoheal-test-authorship-demo
-      - name: Upload test results artifact to Momentic Cloud
-        run: npx momentic results upload test-results
-        if: always()
+        run: npx momentic run --upload-results --exclude autoheal-test-authorship-demo
 
   run-android-tests:
     name: Run android tests
@@ -56,7 +53,4 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v4
       - name: Run tests
-        run: npx momentic-mobile run .
-      - name: Upload test results artifact to Momentic Cloud
-        run: npx momentic-mobile results upload test-results
-        if: always()
+        run: npx momentic-mobile run --upload-results
