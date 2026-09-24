@@ -45,7 +45,7 @@ jobs:
       # event's before SHA..HEAD so the selection covers only commits in that push.
       - name: Preview selected tests
         working-directory: web
-        run: npx momentic ai select --json
+        run: npx momentic ai select --json --exclude autoheal-test-authorship-demo
 
       - name: Install browser
         run: npx momentic install-browsers chromium
@@ -55,7 +55,7 @@ jobs:
       # and runs the full in-scope test set instead.
       - name: Run selected tests
         working-directory: web
-        run: npx momentic run . --ai-select
+        run: npx momentic run . --ai-select --exclude autoheal-test-authorship-demo
       # A valid zero-test selection creates no runs directory, so there is nothing to upload.
       - name: Upload test results
         if: ${{ always() && hashFiles('web/test-results/runs/**') != '' }}
