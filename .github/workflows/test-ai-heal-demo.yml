@@ -34,17 +34,17 @@ jobs:
         working-directory: .
 
       - name: Install headless browsers for automation
-        run: npx --no-install momentic install-browsers chromium
+        run: npx momentic install-browsers chromium
 
       - name: Run intentional failing auto-heal demo test
         continue-on-error: true
         run: |
-          npx --no-install momentic run autoheal-test-authorship-demo.test.yaml \
+          npx momentic run autoheal-test-authorship-demo.test.yaml \
             --output-dir test-results/autoheal-demo --upload-results
 
       - name: Classify and heal the local demo results
         if: always()
         run: |
-          npx --no-install momentic ai triage test-results/autoheal-demo \
+          npx momentic ai triage test-results/autoheal-demo \
             --yes \
             --timeout-minutes 10

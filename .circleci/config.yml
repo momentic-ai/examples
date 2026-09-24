@@ -18,12 +18,12 @@ jobs:
           command: npm --prefix ../ ci
       - run:
           name: Install Browsers
-          command: npx --no-install momentic install-browsers chromium
+          command: npx momentic install-browsers chromium
           no_output_timeout: 5m
       - run:
           name: Run tests
           command: |
-            npx --no-install momentic run . \
+            npx momentic run . \
               --output-dir test-results/shard-${CIRCLE_NODE_INDEX} \
               --shard-index $(($CIRCLE_NODE_INDEX+1)) \
               --shard-count ${CIRCLE_NODE_TOTAL}
@@ -49,10 +49,10 @@ jobs:
           at: .
       - run:
           name: Merge test results
-          command: npx --no-install momentic results merge --output-dir test-results/merged test-results
+          command: npx momentic results merge --output-dir test-results/merged test-results
       - run:
           name: Upload test results
-          command: npx --no-install momentic results upload test-results/merged
+          command: npx momentic results upload test-results/merged
 
 workflows:
   UI_Tests:

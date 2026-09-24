@@ -97,7 +97,7 @@ passes each shard's explicit paths to `momentic run`.
 The workflow also passes application-specific selection guidance:
 
 ```bash
-npx --no-install momentic ai select --json \
+npx momentic ai select --json \
   --prompt "Prioritize product search, product details, and cart behavior affected by this change."
 ```
 

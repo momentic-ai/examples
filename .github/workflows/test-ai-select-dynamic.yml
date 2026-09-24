@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Install code-index tools
-        run: npx --no-install momentic install-codetools
+        run: npx momentic install-codetools
       - name: Restore code index
         uses: actions/cache@v4
         with:
@@ -46,7 +46,7 @@ jobs:
       - name: Select tests
         working-directory: web
         run: |
-          npx --no-install momentic ai select \
+          npx momentic ai select \
             --json \
             --budget 4 \
             --exclude autoheal-test-authorship-demo \
@@ -84,13 +84,13 @@ jobs:
       - name: Install dependencies
         run: npm --prefix .. ci
       - name: Install browser
-        run: npx --no-install momentic install-browsers chromium
+        run: npx momentic install-browsers chromium
       - name: Run selected tests
         env:
           TEST_ARGS: ${{ matrix.testArgs }}
         run: |
           read -r -a SELECTED_TESTS <<< "$TEST_ARGS"
-          npx --no-install momentic run "${SELECTED_TESTS[@]}" \
+          npx momentic run "${SELECTED_TESTS[@]}" \
             --output-dir "test-results/shard-${{ matrix.shard }}"
       - name: Save test results
         if: always()
@@ -124,6 +124,6 @@ jobs:
           pattern: ai-selected-test-results-*
           merge-multiple: true
       - name: Merge test results
-        run: npx --no-install momentic results merge --output-dir test-results/merged test-results
+        run: npx momentic results merge --output-dir test-results/merged test-results
       - name: Upload test results
-        run: npx --no-install momentic results upload test-results/merged
+        run: npx momentic results upload test-results/merged

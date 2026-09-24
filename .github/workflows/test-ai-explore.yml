@@ -36,12 +36,12 @@ jobs:
         working-directory: .
 
       - name: Install headless browsers for automation
-        run: npx --no-install momentic install-browsers chromium
+        run: npx momentic install-browsers chromium
 
       - name: Explore the change that landed
         if: github.event_name == 'push'
-        run: npx --no-install momentic ai explore diff
+        run: npx momentic ai explore diff
 
       - name: Explore the whole app
         if: github.event_name == 'workflow_dispatch'
-        run: npx --no-install momentic ai explore latest
+        run: npx momentic ai explore latest

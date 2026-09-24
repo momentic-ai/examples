@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: npm --prefix ../ ci
       - name: Queue remote test runs
-        run: npx --no-install momentic queue tests add-products-to-cart search-and-cart-behavior
+        run: npx momentic queue tests add-products-to-cart search-and-cart-behavior
 
   run-android-tests:
     name: Run android tests
@@ -52,4 +52,4 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v4
       - name: Run tests
-        run: npx --no-install momentic-mobile run .
+        run: npx momentic-mobile run .
