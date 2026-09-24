@@ -92,7 +92,7 @@ shirt,Acme Circles T-Shirt
 
 | Example | Description |
 | --- | --- |
-| [`android-contacts.test.yaml`](android/android-contacts.test.yaml) | Creates a contact, checks its details, and prepares a call without placing it |
+| [`android-contacts.test.yaml`](android/android-contacts.test.yaml) | Creates a contact and checks its company and phone details |
 | [`android-google-maps.test.yaml`](android/android-google-maps.test.yaml) | Searches for restaurants with a shared module and checks directions and reviews |
 | [`search-restaurants.module.yaml`](android/search-restaurants.module.yaml) | Reusable cuisine and city search module |
 

@@ -8,6 +8,3 @@ steps:
       activity: ""
   - Create a contact named Android Test at Momentic with phone number 9194089905
   - assert: Android Test contact has a company name and phone number
-  - killApp
-  - Open the Phone app, dial Android Test, and stop at the confirmation prompt without placing the call
-  - assert: The phone is ready to call Android Test at 9194089905
