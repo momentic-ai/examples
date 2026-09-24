@@ -19,7 +19,7 @@ fileFormat: v2
 # Named environments let the same tests run against different deployments. See https://momentic.ai/docs/configuration/environments
 environments:
   - name: test
-    baseUrl: https://google.com
+    baseUrl: https://demo.vercel.store/
     envFile: ../../test.env
     envVariables:
       VAR_FROM_SHELL: ${VAR_FROM_SHELL}

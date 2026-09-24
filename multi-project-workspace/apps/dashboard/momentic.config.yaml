@@ -19,7 +19,7 @@ fileFormat: v2
 # Named environments let the same tests run against different deployments. See https://momentic.ai/docs/configuration/environments
 environments:
   - name: production
-    baseUrl: https://google.com/
+    baseUrl: https://demo.vercel.store/
 
 # Advanced options. See https://momentic.ai/docs/configuration/advanced
 advanced:

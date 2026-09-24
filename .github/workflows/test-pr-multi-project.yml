@@ -38,4 +38,4 @@ jobs:
       - name: Run dashboard tests using absolute path
         run: |
           cd apps/dashboard
-          npx momentic run --upload-results google-search.test.yaml
+          npx momentic run --upload-results store-product-navigation.test.yaml

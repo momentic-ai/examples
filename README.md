@@ -162,7 +162,7 @@ installation:
 
 | Project | Description |
 | --- | --- |
-| [`apps/dashboard`](multi-project-workspace/apps/dashboard) | Runs a Google search test from its own config |
+| [`apps/dashboard`](multi-project-workspace/apps/dashboard) | Opens a Vercel Store product from its own config |
 | [`apps/marketing`](multi-project-workspace/apps/marketing) | Reads values from an env file, interpolation, and the shell |
 | [`qa`](multi-project-workspace/qa) | Calls a module from `common/` against Practice Test Automation |
 
@@ -190,7 +190,7 @@ Run the dashboard project from its directory:
 
 ```bash
 cd apps/dashboard
-npx momentic run google-search.test.yaml
+npx momentic run store-product-navigation.test.yaml
 ```
 
 ## AI test selection

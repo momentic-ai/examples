@@ -1,8 +1,0 @@
-fileType: momentic/test/v2
-id: cfa6eb04-a97e-42c0-aeaa-5de0bc3cac0d
-description: Search Google and verify relevant results
-defaultEnv: production
-retries: 0
-steps:
-  - Search Google for Momentic browser testing
-  - assert: The search results include information about Momentic
