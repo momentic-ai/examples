@@ -85,7 +85,7 @@ The CSV headers match the test parameters:
 
 ```csv
 QUERY,PRODUCT
-shirt,Acme Circles T-Shirt
+shirt,Desert T-shirt
 ```
 
 ## Android examples
