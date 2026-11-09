@@ -13,7 +13,7 @@ jobs:
   run-tests-on-amazon-linux:
     name: Run tests
 
-    runs-on: ubuntu-latest # Change this to your own runners
+    runs-on: ubuntu-24.04 # Change this to your own runners
     container: # Remove this line if your runners already run on Amazon Linux
       image: amazonlinux # Remove this line if your runners already run on Amazon Linux
 
