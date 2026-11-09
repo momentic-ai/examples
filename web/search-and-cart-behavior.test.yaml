@@ -10,5 +10,5 @@ steps:
       path: ./add-product-to-cart.module.yaml
       inputs:
         ITEM:
-          string: Acme Hoodie
-  - Open the cart and confirm the Acme Hoodie is present
+          string: Unisex Fleece Hoodie
+  - Open the cart and confirm the Unisex Fleece Hoodie is present
