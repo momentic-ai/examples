@@ -50,7 +50,7 @@ npm run lint:workspace
 ## Web examples
 
 The web project targets the
-[Vercel Store demo](https://demo.vercel.store/).
+[Next.js Commerce demo store](https://nextjs-commerce.vercel.app/).
 
 | Example | Description |
 | --- | --- |
