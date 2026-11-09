@@ -38,3 +38,5 @@ test-results
 
 # Momentic MCP working directory
 .momentic-mcp
+# Mo + Codex round-trip files
+.momentic-artifacts

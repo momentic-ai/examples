@@ -1,0 +1,86 @@
+name: Mo + Codex tests
+
+# Codex briefs Mo, Mo tests the app and edits copies of the tests, and Codex
+# applies, lints and runs Mo's patch here. The run outputs the result as a Git
+# patch artifact; it doesn't push or open pull requests. See mo-codex/README.md.
+on:
+  workflow_dispatch:
+    inputs:
+      request:
+        description: What Mo should test and which tests to add or update
+        required: true
+      app-url:
+        description: URL of the running app
+        default: https://nextjs-commerce.vercel.app/
+      effort:
+        description: Mo testing effort
+        type: choice
+        options: [low, medium, high]
+        default: low
+
+jobs:
+  mo-codex:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.15.0
+          cache: "npm"
+      - run: npm ci
+      - run: npx momentic install-browsers chromium
+      - name: Write the Codex prompt
+        env:
+          REQUEST: ${{ inputs.request }}
+        run: |
+          mkdir -p .momentic-artifacts
+          { cat mo-codex/codex-prompt.md; printf '%s\n' "$REQUEST"; } > .momentic-artifacts/codex-prompt.md
+      - name: Run Codex
+        uses: openai/codex-action@v1
+        env:
+          MOMENTIC_API_KEY: ${{ secrets.MOMENTIC_API_KEY }}
+          APP_URL: ${{ inputs.app-url }}
+          MO_EFFORT: ${{ inputs.effort }}
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          prompt-file: .momentic-artifacts/codex-prompt.md
+          output-file: .momentic-artifacts/codex-summary.md
+          # Codex needs network access for the qa CLI and Momentic runs. The job
+          # token is read-only and Codex doesn't get it.
+          sandbox: danger-full-access
+      - name: Write the changed tests as a Git patch
+        if: always()
+        run: |
+          git add -A web
+          git diff --cached --binary -- web > momentic-tests.patch
+          {
+            cat .momentic-artifacts/codex-summary.md 2>/dev/null
+            if [ -s momentic-tests.patch ]; then
+              echo
+              echo "Download the momentic-tests-patch artifact and apply it with \`git apply momentic-tests.patch\`."
+              echo
+              echo '```diff'
+              cat momentic-tests.patch
+              echo '```'
+            else
+              echo "No test changes."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: momentic-tests-patch
+          path: momentic-tests.patch
+          if-no-files-found: ignore
+      # Brief, Mo's session state and Codex's summary, for debugging.
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mo-codex-logs
+          path: .momentic-artifacts/
+          include-hidden-files: true
