@@ -6,7 +6,8 @@ orbs:
 jobs:
   run-tests:
     docker:
-      - image: cimg/node:24.0
+      # Ships Chromium's system packages, so installing browsers needs no apt downloads.
+      - image: mcr.microsoft.com/playwright:v1.64.1-noble
     resource_class: large
     parallelism: 2
     working_directory: ~/project/web
@@ -16,9 +17,14 @@ jobs:
       - run:
           name: Install dependencies
           command: npm --prefix ../ ci
+      # In case apt still refreshes its index: archive.ubuntu.com is often slow from cloud runners.
+      - run:
+          name: Use Azure's Ubuntu mirror
+          command: sed -i 's|http://archive.ubuntu.com|http://azure.archive.ubuntu.com|g; s|http://security.ubuntu.com|http://azure.archive.ubuntu.com|g' /etc/apt/sources.list.d/ubuntu.sources
       - run:
           name: Install Browsers
-          command: npx momentic install-browsers chromium
+          # apt keeps printing progress while stuck, so no_output_timeout alone never fires
+          command: timeout 10m npx momentic install-browsers chromium
           no_output_timeout: 5m
       - run:
           name: Run tests
