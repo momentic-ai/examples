@@ -37,6 +37,8 @@ qa() { npx --no-install qa "$@"; }
 json_field() { node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const v=JSON.parse(s)[process.argv[1]];console.log(typeof v==="string"?v:JSON.stringify(v??null))})' "$1"; }
 
 mkdir -p "$out_dir"
+# A round that fails must not leave an earlier round's patch as the result.
+rm -f "$out_dir/momentic-tests.patch"
 remote_tests=/home/user/momentic-tests
 # A new name per round, so a round where Mo writes nothing can't return an old patch.
 remote_patch="/home/user/momentic-tests-$(date +%s)-$$-$RANDOM.patch"
