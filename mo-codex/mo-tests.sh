@@ -17,6 +17,7 @@ session_id=""
 out_dir=.momentic-artifacts
 
 while [[ $# -gt 0 ]]; do
+  [[ "$1" == --* && $# -ge 2 ]] || { echo "usage: $0 --brief <file> [--option value ...]" >&2; exit 2; }
   case "$1" in
     --brief) brief="$2"; shift 2 ;;
     --tests-dir) tests_dir="$2"; shift 2 ;;
@@ -37,14 +38,19 @@ json_field() { node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{
 
 mkdir -p "$out_dir"
 remote_tests=/home/user/momentic-tests
-# A fresh name per round, so a round where Mo writes nothing can't return an old patch.
-remote_patch="/home/user/momentic-tests-$(date +%s).patch"
+# A new name per round, so a round where Mo writes nothing can't return an old patch.
+remote_patch="/home/user/momentic-tests-$(date +%s)-$$-$RANDOM.patch"
 
 if [[ -z "$session_id" ]]; then
   # Mo reads only what you send: tracked files in the tests directory, including
   # uncommitted edits, never untracked files such as local .env files.
   archive="$out_dir/momentic-tests-baseline.tgz"
-  git ls-files -z -- "$tests_dir" | tar --null -T - -czf "$archive"
+  # Regular files only: skip unstaged deletions and submodules, whose directories
+  # can hold untracked files.
+  git ls-files -z -s -- "$tests_dir" | while IFS= read -r -d '' entry; do
+    path=${entry#*$'\t'}
+    [[ ${entry%% *} != 160000 && -f "$path" ]] && printf '%s\0' "$path"
+  done | tar --null -T - -czf "$archive"
 
   start_args=(--effort "$effort")
   [[ -n "$url" ]] && start_args+=(--url "$url")
@@ -53,7 +59,7 @@ if [[ -z "$session_id" ]]; then
     "Wait for my next message. I'm uploading our Momentic tests first. Reply 'ready'." |
     json_field sessionId)
   uploaded=$(qa upload "$archive" momentic-tests-baseline.tgz --session-id "$session_id")
-  setup="Set up the tests first: mkdir -p $remote_tests && tar -xzf $uploaded -C $remote_tests && cd $remote_tests && git init -q && git add -A && git -c user.name=mo -c user.email=mo@localhost commit -qm baseline && git tag baseline
+  setup="Set up the tests first: mkdir -p $remote_tests && tar -xzf $uploaded -C $remote_tests && cd $remote_tests && git init -q && git add -A && git -c user.name=mo -c user.email=mo@localhost commit -q --allow-empty -m baseline && git tag baseline
 The Momentic tests are in $remote_tests/$tests_dir. Edit tests there.
 
 "
@@ -69,7 +75,10 @@ Then reply with the patch path, the files it changes, what you verified in the b
 
 qa send "$session_id" "$message" >/dev/null
 state="$out_dir/mo-session-state.json"
-qa wait "$session_id" --json >"$state"
+# Exit 2 means Mo needs input and 4 means it was stopped; both are handled below.
+wait_status=0
+qa wait "$session_id" --json >"$state" || wait_status=$?
+[[ $wait_status == 0 || $wait_status == 2 || $wait_status == 4 ]] || exit "$wait_status"
 echo "session: $session_id"
 echo "mo: $(json_field messages <"$state" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const m=JSON.parse(s).filter(x=>x.role==="assistant").at(-1);console.log(m?m.text:"(no reply)")})')"
 

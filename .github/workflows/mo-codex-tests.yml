@@ -60,7 +60,7 @@ jobs:
           git add -A web
           git diff --cached --binary -- web > momentic-tests.patch
           {
-            cat .momentic-artifacts/codex-summary.md 2>/dev/null
+            cat .momentic-artifacts/codex-summary.md 2>/dev/null || true
             if [ -s momentic-tests.patch ]; then
               echo
               echo "Download the momentic-tests-patch artifact and apply it with \`git apply momentic-tests.patch\`."
