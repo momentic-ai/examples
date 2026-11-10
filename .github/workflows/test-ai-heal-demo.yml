@@ -13,7 +13,7 @@ permissions:
 jobs:
   run-ai-heal-demo:
     name: Run AI heal demo
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: ./web

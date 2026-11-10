@@ -50,7 +50,7 @@ npm run lint:workspace
 ## Web examples
 
 The web project targets the
-[Vercel Store demo](https://demo.vercel.store/).
+[Next.js Commerce demo store](https://nextjs-commerce.vercel.app/).
 
 | Example | Description |
 | --- | --- |
@@ -85,7 +85,7 @@ The CSV headers match the test parameters:
 
 ```csv
 QUERY,PRODUCT
-shirt,Acme Circles T-Shirt
+shirt,Desert T-shirt
 ```
 
 ## Android examples
@@ -127,18 +127,11 @@ npx momentic-mobile run android-google-maps.test.yaml \
 | Example | Description |
 | --- | --- |
 | [`dime-app.test.yaml`](ios/dime-app.test.yaml) | Completes onboarding, records an expense, and checks settings |
-| [`ios-contacts.test.yaml`](ios/ios-contacts.test.yaml) | Creates a contact and drafts a message without sending it |
 
-Run an iOS test on the mobile target configured for your Momentic account:
+Run the Dime example on the mobile target configured for your Momentic account:
 
 ```bash
 cd ios
-npx momentic-mobile run ios-contacts.test.yaml
-```
-
-Run the Dime example:
-
-```bash
 npx momentic-mobile run dime-app.test.yaml
 ```
 
@@ -159,7 +152,7 @@ installation:
 
 | Project | Description |
 | --- | --- |
-| [`apps/dashboard`](multi-project-workspace/apps/dashboard) | Opens a Vercel Store product from its own config |
+| [`apps/dashboard`](multi-project-workspace/apps/dashboard) | Opens a Next.js Commerce demo store product from its own config |
 | [`apps/marketing`](multi-project-workspace/apps/marketing) | Reads values from an env file, interpolation, and the shell |
 | [`qa`](multi-project-workspace/qa) | Calls a module from `common/` against Practice Test Automation |
 

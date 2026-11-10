@@ -19,7 +19,7 @@ fileFormat: v2
 # Named environments let the same tests run against different deployments. See https://momentic.ai/docs/configuration/environments
 environments:
   - name: production
-    baseUrl: https://demo.vercel.store/
+    baseUrl: https://nextjs-commerce.vercel.app/
 
 # Advanced options. See https://momentic.ai/docs/configuration/advanced
 advanced:

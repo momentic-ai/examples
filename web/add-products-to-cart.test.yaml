@@ -8,11 +8,11 @@ steps:
       path: ./add-product-to-cart.module.yaml
       inputs:
         ITEM:
-          string: Acme Circles T-Shirt
+          string: Desert T-shirt
   - module:
       path: ./add-product-to-cart.module.yaml
       inputs:
         ITEM:
-          string: Acme Drawstring Bag
+          string: Beanie
   - Open the cart, confirm both selected products are present, and increase the quantity of one product
   - assert: The cart contains both selected products, one has a quantity greater than one, and the subtotal is greater than zero

@@ -13,7 +13,8 @@ jobs:
   run-tests-on-amazon-linux:
     name: Run tests
 
-    runs-on: ubuntu-latest # Change this to your own runners
+    runs-on: ubuntu-24.04 # Change this to your own runners
+    timeout-minutes: 15
     container: # Remove this line if your runners already run on Amazon Linux
       image: amazonlinux # Remove this line if your runners already run on Amazon Linux
 
@@ -45,10 +46,13 @@ jobs:
 
           export DEBIAN_FRONTEND=noninteractive
           ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
+          # Retry flaky package mirrors quickly instead of hanging on one connection.
+          # Also applies to the apt-get run by `momentic install-browsers`.
+          printf 'Acquire::Retries "5";\nAcquire::http::Timeout "20";\nAcquire::https::Timeout "20";\n' > /etc/apt/apt.conf.d/80-retries
           apt-get update -y && apt-get install -y --no-install-recommends curl ca-certificates
 
           # Install nvm
-          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+          curl -fsS --retry 5 --connect-timeout 20 -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
           # Load nvm
           export NVM_DIR="$HOME/.nvm"
@@ -76,6 +80,7 @@ jobs:
       # Section 4: Start the Momentic docker container
       # Copies the Momentic tests from your codebase and the testing script into the container before kicking off the script.
       - name: Run Momentic in ubuntu image
+        timeout-minutes: 12
         run: |
           docker run -d --name momentic --network host -e MOMENTIC_API_KEY='${{ secrets.MOMENTIC_API_KEY }}' ubuntu:20.04 sleep infinity
           docker cp run_tests.sh momentic:/run_tests.sh

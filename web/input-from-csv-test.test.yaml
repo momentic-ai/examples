@@ -9,7 +9,9 @@ parameters:
       string: shirt
   - name: PRODUCT
     default:
-      string: Acme Circles T-Shirt
+      string: Desert T-shirt
 steps:
   - Search for {{ env.QUERY }} and open the product named {{ env.PRODUCT }}
-  - assert: The product page is open for {{ env.PRODUCT }} and shows a price and an Add to Cart button
+  - assert: The product page is open for {{ env.PRODUCT }} and shows its price
+  - Scroll down until the Add to Cart button is visible
+  - assert: The page shows an Add to Cart button

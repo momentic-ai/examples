@@ -11,6 +11,6 @@ steps:
       path: ./add-product-to-cart.module.yaml
       inputs:
         ITEM:
-          string: Acme Circles T-Shirt
+          string: Desert T-shirt
   - Open the cart
-  - assert: The Acme Drawstring Bag is the only item in the cart
+  - assert: The Beanie is the only item in the cart

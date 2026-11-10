@@ -12,7 +12,7 @@ on:
 jobs:
   run-tests:
     name: Run tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -50,7 +50,7 @@ jobs:
 
   upload-results:
     name: Merge and upload test results
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: always()
     needs:
       - run-tests
