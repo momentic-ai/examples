@@ -159,7 +159,7 @@ installation:
 
 | Project | Description |
 | --- | --- |
-| [`apps/dashboard`](multi-project-workspace/apps/dashboard) | Opens a Vercel Store product from its own config |
+| [`apps/dashboard`](multi-project-workspace/apps/dashboard) | Opens a Next.js Commerce demo store product from its own config |
 | [`apps/marketing`](multi-project-workspace/apps/marketing) | Reads values from an env file, interpolation, and the shell |
 | [`qa`](multi-project-workspace/qa) | Calls a module from `common/` against Practice Test Automation |
 
