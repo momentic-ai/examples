@@ -127,18 +127,11 @@ npx momentic-mobile run android-google-maps.test.yaml \
 | Example | Description |
 | --- | --- |
 | [`dime-app.test.yaml`](ios/dime-app.test.yaml) | Completes onboarding, records an expense, and checks settings |
-| [`ios-contacts.test.yaml`](ios/ios-contacts.test.yaml) | Creates a contact and drafts a message without sending it |
 
-Run an iOS test on the mobile target configured for your Momentic account:
+Run the Dime example on the mobile target configured for your Momentic account:
 
 ```bash
 cd ios
-npx momentic-mobile run ios-contacts.test.yaml
-```
-
-Run the Dime example:
-
-```bash
 npx momentic-mobile run dime-app.test.yaml
 ```
 
