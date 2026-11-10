@@ -49,7 +49,7 @@ if [[ -z "$session_id" ]]; then
   archive="$out_dir/momentic-tests-baseline.tgz"
   # Files and symlinks that still exist: skip unstaged deletions, and skip
   # submodules (mode 160000), whose directories can hold untracked files.
-  git ls-files -z -s -- "$tests_dir" | while IFS= read -r -d '' entry; do
+  git ls-files -z -s -- ":(literal)$tests_dir" | while IFS= read -r -d '' entry; do
     path=${entry#*$'\t'}
     [[ ${entry%% *} != 160000 && ( -L "$path" || -f "$path" ) ]] && printf '%s\0' "$path"
   done | tar --null -T - -czf "$archive"
