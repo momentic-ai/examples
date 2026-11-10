@@ -1,9 +1,10 @@
 fileType: momentic/test/v2
 id: cfa6eb04-a97e-42c0-aeaa-5de0bc3cac0d
-description: Open a product from the Vercel Store home page
+description: Open a product from the Next.js Commerce demo store home page
 defaultEnv: production
 retries: 1
 steps:
   - Open the product named Desert T-shirt
+  - assert: The Desert T-shirt product page shows its price
   - Scroll down until the Add to Cart button is visible
-  - assert: The Desert T-shirt product page shows its price and an Add to Cart button
+  - assert: The page shows an Add to Cart button
