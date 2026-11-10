@@ -16,9 +16,17 @@ jobs:
       - run:
           name: Install dependencies
           command: npm --prefix ../ ci
+      # archive.ubuntu.com is often slow or unreachable from cloud runners; use
+      # Azure's Ubuntu mirror for the system packages Chromium needs.
+      - run:
+          name: Use Azure's Ubuntu mirror
+          command: |
+            sudo sed -i 's|http://archive.ubuntu.com|http://azure.archive.ubuntu.com|g; s|http://security.ubuntu.com|http://azure.archive.ubuntu.com|g' /etc/apt/sources.list
+            printf 'Acquire::Retries "3";\nAcquire::http::Timeout "15";\nAcquire::https::Timeout "15";\n' | sudo tee /etc/apt/apt.conf.d/80-retries >/dev/null
       - run:
           name: Install Browsers
-          command: npx momentic install-browsers chromium
+          # apt keeps printing progress while stuck, so no_output_timeout alone never fires
+          command: timeout 10m npx momentic install-browsers chromium
           no_output_timeout: 5m
       - run:
           name: Run tests
