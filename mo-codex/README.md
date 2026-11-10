@@ -32,7 +32,7 @@ npx momentic install-browsers chromium
 
 ```bash
 { cat mo-codex/codex-prompt.md; echo "Add a test that searches for a hoodie and adds it to the cart"; } |
-  APP_URL=https://nextjs-commerce.vercel.app/ codex exec --sandbox danger-full-access -
+  APP_URL=https://nextjs-commerce.vercel.app/ codex exec -m gpt-6.1-terra --sandbox danger-full-access -
 ```
 
 Codex needs network access for the `qa` CLI and `momentic run`. Review the

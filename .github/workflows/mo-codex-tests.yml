@@ -48,6 +48,7 @@ jobs:
           MO_EFFORT: ${{ inputs.effort }}
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          model: gpt-6.1-terra
           prompt-file: .momentic-artifacts/codex-prompt.md
           output-file: .momentic-artifacts/codex-summary.md
           # Codex needs network access for the qa CLI and Momentic runs. The job
