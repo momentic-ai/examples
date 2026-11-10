@@ -4,6 +4,8 @@ name: Mo + Codex tests
 # applies, lints and runs Mo's patch here. The run outputs the result as a Git
 # patch artifact; it doesn't push or open pull requests. See mo-codex/README.md.
 on:
+  push:
+    branches: [jeff-an/mo-codex-test-roundtrip]
   workflow_dispatch:
     inputs:
       request:
@@ -36,7 +38,7 @@ jobs:
       - run: npx momentic install-browsers chromium
       - name: Write the Codex prompt
         env:
-          REQUEST: ${{ inputs.request }}
+          REQUEST: ${{ inputs.request || 'Add a test that sorts products by price from low to high and checks the first product is the cheapest one shown.' }}
         run: |
           mkdir -p .momentic-artifacts
           { cat mo-codex/codex-prompt.md; printf '%s\n' "$REQUEST"; } > .momentic-artifacts/codex-prompt.md
@@ -44,8 +46,8 @@ jobs:
         uses: openai/codex-action@v1
         env:
           MOMENTIC_API_KEY: ${{ secrets.MOMENTIC_API_KEY }}
-          APP_URL: ${{ inputs.app-url }}
-          MO_EFFORT: ${{ inputs.effort }}
+          APP_URL: ${{ inputs.app-url || 'https://nextjs-commerce.vercel.app/' }}
+          MO_EFFORT: ${{ inputs.effort || 'low' }}
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
           model: gpt-6.1-terra
