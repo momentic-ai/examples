@@ -93,4 +93,4 @@ if ! qa download "$remote_patch" --session-id "$session_id" --output "$local_pat
   exit 4
 fi
 echo "patch: $local_patch"
-git apply --stat "$local_patch"
+if [[ -s "$local_patch" ]]; then git apply --stat "$local_patch"; else echo "Mo changed no tests."; fi
