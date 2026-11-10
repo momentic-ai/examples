@@ -5,7 +5,7 @@
 #   mo-codex/mo-tests.sh --brief brief.md [--tests-dir web] [--url URL] [--effort low]
 #   mo-codex/mo-tests.sh --brief follow-up.md --session-id <id>   # later round
 #
-# Prints the session ID and the downloaded patch path. Exits 3 when Mo is waiting
+# Prints the session ID and the patch path ($out_dir/momentic-tests.patch). Exits 3 when Mo is waiting
 # on a question (answer it with a follow-up round) and 4 when Mo wrote no patch.
 set -euo pipefail
 
@@ -45,11 +45,11 @@ if [[ -z "$session_id" ]]; then
   # Mo reads only what you send: tracked files in the tests directory, including
   # uncommitted edits, never untracked files such as local .env files.
   archive="$out_dir/momentic-tests-baseline.tgz"
-  # Regular files only: skip unstaged deletions and submodules, whose directories
-  # can hold untracked files.
+  # Files and symlinks that still exist: skip unstaged deletions, and skip
+  # submodules (mode 160000), whose directories can hold untracked files.
   git ls-files -z -s -- "$tests_dir" | while IFS= read -r -d '' entry; do
     path=${entry#*$'\t'}
-    [[ ${entry%% *} != 160000 && -f "$path" ]] && printf '%s\0' "$path"
+    [[ ${entry%% *} != 160000 && ( -L "$path" || -f "$path" ) ]] && printf '%s\0' "$path"
   done | tar --null -T - -czf "$archive"
 
   start_args=(--effort "$effort")
@@ -71,7 +71,7 @@ message="$setup$(cat "$brief")
 
 When you're done, export every change since the baseline, even if you changed nothing:
 cd $remote_tests && git add -A && git diff --cached --binary baseline > $remote_patch
-Then reply with the patch path, the files it changes, what you verified in the browser, and anything you couldn't verify."
+Then reply with the patch path and the files it changes."
 
 qa send "$session_id" "$message" >/dev/null
 state="$out_dir/mo-session-state.json"
@@ -92,5 +92,6 @@ if ! qa download "$remote_patch" --session-id "$session_id" --output "$local_pat
   echo "Mo didn't write $remote_patch. Ask it with a follow-up round." >&2
   exit 4
 fi
-echo "patch: $local_patch"
+cp "$local_patch" "$out_dir/momentic-tests.patch"
+echo "patch: $out_dir/momentic-tests.patch"
 if [[ -s "$local_patch" ]]; then git apply --stat "$local_patch"; else echo "Mo changed no tests."; fi

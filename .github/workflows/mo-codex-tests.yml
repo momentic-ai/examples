@@ -1,8 +1,8 @@
 name: Mo + Codex tests
 
-# Codex briefs Mo, Mo tests the app and edits copies of the tests, and Codex
-# applies, lints and runs Mo's patch here. The run outputs the result as a Git
-# patch artifact; it doesn't push or open pull requests. See mo-codex/README.md.
+# Codex briefs Mo, Mo tests the app and writes and runs the tests, and the run
+# outputs Mo's changes as a Git patch artifact. It doesn't apply the patch,
+# push or open pull requests. See mo-codex/README.md.
 on:
   workflow_dispatch:
     inputs:
@@ -33,7 +33,6 @@ jobs:
           node-version: 24.15.0
           cache: "npm"
       - run: npm ci
-      - run: npx momentic install-browsers chromium
       - name: Write the Codex prompt
         env:
           REQUEST: ${{ inputs.request }}
@@ -51,22 +50,21 @@ jobs:
           model: gpt-6.1-terra
           prompt-file: .momentic-artifacts/codex-prompt.md
           output-file: .momentic-artifacts/codex-summary.md
-          # Codex needs network access for the qa CLI and Momentic runs. The job
-          # token is read-only and Codex doesn't get it.
+          # Codex needs network access for the qa CLI. The job token is
+          # read-only and Codex doesn't get it.
           sandbox: danger-full-access
-      - name: Write the changed tests as a Git patch
+      - name: Summarize the patch
         if: always()
         run: |
-          git add -A web
-          git diff --cached --binary -- web > momentic-tests.patch
+          patch=.momentic-artifacts/momentic-tests.patch
           {
             cat .momentic-artifacts/codex-summary.md 2>/dev/null || true
-            if [ -s momentic-tests.patch ]; then
+            if [ -s "$patch" ]; then
               echo
               echo "Download the momentic-tests-patch artifact and apply it with \`git apply momentic-tests.patch\`."
               echo
               echo '```diff'
-              cat momentic-tests.patch
+              cat "$patch"
               echo '```'
             else
               echo "No test changes."
@@ -76,8 +74,9 @@ jobs:
         if: always()
         with:
           name: momentic-tests-patch
-          path: momentic-tests.patch
+          path: .momentic-artifacts/momentic-tests.patch
           if-no-files-found: ignore
+          include-hidden-files: true
       # Brief, Mo's session state and Codex's summary, for debugging.
       - uses: actions/upload-artifact@v4
         if: always()
