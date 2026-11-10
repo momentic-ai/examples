@@ -69,7 +69,7 @@ jobs:
             elif [ -e "$patch" ]; then
               echo "No test changes."
             else
-              echo "No patch: the Mo round didn't finish. See the mo-codex-logs artifact."
+              echo "No patch was downloaded. See the mo-codex-logs artifact."
             fi
           } >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v4
