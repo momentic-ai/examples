@@ -46,9 +46,12 @@ jobs:
 
           export DEBIAN_FRONTEND=noninteractive
           ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
-          # Retry flaky package mirrors quickly instead of hanging on one connection.
-          # Also applies to the apt-get run by `momentic install-browsers`.
-          printf 'Acquire::Retries "5";\nAcquire::http::Timeout "20";\nAcquire::https::Timeout "20";\n' > /etc/apt/apt.conf.d/80-retries
+          # archive.ubuntu.com is often unreachable from GitHub-hosted runners; use
+          # Azure's Ubuntu mirror, which those runners use themselves.
+          sed -i 's|http://archive.ubuntu.com|http://azure.archive.ubuntu.com|g; s|http://security.ubuntu.com|http://azure.archive.ubuntu.com|g' /etc/apt/sources.list
+          # Retry quickly instead of hanging on one connection. Also applies to the
+          # apt-get run by `momentic install-browsers`.
+          printf 'Acquire::Retries "3";\nAcquire::http::Timeout "15";\nAcquire::https::Timeout "15";\n' > /etc/apt/apt.conf.d/80-retries
           apt-get update -y && apt-get install -y --no-install-recommends curl ca-certificates
 
           # Install nvm
