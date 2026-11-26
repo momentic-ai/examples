@@ -1,0 +1,14 @@
+fileType: momentic/test/v2
+id: 6c1f0d52-8b0e-4a6f-9d3e-2f7a1c4b9e10
+description: Change a cart item's quantity and verify the subtotal updates
+defaultEnv: production
+retries: 1
+steps:
+  - module:
+      path: ./add-product-to-cart.module.yaml
+      inputs:
+        ITEM:
+          string: Unisex Fleece Hoodie
+  - Open the cart
+  - Increase the Unisex Fleece Hoodie quantity to 2
+  - assert: The cart shows quantity 2 for the Unisex Fleece Hoodie and the subtotal is twice the unit price
